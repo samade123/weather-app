@@ -55,7 +55,7 @@ div.outer {
   // }
   .middle {
     display: grid;
-    grid-template-rows: repeat(8, 1fr);
+    grid-template-rows: repeat(7, 1fr);
     div.navigation {
       font-weight: bold;
       display: grid;
