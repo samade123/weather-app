@@ -17,12 +17,12 @@ div.outer {
   height: 100%;
   grid-gap: 5px;
   border: solid 0 5px 0 0 #E6EBF4;
-  .top {
-    background: purple;
-  }
-  .bottom {
-    background: blue;
-  }
+//   .top {
+//     background: purple;
+//   }
+//   .bottom {
+//     background: blue;
+//   }
 }
 </style>
 

@@ -25,9 +25,9 @@ div.outer {
 //   width: 100%;
   grid-gap: 5px;
   border: solid 0 5px 0 0 #e6ebf4;
-  .top {
-    background: orange;
-  }
+//   .top {
+//     background: orange;
+//   }
   .middle {
     display: grid;
     place-items: center;
@@ -42,7 +42,7 @@ div.outer {
     }
   }
   .bottom {
-    background: blue;
+    // background: blue;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="left" v-if="!setMobile">
-      <SideNav />
+      <SideNav :nav="nav" />
     </div>
     <div class="middle">
       <MainBit />
@@ -31,13 +31,28 @@ export default {
   setup() {
     const setMobile = ref(false);
     const { width, height } = useWindowSize();
-
+    const nav = ref([
+      { title: "Dashboard", link: "/", icon: "la-border-all", current: true },
+      { title: "Map", link: "/map", icon: "la-map-marked", current: false },
+      {
+        title: "Saved Location",
+        link: "/saved",
+        icon: "la-hdd",
+        current: false,
+      },
+      {
+        title: "Calendar",
+        link: "/calendar",
+        icon: "la-calendar",
+        current: false,
+      },
+    ]);
     watch(width, (width) => {
       width < 600 ? (setMobile.value = true) : (setMobile.value = false);
     });
 
     // onMounted(() => console.log(setMobile));
-    return { width, height, setMobile };
+    return { width, height, setMobile, nav };
   },
 };
 </script>
