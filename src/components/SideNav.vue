@@ -2,15 +2,12 @@
   <div class="outer">
     <div class="top"></div>
     <div class="middle">
-    <!-- <router-link to="/">
-      
-    </router-link> | -->
-
       <div
         class="navigation"
         :class="{ unselected: !link.current }"
         v-for="link in nav"
         :key="link.link"
+        @click="routeLink(link.link)"
       >
         <div class="icon">
           <i class="las la-lg" :class="returnIconClass(link.icon)"></i>
@@ -20,24 +17,32 @@
         </div>
       </div>
     </div>
-    <div class="bottom"></div>
+    <div class="bottom" ref="bottom"></div>
   </div>
 </template>
 
 <script>
 import { ref } from "@vue/reactivity";
+import { useRouter } from "vue-router";
 
 export default {
   props: ["nav"],
   setup(props) {
-    // console.log(props.nav[0].title)
+    // console.log(props.nav[0].title)    
+    const router = useRouter()
+
     const nav = ref(props.nav);
     const returnIconClass = (icon) => {
       const classObj = {};
       classObj[icon] = true;
       return classObj;
     };
-    return { nav, returnIconClass };
+
+    const routeLink = (linkRef) => {
+      router.push(linkRef);
+      return;
+    };
+    return { nav, returnIconClass, routeLink };
   },
 };
 </script>
@@ -51,12 +56,7 @@ div.outer {
   border: solid #e6ebf4;
   border-width: 0 2px 0 0;
   color: #0f1621;
-  // .top {
-  //   background: red;
-  // }
-  // .bottom {
-  //   background: blue;
-  // }
+  
   .middle {
     display: grid;
     grid-template-rows: repeat(7, 1fr);
