@@ -3,8 +3,20 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav> -->
-  <router-view />
+  <!-- <router-view /> -->
+  <HomeView />
 </template>
+
+<script>
+import HomeView from "./components/HomePage.vue";
+
+export default {
+  name: "AppView",
+  components: {
+    HomeView,
+  },
+};
+</script>
 
 <style lang="scss">
 @import "./../node_modules/normalize.css/normalize.css";

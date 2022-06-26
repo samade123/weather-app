@@ -2,6 +2,10 @@
   <div class="outer">
     <div class="top"></div>
     <div class="middle">
+    <!-- <router-link to="/">
+      
+    </router-link> | -->
+
       <div
         class="navigation"
         :class="{ unselected: !link.current }"

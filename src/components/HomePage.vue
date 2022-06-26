@@ -4,7 +4,8 @@
       <SideNav :nav="nav" />
     </div>
     <div class="middle">
-      <MainBit />
+      <!-- <MainBit /> -->
+      <router-view />
     </div>
     <div class="right" v-if="!setMobile">
       <ThisWeek />
@@ -15,7 +16,7 @@
 <script>
 // @ is an alias to /src
 import SideNav from "@/components/SideNav.vue";
-import MainBit from "@/components/MainBit.vue";
+import MainBit from "@/views/DashboardView.vue";
 import ThisWeek from "@/components/ThisWeek.vue";
 import { useWindowSize } from "vue-window-size";
 import { watch } from "@vue/runtime-core";
