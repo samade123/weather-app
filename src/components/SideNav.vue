@@ -8,6 +8,7 @@
         v-for="link in nav"
         :key="link.link"
         @click="routeLink(link.link)"
+        :ref="getRef(link)"
       >
         <div class="icon">
           <i class="las la-lg" :class="returnIconClass(link.icon)"></i>
@@ -28,8 +29,7 @@ import { useRouter } from "vue-router";
 export default {
   props: ["nav"],
   setup(props) {
-    // console.log(props.nav[0].title)    
-    const router = useRouter()
+    const router = useRouter();
 
     const nav = ref(props.nav);
     const returnIconClass = (icon) => {
@@ -42,7 +42,11 @@ export default {
       router.push(linkRef);
       return;
     };
-    return { nav, returnIconClass, routeLink };
+
+    const getRef = (linkRef) => {
+          return nav.value.indexOf(linkRef).toString();
+    };
+    return { nav, returnIconClass, routeLink, getRef };
   },
 };
 </script>
@@ -56,7 +60,7 @@ div.outer {
   border: solid #e6ebf4;
   border-width: 0 2px 0 0;
   color: #0f1621;
-  
+
   .middle {
     display: grid;
     grid-template-rows: repeat(7, 1fr);
