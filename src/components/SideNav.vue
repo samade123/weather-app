@@ -1,13 +1,14 @@
 <template>
   <div class="outer">
-    <div class="top"></div>
+    <div class="top"><span class="target" ref="target"></span></div>
     <div class="middle">
       <div
         class="navigation"
         :class="{ unselected: !link.current }"
         v-for="link in nav"
         :key="link.link"
-        @click="routeLink(link.link)"
+        @click="routeLink(link.link, link)"
+        @mouseenter="mouseenterFunc(link)"
         :ref="getRef(link)"
       >
         <div class="icon">
@@ -24,12 +25,14 @@
 
 <script>
 import { ref } from "@vue/reactivity";
+import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 export default {
   props: ["nav"],
   setup(props) {
     const router = useRouter();
+    const stripDimensions = { width: 0, height: 0, left: 0, right: 0 };
 
     const nav = ref(props.nav);
     const returnIconClass = (icon) => {
@@ -38,15 +41,49 @@ export default {
       return classObj;
     };
 
-    const routeLink = (linkRef) => {
+    const routeLink = (linkRef, linkObj) => {
       router.push(linkRef);
       return;
     };
 
     const getRef = (linkRef) => {
-          return nav.value.indexOf(linkRef).toString();
+      return nav.value.indexOf(linkRef).toString();
     };
-    return { nav, returnIconClass, routeLink, getRef };
+
+    // onMounted(() =>  console.log(nav.value[0]));
+    // onMounted(() =>  this.mouseenterFunc(nav.value[0]));
+    return { nav, returnIconClass, routeLink, getRef, stripDimensions };
+  },
+
+  methods: {
+    mouseenterFunc(linkObj) {
+      const elementRef = this.getRef(linkObj);
+      // console.log(this.$refs[elementRef][0].getBoundingClientRect())
+      const element = this.$refs[elementRef][0];
+      const target = this.$refs["target"];
+
+      // console.log(target)
+      //remove current styling from the current link divfunction here
+
+      // add current styling to the mouse over link div
+      this.stripDimensions.width = element.getBoundingClientRect().width;
+      this.stripDimensions.height = element.getBoundingClientRect().height;
+      this.stripDimensions.left =
+        element.getBoundingClientRect().right + window.pageXOffset;
+      this.stripDimensions.top =
+        element.getBoundingClientRect().top + window.pageYOffset;
+
+      // target.style.width = `${this.stripDimensions.width}px`;
+      target.style.width = `2px`;
+      target.style.height = `${this.stripDimensions.height}px`;
+      target.style.left = `${this.stripDimensions.left}px`;
+      target.style.top = `${this.stripDimensions.top}px`;
+      target.style.borderColor = "#0F1621";
+      target.style.transform = "none";
+    },
+  },
+  mounted() {
+    this.mouseenterFunc(this.nav[0]);
   },
 };
 </script>
@@ -90,7 +127,19 @@ div.outer {
         width: 100%;
         text-align: left;
       }
+
+      // .mynav a,
+      // .target {
+      //   transition: all 0.35s ease-in-out;
+      // }
     }
+  }
+  .target {
+    position: absolute;
+    border-left: 2px solid transparent;
+    z-index: 2;
+    transform: translateX(-60px);
+    transition: all 0.3s ease-in-out;
   }
 }
 </style>
