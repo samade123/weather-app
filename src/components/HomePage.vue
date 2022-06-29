@@ -8,7 +8,9 @@
         @current-obj="newPage"
       />
     </div>
-    <div class="middle">
+    <div class="middle" >
+
+
       <!-- <MainBit /> -->
       <router-view />
     </div>
@@ -80,7 +82,7 @@ export default {
 }
 
 // .middle {
-//   background-image: url("")
+//   background-image: url("./img/background.jpg")
 // }
 
 @media (max-width: 600px) {
