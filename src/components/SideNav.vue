@@ -31,7 +31,8 @@ import { useWindowSize } from "vue-window-size";
 
 export default {
   props: ["nav", "windowWidth", "windowHeight"],
-  setup(props) {
+  emits: ['currentObj'],
+  setup(props, ctx) {
     const windowWidth = ref(props.windowWidth);
     const windowHeight = ref(props.windowHeight);
 
@@ -47,24 +48,20 @@ export default {
 
     const routeLink = (linkRef, linkObj) => {
       router.push(linkRef);
+      ctx.emit('currentObj', linkObj)
+
       return;
     };
 
     const getRef = (linkRef) => {
       return nav.value.indexOf(linkRef).toString();
     };
-    //  watch(width, (width) => {
-    //   width < 600 ? (setMobile.value = true) : (setMobile.value = false);
-    // });
-
-    // onMounted(nav, () =>  console.log(nav.value));
-    // onMounted(() =>  this.mouseenterFunc(nav.value[0]));
     return { nav, returnIconClass, routeLink, getRef, stripDimensions };
   },
   watch: {
     windowWidth() {
-      this.mouseenterFunc(this.currentObj)
-    }
+      this.mouseenterFunc(this.currentObj);
+    },
   },
 
   methods: {
@@ -87,7 +84,7 @@ export default {
         element.getBoundingClientRect().top + window.pageYOffset;
 
       // target.style.width = `${this.stripDimensions.width}px`;
-      
+
       target.style.width = `2px`;
       target.style.height = `${this.stripDimensions.height}px`;
       target.style.left = `${this.stripDimensions.left}px`;

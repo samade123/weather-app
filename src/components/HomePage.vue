@@ -1,7 +1,12 @@
 <template>
   <div class="home">
     <div class="left" v-if="!setMobile">
-      <SideNav :nav="nav" :windowWidth="width" :windowHeight="height" />
+      <SideNav
+        :nav="nav"
+        :windowWidth="width"
+        :windowHeight="height"
+        @current-obj="newPage"
+      />
     </div>
     <div class="middle">
       <!-- <MainBit /> -->
@@ -48,12 +53,20 @@ export default {
         current: false,
       },
     ]);
+    const newPage = (linkObj) => {
+      console.log(nav.value);
+      nav.value.forEach((linkObj) => {
+        linkObj.current = false;
+      });
+      const newVal = nav.value.find((link) => link == linkObj);
+      newVal.current = true;
+    };
     watch(width, (width) => {
       width < 600 ? (setMobile.value = true) : (setMobile.value = false);
     });
 
     // onMounted(() => console.log(setMobile));
-    return { width, height, setMobile, nav };
+    return { width, height, setMobile, nav, newPage };
   },
 };
 </script>
