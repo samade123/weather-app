@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="left" v-if="!setMobile">
-      <SideNav :nav="nav" />
+      <SideNav :nav="nav" :windowWidth="width" :windowHeight="height" />
     </div>
     <div class="middle">
       <!-- <MainBit /> -->
@@ -65,6 +65,10 @@ export default {
   grid-gap: 2px;
   height: 100%;
 }
+
+// .middle {
+//   background-image: url("")
+// }
 
 @media (max-width: 600px) {
   .home {

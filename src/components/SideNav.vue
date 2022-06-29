@@ -25,12 +25,16 @@
 
 <script>
 import { ref } from "@vue/reactivity";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useWindowSize } from "vue-window-size";
 
 export default {
-  props: ["nav"],
+  props: ["nav", "windowWidth", "windowHeight"],
   setup(props) {
+    const windowWidth = ref(props.windowWidth);
+    const windowHeight = ref(props.windowHeight);
+
     const router = useRouter();
     const stripDimensions = { width: 0, height: 0, left: 0, right: 0 };
 
@@ -49,15 +53,24 @@ export default {
     const getRef = (linkRef) => {
       return nav.value.indexOf(linkRef).toString();
     };
+    //  watch(width, (width) => {
+    //   width < 600 ? (setMobile.value = true) : (setMobile.value = false);
+    // });
 
-    // onMounted(() =>  console.log(nav.value[0]));
+    // onMounted(nav, () =>  console.log(nav.value));
     // onMounted(() =>  this.mouseenterFunc(nav.value[0]));
     return { nav, returnIconClass, routeLink, getRef, stripDimensions };
+  },
+  watch: {
+    windowWidth() {
+      this.mouseenterFunc(this.currentObj)
+    }
   },
 
   methods: {
     mouseenterFunc(linkObj) {
       const elementRef = this.getRef(linkObj);
+      this.currentObj = linkObj;
       // console.log(this.$refs[elementRef][0].getBoundingClientRect())
       const element = this.$refs[elementRef][0];
       const target = this.$refs["target"];
@@ -74,6 +87,7 @@ export default {
         element.getBoundingClientRect().top + window.pageYOffset;
 
       // target.style.width = `${this.stripDimensions.width}px`;
+      
       target.style.width = `2px`;
       target.style.height = `${this.stripDimensions.height}px`;
       target.style.left = `${this.stripDimensions.left}px`;
