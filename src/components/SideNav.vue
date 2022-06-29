@@ -1,7 +1,7 @@
 <template>
   <div class="outer">
-    <div class="top"><span class="target" ref="target"></span></div>
-    <div class="middle">
+    <div class="top"><span class="target smooth" ref="target"></span></div>
+    <div class="middle" ref="sidebar">
       <div
         class="navigation"
         :class="{ unselected: !link.current }"
@@ -31,7 +31,7 @@ import { useWindowSize } from "vue-window-size";
 
 export default {
   props: ["nav", "windowWidth", "windowHeight"],
-  emits: ['currentObj'],
+  emits: ["currentObj"],
   setup(props, ctx) {
     const windowWidth = ref(props.windowWidth);
     const windowHeight = ref(props.windowHeight);
@@ -48,7 +48,7 @@ export default {
 
     const routeLink = (linkRef, linkObj) => {
       router.push(linkRef);
-      ctx.emit('currentObj', linkObj)
+      ctx.emit("currentObj", linkObj);
 
       return;
     };
@@ -60,12 +60,12 @@ export default {
   },
   watch: {
     windowWidth() {
-      this.mouseenterFunc(this.currentObj);
+      this.mouseenterFunc(this.currentObj, true);
     },
   },
 
   methods: {
-    mouseenterFunc(linkObj) {
+    mouseenterFunc(linkObj, resize = false) {
       const elementRef = this.getRef(linkObj);
       this.currentObj = linkObj;
       // console.log(this.$refs[elementRef][0].getBoundingClientRect())
@@ -78,19 +78,35 @@ export default {
       // add current styling to the mouse over link div
       this.stripDimensions.width = element.getBoundingClientRect().width;
       this.stripDimensions.height = element.getBoundingClientRect().height;
+      // this.stripDimensions.left =
+      //   element.getBoundingClientRect().right + window.pageXOffset;
       this.stripDimensions.left =
-        element.getBoundingClientRect().right + window.pageXOffset;
+        this.$refs["sidebar"].getBoundingClientRect().right +
+        window.pageXOffset;
+
       this.stripDimensions.top =
         element.getBoundingClientRect().top + window.pageYOffset;
 
       // target.style.width = `${this.stripDimensions.width}px`;
+      // resize ? target.classList.remove("smooth") : false;
+      // resize ? target.classList.add("resize") : false;
 
+      if (resize) {
+        target.classList.remove("smooth");
+        target.classList.add("resize");
+      }
       target.style.width = `2px`;
       target.style.height = `${this.stripDimensions.height}px`;
       target.style.left = `${this.stripDimensions.left}px`;
       target.style.top = `${this.stripDimensions.top}px`;
       target.style.borderColor = "#0F1621";
       target.style.transform = "none";
+      setTimeout(() => {
+        if (resize) {
+          target.classList.add("smooth");
+          target.classList.remove("resize");
+        }
+      }, 500);
     },
   },
   mounted() {
@@ -119,6 +135,7 @@ div.outer {
       place-items: center;
       grid-gap: 7px;
       transition: all ease-out 0.1s;
+      width: 99%;
       &.unselected {
         color: #7f7f8a;
       }
@@ -137,6 +154,8 @@ div.outer {
       .title {
         width: 100%;
         text-align: left;
+        margin: 0 5px;
+        font-size: clamp(13px, 1vw, 16px);
       }
 
       // .mynav a,
@@ -149,8 +168,15 @@ div.outer {
     position: absolute;
     border-left: 2px solid transparent;
     z-index: 2;
-    transform: translateX(-60px);
-    transition: all 0.3s ease-in-out;
+    display: block;
+    // transform: translateX(-60px);
+
+    &.smooth {
+      transition: all 0.3s ease-in-out;
+    }
+    &.resize {
+      display: none;
+    }
   }
 }
 </style>
