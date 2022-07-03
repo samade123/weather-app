@@ -12,7 +12,7 @@
 
 
       <!-- <MainBit /> -->
-      <router-view />
+      <router-view :mobile="setMobile" />
     </div>
     <div class="right" v-if="!setMobile">
       <ThisWeek />

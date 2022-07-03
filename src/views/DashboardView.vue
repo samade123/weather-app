@@ -1,6 +1,6 @@
 <template>
   <div class="outer">
-    <div class="top"></div>
+    <div class="top" v-if="!props.mobile"></div>
     <div class="middle">
       <!-- <div
         class="today-board"
@@ -8,8 +8,17 @@
           'background-image': 'url(./background.jpg`)',
         }"
       ></div> -->
-      <div class="today-board" :style="{ backgroundImage: 'url(' + require('@/assets/background.jpg') + ')' }">
+      <div
+        class="today-board"
+        :style="{
+          backgroundImage: 'url(' + require('@/assets/background.jpg') + ')',
+        }"
+      >
         <!-- <img src="./background.jpg" width="500" alt=""> -->
+        <div class="left"></div>
+        <div class="right">
+          <div class="temp-board">{{ props.mobile }}</div>
+        </div>
       </div>
     </div>
     <div class="bottom">
@@ -22,10 +31,12 @@
 </template>
 
 <script>
+import { ref } from "@vue/reactivity";
 export default {
-  setup() {
+  props: ["mobile"],
+  setup(props) {
     const publicPath = process.env.BASE_URL;
-    return { publicPath };
+    return { publicPath, props };
   },
 };
 </script>
@@ -40,6 +51,10 @@ div.outer {
   border: solid 0 5px 0 0 #e6ebf4;
   //   .top {
   //     background: orange;
+
+  @media (max-width: 600px) {
+    grid-template-rows: 4fr 4fr;
+  }
   //   }
   .middle {
     display: grid;
@@ -53,10 +68,38 @@ div.outer {
 
       display: grid;
       grid-template-columns: 1fr 1fr;
+      @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+    }
+
+    .right {
+      display: grid;
+      place-items: center;
+      .temp-board {
+        height: 95%;
+        width: 90%;
+        background: #c4e2ffaa;
+        border-radius: 7px;
+      }
     }
   }
   .bottom {
     // background: blue;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr 1fr;
+    grid-gap: 20px 25px;
+    padding: 5px;
+    width: 95%;
+    margin: 0 auto;
+    // place-items: center;
+    div.stats-card {
+      background: #edf3f8;
+      border-radius: 7px;
+    }
   }
 }
 </style>
