@@ -4,16 +4,53 @@
     <router-link to="/about">About</router-link>
   </nav> -->
   <!-- <router-view /> -->
-  <HomeView />
+        
+  <HomeView :nav="nav"  @current-obj="newPage"/>
 </template>
 
 <script>
+import { ref } from "@vue/reactivity";
 import HomeView from "./components/HomePage.vue";
+import { useRouter } from "vue-router";
 
 export default {
   name: "AppView",
   components: {
     HomeView,
+  },
+  setup() {
+    const router = useRouter();
+
+    const nav = ref([
+      { title: "Dashboard", link: "/", icon: "la-border-all", current: true },
+      { title: "Map", link: "/map", icon: "la-map-marked", current: false },
+      {
+        title: "Saved Location",
+        link: "/saved",
+        icon: "la-hdd",
+        current: false,
+      },
+      {
+        title: "Calendar",
+        link: "/calendar",
+        icon: "la-calendar",
+        current: false,
+      },
+    ]);
+
+    const newPage = (linkObj) => {
+      // console.log(nav.value);
+      nav.value.forEach((linkObj) => {
+        linkObj.current = false;
+      });
+      const newVal = nav.value.find((link) => link == linkObj);
+      newVal.current = true;
+
+      router.push(linkObj.link);
+
+    };
+
+    return { nav, newPage};
   },
 };
 </script>

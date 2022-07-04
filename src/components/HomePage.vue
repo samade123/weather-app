@@ -5,12 +5,10 @@
         :nav="nav"
         :windowWidth="width"
         :windowHeight="height"
-        @current-obj="newPage"
+        @current-obj="routeLink"
       />
     </div>
-    <div class="middle" >
-
-
+    <div class="middle">
       <!-- <MainBit /> -->
       <router-view :mobile="setMobile" />
     </div>
@@ -36,25 +34,27 @@ export default {
     MainBit,
     ThisWeek,
   },
-  setup() {
+  props: ["nav"],
+  setup(props, ctx) {
     const setMobile = ref(false);
     const { width, height } = useWindowSize();
-    const nav = ref([
-      { title: "Dashboard", link: "/", icon: "la-border-all", current: true },
-      { title: "Map", link: "/map", icon: "la-map-marked", current: false },
-      {
-        title: "Saved Location",
-        link: "/saved",
-        icon: "la-hdd",
-        current: false,
-      },
-      {
-        title: "Calendar",
-        link: "/calendar",
-        icon: "la-calendar",
-        current: false,
-      },
-    ]);
+    const nav = ref(props.nav);
+    // const nav = ref([
+    //   { title: "Dashboard", link: "/", icon: "la-border-all", current: true },
+    //   { title: "Map", link: "/map", icon: "la-map-marked", current: false },
+    //   {
+    //     title: "Saved Location",
+    //     link: "/saved",
+    //     icon: "la-hdd",
+    //     current: false,
+    //   },
+    //   {
+    //     title: "Calendar",
+    //     link: "/calendar",
+    //     icon: "la-calendar",
+    //     current: false,
+    //   },
+    // ]);
     const newPage = (linkObj) => {
       console.log(nav.value);
       nav.value.forEach((linkObj) => {
@@ -63,12 +63,23 @@ export default {
       const newVal = nav.value.find((link) => link == linkObj);
       newVal.current = true;
     };
-    watch(width, (width) => {
-      width < 600 ? (setMobile.value = true) : (setMobile.value = false);
-    });
+
+    const routeLink = (linkObj) => {
+      // router.push(linkRef);
+      ctx.emit("currentObj", linkObj);
+
+      return;
+    };
+    watch(
+      width,
+      (width) => {
+        width < 600 ? (setMobile.value = true) : (setMobile.value = false);
+      },
+      { immediate: true }
+    );
 
     // onMounted(() => console.log(setMobile));
-    return { width, height, setMobile, nav, newPage };
+    return { width, height, setMobile, nav, newPage, routeLink};
   },
 };
 </script>

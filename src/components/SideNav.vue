@@ -47,7 +47,7 @@ export default {
     };
 
     const routeLink = (linkRef, linkObj) => {
-      router.push(linkRef);
+      // router.push(linkRef);
       ctx.emit("currentObj", linkObj);
 
       return;
