@@ -61,7 +61,7 @@ div.outer {
     place-items: center;
     .today-board {
       height: 95%;
-      width: 95%;
+      width: clamp(95%, calc(94% + 20px), 98%);
       background: #c4e2ff;
       background-size: cover;
       border-radius: 8px;
@@ -93,7 +93,8 @@ div.outer {
     grid-auto-rows: 1fr 1fr;
     grid-gap: 20px 25px;
     padding: 5px;
-    width: 95%;
+    width: clamp(95%, calc(94% + 20px), 98%);
+    // width: 95%;
     margin: 0 auto;
     // place-items: center;
     div.stats-card {
