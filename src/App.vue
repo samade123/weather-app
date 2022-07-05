@@ -4,13 +4,15 @@
     <router-link to="/about">About</router-link>
   </nav> -->
   <!-- <router-view /> -->
-        
-  <HomeView :nav="nav"  @current-obj="newPage"/>
+
+  <HomeView :nav="nav" @current-obj="newPage" />
 </template>
 
 <script>
 import { ref } from "@vue/reactivity";
 import HomeView from "./components/HomePage.vue";
+import { getLocation } from "./composables/location";
+
 import { useRouter } from "vue-router";
 
 export default {
@@ -20,6 +22,9 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const { latitude, longitude, positions } = getLocation();
+
+    // console.log(longitude.value, latitude.value, positions.value);
 
     const nav = ref([
       { title: "Dashboard", link: "/", icon: "la-border-all", current: true },
@@ -47,10 +52,11 @@ export default {
       newVal.current = true;
 
       router.push(linkObj.link);
-
     };
 
-    return { nav, newPage};
+    positions;
+    positions;
+    return { nav, newPage, latitude, longitude, positions };
   },
 };
 </script>
