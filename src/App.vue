@@ -15,6 +15,7 @@ import { getLocation } from "./composables/location";
 import { getWeather } from "./composables/weatherReponse";
 
 import { useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
 
 export default {
   name: "AppView",
@@ -24,7 +25,13 @@ export default {
   setup() {
     const router = useRouter();
     const { latitude, longitude, positions } = getLocation();
-    const { location} = getWeather();
+
+    getWeather()
+      .then((data) => {
+        const location = data;
+        console.log(location.value)
+      })
+      .catch((error) => console.error(error));
 
     // console.log(longitude.value, latitude.value, positions.value);
 
@@ -45,6 +52,11 @@ export default {
       },
     ]);
 
+    // onMounted(async () => {
+    //   const location  = await getWeather();
+    //   // console.log(location.value)
+    // });
+
     const newPage = (linkObj) => {
       // console.log(nav.value);
       nav.value.forEach((linkObj) => {
@@ -56,8 +68,6 @@ export default {
       router.push(linkObj.link);
     };
 
-    positions;
-    positions;
     return { nav, newPage, latitude, longitude, positions, location };
   },
 };
