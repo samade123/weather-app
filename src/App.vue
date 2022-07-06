@@ -12,6 +12,7 @@
 import { ref } from "@vue/reactivity";
 import HomeView from "./components/HomePage.vue";
 import { getLocation } from "./composables/location";
+import { getWeather } from "./composables/weatherReponse";
 
 import { useRouter } from "vue-router";
 
@@ -23,6 +24,7 @@ export default {
   setup() {
     const router = useRouter();
     const { latitude, longitude, positions } = getLocation();
+    const { location} = getWeather();
 
     // console.log(longitude.value, latitude.value, positions.value);
 
@@ -56,7 +58,7 @@ export default {
 
     positions;
     positions;
-    return { nav, newPage, latitude, longitude, positions };
+    return { nav, newPage, latitude, longitude, positions, location };
   },
 };
 </script>
