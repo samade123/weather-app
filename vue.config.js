@@ -9,7 +9,7 @@ module.exports = defineConfig({
    
     config.plugin("copy").use(CopyPlugin, [
       {
-        patterns: [{ from: "src/api", to: "./api" }],
+        patterns: [{ from: "src/api", to: "../api" }],
       },
     ]);
   }
