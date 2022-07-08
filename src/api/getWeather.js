@@ -1,5 +1,5 @@
-var axios = require('axios');
-module.exports = async (request, res) => {
+export default function handler(request, res) {
+  var axios = require('axios');
 
   var config = {
     method: 'get',
@@ -8,11 +8,16 @@ module.exports = async (request, res) => {
   };
 
   axios(config)
-    .then(function(response) {
+    .then(function (response) {
       console.log(JSON.stringify(response.data));
-      res.json(response.data)
+      res.status(200).json(response.data)
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
 }
+
+// export default function handler(request, response) {
+//   const { name } = request.query;
+//   response.status(200).send(`Hello ${name}!`);
+// }

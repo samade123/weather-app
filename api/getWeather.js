@@ -1,0 +1,1 @@
+export default function handler(a,t){var e=require("axios"),o={method:"get",url:"http://api.weatherapi.com/v1/forecast.json?key=98ffae9a4d174a51b15180411220507&q=51.3934149,0.1216487&days=1&aqi=no&alerts=no",headers:{}};e(o).then((function(a){console.log(JSON.stringify(a.data)),t.status(200).json(a.data)})).catch((function(a){console.log(a)}))}

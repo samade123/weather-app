@@ -4,7 +4,7 @@ export function getWeather() {
     return new Promise((resolve, reject) => {
         console.log("Initial");
         const location = ref(null);
-        fetch("/getWeather")
+        fetch("api/getWeather")
             .then(response => response.json())
             .then(data => {
                 location.value = data
