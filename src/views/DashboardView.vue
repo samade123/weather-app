@@ -14,7 +14,7 @@
           backgroundImage: 'url(' + require('@/assets/background.jpg') + ')',
         }"
       >
-        <!-- <img src="./background.jpg" width="500" alt=""> -->
+        <!-- <img src="@/assets/background.jpg" width="500" alt=""> -->
         <div class="left">
           <div class="left-top">
             <div class="location-name"><div class="icon"><i class="las la-map-marker"></i></div><div>{{location? location.name : ".."}}</div></div>
@@ -26,6 +26,7 @@
           </div>
           <div class="left-bottom">
             <div class="lb-left">
+
               <i class="las la-tachometer-alt"></i>
               {{current? current.pressure_in : ".."}}
             </div>
@@ -42,16 +43,25 @@
         <div class="right">
           <div class="temp-board">
           <div class="forecast" v-if="forecast">
-            <div class="forecast-day"  v-for="temp in forecast.forecastday[0].hour.slice(0,3)" :key="temp.time"> {{temp.time.substring(11)}} {{temp.temp_c}}</div>
+            <div class="forecast-day"  v-for="temp in forecast.forecastday[0].hour.slice(0,3)" :key="temp.time">
+              <img :src="temp.condition.icon" width="100" alt="">
+              <!-- <img :src="`@/assets/day/${temp.condition.code}.png`" width="100" alt=""> -->
+              {{temp.time.substring(11)}} {{temp.temp_c}}</div>
           </div>
           </div>
         </div>
       </div>
     </div>
     <div class="bottom">
-      <div class="stats-card"></div>
-      <div class="stats-card"></div>
-      <div class="stats-card"></div>
+      <div class="stats-card">
+        <i class="las la-compass"></i>
+      </div>
+      <div class="stats-card">
+        <i class="las la-tachometer-alt"></i>
+      </div>
+      <div class="stats-card">
+
+      </div>
       <div class="stats-card"></div>
     </div>
   </div>
@@ -59,7 +69,7 @@
 
 <script>
 import { ref } from "@vue/reactivity";
-import { watch } from "@vue/runtime-core";
+import { onMounted, watch } from "@vue/runtime-core";
 export default {
   props: ["mobile", "data", "ready"],
   setup(props) {
@@ -76,7 +86,7 @@ export default {
         location.value = props.data.location;
         current.value = props.data.current;
         forecast.value = props.data.forecast;
-        hey.value = forecast.value.forecastday[0].hour.slice(0, 3);
+        // hey.value = forecast.value.forecastday[0].hour.slice(0, 3);
         console.log(
           props.data.forecast.forecastday[0].hour.slice(3),
           "dashboard-props"
@@ -84,6 +94,20 @@ export default {
       },
       { immediate: false, deep: false }
     );
+
+    // watch(props.ready, ()=> {
+    //   console.log("ready")
+    // })
+
+    onMounted(() => {
+      if (props) {
+        if (props.ready) {
+          location.value = props.data.location;
+          current.value = props.data.current;
+          forecast.value = props.data.forecast;
+        }
+      }
+    });
     return { publicPath, props, location, current, forecast, hey };
   },
 };
@@ -206,6 +230,9 @@ div.outer {
     div.stats-card {
       background: #edf3f8;
       border-radius: 7px;
+
+      display: grid;
+      grid-template-columns: 5fr 3fr;
     }
   }
 }

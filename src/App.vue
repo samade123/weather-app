@@ -35,7 +35,7 @@ export default {
     getWeather()
       .then((data) => {
         weatherData.value = data;
-        dataReady.value = false;
+        dataReady.value = true;
         console.log(weatherData.value, "weatherData value");
       })
       .catch((error) => console.error(error));
@@ -73,6 +73,10 @@ export default {
       newVal.current = true;
 
       router.push(linkObj.link);
+
+        dataReady.value = false;
+        dataReady.value = true;
+
     };
 
     return {
