@@ -9,7 +9,7 @@ export function getWeather() {
             .then(data => {
                 location.value = data
                 // console.log(location.value)
-                resolve(location)
+                resolve(location.value)
             })
             .catch(error => {
                 console.error('Error:', error);

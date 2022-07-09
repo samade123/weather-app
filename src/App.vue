@@ -5,7 +5,12 @@
   </nav> -->
   <!-- <router-view /> -->
 
-  <HomeView :nav="nav" @current-obj="newPage" />
+  <HomeView
+    :nav="nav"
+    :data="weatherData"
+    :ready="dataReady"
+    @current-obj="newPage"
+  />
 </template>
 
 <script>
@@ -15,7 +20,6 @@ import { getLocation } from "./composables/location";
 import { getWeather } from "./composables/weatherReponse";
 
 import { useRouter } from "vue-router";
-import { onMounted } from "@vue/runtime-core";
 
 export default {
   name: "AppView",
@@ -25,11 +29,14 @@ export default {
   setup() {
     const router = useRouter();
     const { latitude, longitude, positions } = getLocation();
+    const weatherData = ref(null);
+    const dataReady = ref(false);
 
     getWeather()
       .then((data) => {
-        const location = data;
-        console.log(location.value)
+        weatherData.value = data;
+        dataReady.value = false;
+        console.log(weatherData.value, "weatherData value");
       })
       .catch((error) => console.error(error));
 
@@ -68,7 +75,16 @@ export default {
       router.push(linkObj.link);
     };
 
-    return { nav, newPage, latitude, longitude, positions, location };
+    return {
+      nav,
+      newPage,
+      latitude,
+      longitude,
+      positions,
+      location,
+      weatherData,
+      dataReady,
+    };
   },
 };
 </script>

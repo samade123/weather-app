@@ -10,7 +10,7 @@
     </div>
     <div class="middle">
       <!-- <MainBit /> -->
-      <router-view :mobile="setMobile" />
+      <router-view :mobile="setMobile" :data="props.data" :ready="props.ready"/>
     </div>
     <div class="right" v-if="!setMobile">
       <ThisWeek />
@@ -34,7 +34,7 @@ export default {
     MainBit,
     ThisWeek,
   },
-  props: ["nav"],
+  props: ["nav", "data", "ready"],
   setup(props, ctx) {
     const setMobile = ref(false);
     const { width, height } = useWindowSize();
@@ -79,7 +79,7 @@ export default {
     );
 
     // onMounted(() => console.log(setMobile));
-    return { width, height, setMobile, nav, newPage, routeLink};
+    return { width, height, setMobile, nav, newPage, routeLink, props};
   },
 };
 </script>
