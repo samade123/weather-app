@@ -1,6 +1,9 @@
 <template>
   <div class="outer">
-    <div class="top"><span class="target smooth" ref="target"></span></div>
+    <div class="top">
+      <span class="target smooth" ref="target"></span>
+      <span class="target smooth" ref="target-2"></span>
+    </div>
     <div class="middle" ref="sidebar">
       <div
         class="navigation"
@@ -62,15 +65,32 @@ export default {
     windowWidth() {
       this.mouseenterFunc(this.currentObj, true);
     },
+    "props.nav": () => {
+      const currentObj = this.nav.filter((page) => page.current == true)[0];
+
+      this.mouseenterFunc(currentObj, false, true);
+    },
+    deep: true,
+    "$route.name": () => {
+      console.log($route.name);
+    },
   },
 
   methods: {
-    mouseenterFunc(linkObj, resize = false) {
-      const elementRef = this.getRef(linkObj);
+    mouseenterFunc(linkObj, resize = false, currentPage = false) {
+      let elementRef = this.getRef(linkObj);
       this.currentObj = linkObj;
       // console.log(this.$refs[elementRef][0].getBoundingClientRect())
-      const element = this.$refs[elementRef][0];
-      const target = this.$refs["target"];
+      let element = this.$refs[elementRef][0];
+      let target = this.$refs["target"];
+
+      if (currentPage) {
+        const currentObj = this.nav.filter((page) => page.current == true)[0];
+        elementRef = this.getRef(currentObj);
+        element = this.$refs[elementRef][0];
+        target = this.$refs["target-2"];
+        this.currentObj = currentObj; //for setting the resizing window
+      }
 
       // console.log(target)
       //remove current styling from the current link divfunction here
@@ -111,6 +131,9 @@ export default {
   },
   mounted() {
     this.mouseenterFunc(this.nav[0]);
+    this.mouseenterFunc(this.nav[1], false, true);
+
+    console.log(this.$route.name, "roiute name");
   },
 };
 </script>

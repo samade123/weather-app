@@ -36,7 +36,7 @@ export default {
       .then((data) => {
         weatherData.value = data;
         dataReady.value = true;
-        console.log(weatherData.value, "weatherData value");
+        // console.log(weatherData.value, "weatherData value");
       })
       .catch((error) => console.error(error));
 

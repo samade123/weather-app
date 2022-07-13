@@ -2,20 +2,13 @@
   <div class="outer">
     <div class="top" v-if="!props.mobile"></div>
     <div class="middle">
-      <!-- <div
-        class="today-board"
-        :style="{
-          'background-image': 'url(./background.jpg`)',
-        }"
-      ></div> -->
+      
       <div
         class="today-board"
         :style="{
           backgroundImage: 'url(' + require('@/assets/background.jpg') + ')',
         }"
-      >
-        <!-- <img src="@/assets/background.jpg" width="500" alt=""> -->
-        <div class="left">
+      >        <div class="left">
           <div class="left-top">
             <div class="location-name"><div class="icon"><i class="las la-map-marker"></i></div><div>{{location? location.name : ".."}}</div></div>
             <div class="location-date">{{location? location.localtime.substring(11) : ".."}}</div>
@@ -45,7 +38,6 @@
           <div class="forecast" v-if="forecast">
             <div class="forecast-day"  v-for="temp in forecast.forecastday[0].hour.slice(0,3)" :key="temp.time">
               <img :src="temp.condition.icon" width="100" alt="">
-              <!-- <img :src="`@/assets/day/${temp.condition.code}.png`" width="100" alt=""> -->
               {{temp.time.substring(11)}} {{temp.temp_c}}</div>
           </div>
           </div>
@@ -87,10 +79,10 @@ export default {
         current.value = props.data.current;
         forecast.value = props.data.forecast;
         // hey.value = forecast.value.forecastday[0].hour.slice(0, 3);
-        console.log(
-          props.data.forecast.forecastday[0].hour.slice(3),
-          "dashboard-props"
-        );
+        // console.log(
+        //   props.data.forecast.forecastday[0].hour.slice(3),
+        //   "dashboard-props"
+        // );
       },
       { immediate: false, deep: false }
     );
