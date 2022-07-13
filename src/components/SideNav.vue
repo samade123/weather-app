@@ -12,6 +12,7 @@
         :key="link.link"
         @click="routeLink(link.link, link)"
         @mouseenter="mouseenterFunc(link)"
+        @mouseleave="mouseenterFunc(currentObj, false, false, false)"
         :ref="getRef(link)"
       >
         <div class="icon">
@@ -49,15 +50,15 @@ export default {
       return classObj;
     };
 
-    const routeLink = (linkRef, linkObj) => {
+    const routeLink = (linkRef, pageObj) => {
       // router.push(linkRef);
-      ctx.emit("currentObj", linkObj);
+      ctx.emit("currentObj", pageObj);
 
       return;
     };
 
-    const getRef = (linkRef) => {
-      return nav.value.indexOf(linkRef).toString();
+    const getRef = (pageObj) => {
+      return nav.value.indexOf(pageObj).toString();
     };
     return { nav, returnIconClass, routeLink, getRef, stripDimensions };
   },
@@ -65,34 +66,47 @@ export default {
     windowWidth() {
       this.mouseenterFunc(this.currentObj, true);
     },
-    "props.nav": () => {
+    "props.nav"() {
       const currentObj = this.nav.filter((page) => page.current == true)[0];
 
       this.mouseenterFunc(currentObj, false, true);
     },
     deep: true,
-    "$route.name": () => {
-      console.log($route.name);
+    "$route.path"() {
+      console.debug(this.$route.path, "watch");
+      this.currentPage = this.$route.path;
+      this.mouseenterFunc(this.nav[1], false, true);
     },
   },
 
   methods: {
-    mouseenterFunc(linkObj, resize = false, currentPage = false) {
-      let elementRef = this.getRef(linkObj);
-      this.currentObj = linkObj;
+    mouseenterFunc(
+      pageObj,
+      resize = false,
+      currentPage = false,
+      leave = false
+    ) {
+      let elementRef = this.getRef(pageObj);
       // console.log(this.$refs[elementRef][0].getBoundingClientRect())
       let element = this.$refs[elementRef][0];
       let target = this.$refs["target"];
 
       if (currentPage) {
-        const currentObj = this.nav.filter((page) => page.current == true)[0];
+        const currentObj = this.nav.filter(
+          (page) => page.link == `${this.currentPage}`
+        )[0];
+
+        console.debug(
+          this.nav,
+          currentObj,
+          `${this.currentPage}`,
+          "inside function"
+        );
         elementRef = this.getRef(currentObj);
         element = this.$refs[elementRef][0];
         target = this.$refs["target-2"];
         this.currentObj = currentObj; //for setting the resizing window
       }
-
-      // console.log(target)
       //remove current styling from the current link divfunction here
 
       // add current styling to the mouse over link div
@@ -115,6 +129,15 @@ export default {
         target.classList.remove("smooth");
         target.classList.add("resize");
       }
+      this.resizeFunction(target, resize);
+      if (resize) {
+        target = this.$refs["target-2"];
+        target.classList.remove("smooth");
+        target.classList.add("resize");
+        this.resizeFunction(target, true);
+      }
+    },
+    resizeFunction(target, resize) {
       target.style.width = `2px`;
       target.style.height = `${this.stripDimensions.height}px`;
       target.style.left = `${this.stripDimensions.left}px`;
@@ -131,9 +154,11 @@ export default {
   },
   mounted() {
     this.mouseenterFunc(this.nav[0]);
+    this.currentPage = this.$route.path;
+
     this.mouseenterFunc(this.nav[1], false, true);
 
-    console.log(this.$route.name, "roiute name");
+    console.log(this.$route.path, "roiute name");
   },
 };
 </script>

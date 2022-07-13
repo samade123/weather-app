@@ -14,6 +14,21 @@ const routes = [
     component: MainBit
   },
   {
+    path: '/map',
+    name: 'map',
+    component: MainBit
+  }, 
+  {
+    path: '/saved',
+    name: 'saved',
+    component: MainBit
+  }, 
+  {
+    path: '/calendar',
+    name: 'calendar',
+    component: MainBit
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
