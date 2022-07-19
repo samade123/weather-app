@@ -35,11 +35,12 @@
         </div>
         <div class="right">
           <div class="temp-board">
-          <div class="forecast" v-if="forecast">
+          <!-- <div class="forecast" v-if="forecast">
             <div class="forecast-day"  v-for="temp in forecast.forecastday[0].hour.slice(0,3)" :key="temp.time">
               <img :src="temp.condition.icon" width="100" alt="">
               {{temp.time.substring(11)}} {{temp.temp_c}}</div>
-          </div>
+          </div> -->
+          <lineChart  v-if="forecast" :data="dataArray"/>
           </div>
         </div>
       </div>
@@ -47,23 +48,49 @@
     <div class="bottom">
       <div class="stats-card">
         <i class="las la-compass"></i>
+        <div class="title">Wind</div>
+        <div class="sub-title">Today's Wind Speed</div>
+        <div class="number">
+                {{current? current.wind_kph : ".."}}
+        </div>
       </div>
       <div class="stats-card">
         <i class="las la-tachometer-alt"></i>
+        <div class="title">Rain Chance</div>
+        <div class="sub-title">Today's Chance of Rain</div>
+
+        <div class="number">
+              {{current? current.pressure_in : ".."}}
+        </div>
       </div>
       <div class="stats-card">
-
+        <div class="title">Pressure</div>
+        <div class="sub-title">Today's Pressure</div>
+        <div class="number">
+          {{current? current.chance_of_rain : ".."}}
+        </div>
       </div>
-      <div class="stats-card"></div>
+      <div class="stats-card">
+                <div class="title">UV Index</div>
+        <div class="sub-title">Today's UV Index</div>
+
+        <div class="number">
+              {{current? current.uv : ".."}}
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { ref } from "@vue/reactivity";
+import LineChart from "@/components/Chart.vue";
 import { onMounted, watch } from "@vue/runtime-core";
 export default {
   props: ["mobile", "data", "ready"],
+  components: {
+    LineChart,
+  },
   setup(props) {
     const publicPath = process.env.BASE_URL;
 
@@ -71,6 +98,7 @@ export default {
     const current = ref(null);
     const forecast = ref(null);
     const hey = ref(null);
+    const dataArray = ref([]);
     watch(
       props,
       (props) => {
@@ -83,6 +111,20 @@ export default {
         //   props.data.forecast.forecastday[0].hour.slice(3),
         //   "dashboard-props"
         // );
+        // console.log(forecast.value.forecastday[0].hour, "hour");
+        forecast.value.forecastday[0].hour.forEach((element) => {
+          var index = forecast.value.forecastday[0].hour.indexOf(element);
+          if (
+            index == 6 ||
+            index == 9 ||
+            index == 11 ||
+            index == 13 ||
+            index == 18 ||
+            index == 22
+          ) {
+            dataArray.value.push(element);
+          }
+        });
       },
       { immediate: false, deep: false }
     );
@@ -97,10 +139,24 @@ export default {
           location.value = props.data.location;
           current.value = props.data.current;
           forecast.value = props.data.forecast;
+
+          forecast.value.forecastday[0].hour.forEach((element) => {
+            var index = forecast.value.forecastday[0].hour.indexOf(element);
+            if (
+              index == 6 ||
+              index == 9 ||
+              index == 11 ||
+              index == 13 ||
+              index == 18 ||
+              index == 22
+            ) {
+              dataArray.value.push(element);
+            }
+          });
         }
       }
     });
-    return { publicPath, props, location, current, forecast, hey };
+    return { publicPath, props, location, current, forecast, hey, dataArray };
   },
 };
 </script>
