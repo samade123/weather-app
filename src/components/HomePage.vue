@@ -13,7 +13,7 @@
       <router-view :mobile="setMobile" :data="props.data" :ready="props.ready"/>
     </div>
     <div class="right" v-if="!setMobile">
-      <ThisWeek />
+      <ThisWeek :mobile="setMobile" :data="props.data" :ready="props.ready"/>
     </div>
   </div>
 </template>

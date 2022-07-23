@@ -46,6 +46,7 @@ export default {
               borderColor: ["#4278AC"],
               pointBorderWidth: 2,
               pointRadius: 4,
+              pointColor: ['white'],
               pointHoverRadius: 6,
               borderJoinStyle: "miter",
             },

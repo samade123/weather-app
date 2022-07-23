@@ -47,36 +47,44 @@
     </div>
     <div class="bottom">
       <div class="stats-card">
-        <i class="las la-compass"></i>
+        <div class="stats-left">
         <div class="title">Wind</div>
         <div class="sub-title">Today's Wind Speed</div>
         <div class="number">
-                {{current? current.wind_kph : ".."}}
+          {{current? current.wind_kph : ".."}}
         </div>
+          </div>
+        <i class="las la-compass la-10x"></i>
       </div>
       <div class="stats-card">
-        <i class="las la-tachometer-alt"></i>
-        <div class="title">Rain Chance</div>
-        <div class="sub-title">Today's Chance of Rain</div>
-
-        <div class="number">
-              {{current? current.pressure_in : ".."}}
+        <div class="stats-left">
+          <div class="title">Rain Chance</div>
+          <div class="sub-title">Today's Chance of Rain</div>
+          <div class="number">
+            {{forecast? forecast.forecastday[0].day.daily_chance_of_rain : ".."}}
+          </div>
         </div>
+          <i class="las la-tachometer-alt la-10x"></i>
       </div>
       <div class="stats-card">
-        <div class="title">Pressure</div>
-        <div class="sub-title">Today's Pressure</div>
-        <div class="number">
-          {{current? current.chance_of_rain : ".."}}
+        <div class="stats-left">
+          <div class="title">Pressure</div>
+          <div class="sub-title">Today's Pressure</div>
+          <div class="number">
+            {{current? current.pressure_in : ".."}}
+          </div>
         </div>
+          <i class="las la-10x la-weight-hanging"></i>
       </div>
       <div class="stats-card">
-                <div class="title">UV Index</div>
-        <div class="sub-title">Today's UV Index</div>
-
-        <div class="number">
-              {{current? current.uv : ".."}}
+        <div class="stats-left">
+          <div class="title">UV Index</div>
+          <div class="sub-title">Today's UV Index</div>
+          <div class="number">
+                {{current? current.uv : ".."}}
+          </div>
         </div>
+          <i class="las la-sun la-10x"></i>
       </div>
     </div>
   </div>
@@ -281,6 +289,15 @@ div.outer {
 
       display: grid;
       grid-template-columns: 5fr 3fr;
+      div.stats-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
+      i {
+        display: grid;
+        place-items: center;
+      }
     }
   }
 }
