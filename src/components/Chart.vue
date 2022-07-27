@@ -1,6 +1,6 @@
 <template>
-  <div class="chart-bg">
-    <canvas id="myChart" :height="chartHeight"></canvas>
+  <div class="chart-bg" id="myChartBG">
+    <canvas id="myChart"></canvas>
   </div>
 </template>
 
@@ -13,10 +13,6 @@ export default {
   name: "lineChart",
   props: ["data"],
   setup(props) {
-    console.log(props, "chart view");
-    // console.log(Date.getDate(props.data[0].time_epoch))
-    const hello = new Date(props.data[0].time);
-    console.log(hello.getDate());
     const data = { names: [], values: [] };
 
     props.data.forEach((element) => {
@@ -25,12 +21,7 @@ export default {
     });
 
     console.log(data, "data");
-    const chartHeight = () => {
-      const ctx = document.getElementById("myChart");
-
-      var heightRatio = 1;
-      return ctx.width * heightRatio;
-    };
+    
     onMounted(() => {
       const ctx = document.getElementById("myChart").getContext("2d");
 
@@ -46,13 +37,14 @@ export default {
               borderColor: ["#4278AC"],
               pointBorderWidth: 2,
               pointRadius: 4,
-              pointColor: ['white'],
+              pointColor: ["white"],
               pointHoverRadius: 6,
               borderJoinStyle: "miter",
             },
           ],
         },
         options: {
+          maintainAspectRatio: false,
           scales: {
             yAxes: [
               {
@@ -62,7 +54,7 @@ export default {
                 },
               },
             ],
-             xAxes: [
+            xAxes: [
               {
                 display: true,
                 ticks: {
@@ -74,7 +66,7 @@ export default {
         },
       });
     });
-    return { chartHeight };
+    return { };
   },
 };
 </script>
@@ -84,11 +76,12 @@ export default {
   display: grid;
   place-items: center;
   // background: black;
-  // width: 100%;
+  position: relative;
+  width: 100%;
   height: 100%;
 
   #myChart {
-    width: 90% !important; 
+    width: 90% !important;
   }
 }
 </style>
