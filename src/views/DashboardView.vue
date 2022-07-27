@@ -54,7 +54,7 @@
           {{current? current.wind_kph : ".."}}
         </div>
           </div>
-        <i class="las la-compass la-10x"></i>
+        <i class="las la-compass la-5x"></i>
       </div>
       <div class="stats-card">
         <div class="stats-left">
@@ -64,7 +64,7 @@
             {{forecast? forecast.forecastday[0].day.daily_chance_of_rain : ".."}}
           </div>
         </div>
-          <i class="las la-tachometer-alt la-10x"></i>
+          <i class="las la-tachometer-alt la-5x"></i>
       </div>
       <div class="stats-card">
         <div class="stats-left">
@@ -74,7 +74,7 @@
             {{current? current.pressure_in : ".."}}
           </div>
         </div>
-          <i class="las la-10x la-weight-hanging"></i>
+          <i class="las la-5x la-weight-hanging"></i>
       </div>
       <div class="stats-card">
         <div class="stats-left">
@@ -84,7 +84,7 @@
                 {{current? current.uv : ".."}}
           </div>
         </div>
-          <i class="las la-sun la-10x"></i>
+          <i class="las la-sun la-5x"></i>
       </div>
     </div>
   </div>
