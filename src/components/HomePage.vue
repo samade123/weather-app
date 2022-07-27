@@ -10,10 +10,20 @@
     </div>
     <div class="middle">
       <!-- <MainBit /> -->
-      <router-view :mobile="setMobile" :data="props.data" :ready="props.ready"/>
+      <router-view
+        :mobile="setMobile"
+        :data="props.data"
+        :ready="props.ready"
+      />
     </div>
     <div class="right" v-if="!setMobile">
-      <ThisWeek :mobile="setMobile" :data="props.data" :ready="props.ready"/>
+      <ThisWeek
+        :mobile="setMobile"
+        :data="props.data"
+        :ready="props.ready"
+        :windowWidth="width"
+        :windowHeight="height"
+      />
     </div>
   </div>
 </template>
@@ -39,22 +49,6 @@ export default {
     const setMobile = ref(false);
     const { width, height } = useWindowSize();
     const nav = ref(props.nav);
-    // const nav = ref([
-    //   { title: "Dashboard", link: "/", icon: "la-border-all", current: true },
-    //   { title: "Map", link: "/map", icon: "la-map-marked", current: false },
-    //   {
-    //     title: "Saved Location",
-    //     link: "/saved",
-    //     icon: "la-hdd",
-    //     current: false,
-    //   },
-    //   {
-    //     title: "Calendar",
-    //     link: "/calendar",
-    //     icon: "la-calendar",
-    //     current: false,
-    //   },
-    // ]);
     const newPage = (linkObj) => {
       console.log(nav.value);
       nav.value.forEach((linkObj) => {
@@ -79,7 +73,7 @@ export default {
     );
 
     // onMounted(() => console.log(setMobile));
-    return { width, height, setMobile, nav, newPage, routeLink, props};
+    return { width, height, setMobile, nav, newPage, routeLink, props };
   },
 };
 </script>
