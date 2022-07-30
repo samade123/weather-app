@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div class="bottom" v-if="props.mobile">
+    <div class="bottom" v-if="props.mobile" >
     <div class="weather-title">Today <span> Next 7 days</span> </div>
       <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth"/>
     </div>
@@ -115,6 +115,11 @@ export default {
     const dateCounter = ref(1);
     const windowWidth = ref(props.windowWidth);
     const dataArray = ref([]);
+
+    const shout = () => {
+
+      console.log("Sadasds")
+    }
     watch(
       props,
       (props) => {
@@ -171,6 +176,7 @@ export default {
       dateCounter,
       upperLimit,
       windowWidth,
+      shout,
     };
   },
 };

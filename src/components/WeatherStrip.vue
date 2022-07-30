@@ -1,5 +1,5 @@
 <template>
-  <div class="today-section">
+  <div class="today-section" v-touch:swipe.left="decrement" v-touch:swipe.right="increment">
     <div class="forecast" v-if="props.data">
       <div
         class="forecast-day"
@@ -30,12 +30,17 @@ export default {
     const location = ref(null);
     const current = ref(null);
     const forecast = ref(null);
-    const hey = ref(null);
     const dataArray = ref([]);
     const dateCounter = ref(0);
     const upperLimit = ref(4);
     const { width, height } = useWindowSize();
 
+    const decrement = () => {
+      dateCounter.value--;
+    };
+    const increment = () => {
+      dateCounter.value++;
+    };
     watch(
       width,
       (width) => {
@@ -82,6 +87,8 @@ export default {
       dataArray,
       dateCounter,
       upperLimit,
+      decrement,
+      increment,
     };
   },
 };

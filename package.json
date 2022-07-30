@@ -15,7 +15,8 @@
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vue-screen": "^2.1.0-beta.1",
-    "vue-window-size": "^1.1.2"
+    "vue-window-size": "^1.1.2",
+    "vue3-touch-events": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.7",
