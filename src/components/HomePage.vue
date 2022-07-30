@@ -17,7 +17,7 @@
       />
     </div>
     <div class="right" v-if="!setMobile">
-      <ThisWeek
+      <ThisWeek v-if="props.ready"
         :mobile="setMobile"
         :data="props.data"
         :ready="props.ready"
@@ -59,7 +59,6 @@ export default {
     };
 
     const routeLink = (linkObj) => {
-      // router.push(linkRef);
       ctx.emit("currentObj", linkObj);
 
       return;

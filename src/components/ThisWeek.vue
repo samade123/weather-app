@@ -24,7 +24,12 @@
           </div>
         </div>
       </div> -->
-      <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth"/>
+      <WeatherStrip
+        :data="props.data"
+        :upperLimit="upperLimit"
+        :dateCounter="dateCounter"
+        :windowWidth="windowWidth"
+      />
       <div class="next-seven-days">
         <div class="forecast" v-if="forecast">
           <div
@@ -98,13 +103,15 @@ export default {
     watch(
       props,
       (props) => {
-        location.value = props.data.location;
-        current.value = props.data.current;
-        forecast.value = props.data.forecast;
+        if (props.ready) {
+          location.value = props.data.location;
+          current.value = props.data.current;
+          forecast.value = props.data.forecast;
 
-        props.windowWidth > 1300
-          ? (upperLimit.value = 4)
-          : (upperLimit.value = 3);
+          props.windowWidth > 1300
+            ? (upperLimit.value = 4)
+            : (upperLimit.value = 3);
+        }
       },
       { immediate: false, deep: false }
     );

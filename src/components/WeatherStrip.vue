@@ -1,9 +1,9 @@
 <template>
   <div class="today-section">
-    <div class="forecast" v-if="forecast">
+    <div class="forecast" v-if="props.data">
       <div
         class="forecast-day"
-        v-for="temp in forecast.forecastday[0].hour.slice(
+        v-for="temp in props.data.forecast.forecastday[0].hour.slice(
           0 + dateCounter,
           upperLimit + dateCounter
         )"
@@ -18,35 +18,36 @@
 </template>
 
 <script>
+import { useWindowSize } from "vue-window-size";
 import { ref } from "@vue/reactivity";
 import { onMounted, watch } from "@vue/runtime-core";
 // @ is an alias to /src
 
 export default {
   name: "weatherStrip",
-  props: ["data", "upperLimit", "dateCounter", "windowWidth"],
+  props: ["data", "upperLimit", "dateCounter", "windowWidth", "ready"],
   setup(props) {
     const location = ref(null);
     const current = ref(null);
     const forecast = ref(null);
     const hey = ref(null);
     const dataArray = ref([]);
-    const dateCounter = ref(1);
+    const dateCounter = ref(0);
     const upperLimit = ref(4);
-    const windowWidth = ref(props.windowWidth);
+    const { width, height } = useWindowSize();
 
     watch(
-      props,
-      (props) => {
-        location.value = props.data.location;
-        current.value = props.data.current;
-        forecast.value = props.data.forecast;
-
-        props.windowWidth > 1300
-          ? (upperLimit.value = 4)
-          : (upperLimit.value = 3);
+      width,
+      (width) => {
+        if (width > 1300) {
+          upperLimit.value = 4;
+        } else if (width < 600) {
+          upperLimit.value = 4;
+        } else {
+          upperLimit.value = 3;
+        }
       },
-      { immediate: false, deep: false }
+      { immediate: true }
     );
 
     onMounted(() => {
@@ -81,7 +82,6 @@ export default {
       dataArray,
       dateCounter,
       upperLimit,
-      windowWidth,
     };
   },
 };
@@ -108,6 +108,12 @@ export default {
   @media (max-width: 1300px) {
     .forecast {
       grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .forecast {
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 }

@@ -73,7 +73,7 @@ export default {
     },
     deep: true,
     "$route.path"() {
-      console.debug(this.$route.path, "watch");
+      // console.debug(this.$route.path, "watch");
       this.currentPage = this.$route.path;
       this.mouseenterFunc(this.nav[1], false, true);
     },

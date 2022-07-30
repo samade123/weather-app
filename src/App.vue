@@ -1,5 +1,6 @@
 <template>
   <HomeView
+    v-if="location"
     :nav="nav"
     :data="weatherData"
     :ready="dataReady"
@@ -12,6 +13,8 @@ import { ref } from "@vue/reactivity";
 import HomeView from "./components/HomePage.vue";
 import { getLocation } from "./composables/location";
 import { getWeather } from "./composables/weatherReponse";
+import { useWindowSize } from "vue-window-size";
+import { watch } from "@vue/runtime-core";
 
 import { useRouter } from "vue-router";
 
@@ -24,6 +27,7 @@ export default {
     const router = useRouter();
     const { latitude, longitude, positions } = getLocation();
     const weatherData = ref(null);
+    const { width, height } = useWindowSize();
     const dataReady = ref(false);
 
     getWeather()
@@ -53,13 +57,14 @@ export default {
       },
     ]);
 
-    // onMounted(async () => {
-    //   const location  = await getWeather();
-    //   // console.log(location.value)
-    // });
+    const refreshDataReady = () => {
+      // if (dataReady.value) {
+        dataReady.value = false;
+        dataReady.value = true;
+      // }
+    };
 
     const newPage = (linkObj) => {
-      // console.log(nav.value);
       nav.value.forEach((linkObj) => {
         linkObj.current = false;
       });
@@ -68,10 +73,16 @@ export default {
 
       router.push(linkObj.link);
 
-        dataReady.value = false;
-        dataReady.value = true;
-
+      refreshDataReady();
     };
+
+    watch(
+      width,
+      (width) => {
+        refreshDataReady();
+      },
+      { immediate: false }
+    );
 
     return {
       nav,

@@ -45,7 +45,11 @@
         </div>
       </div>
     </div>
-    <div class="bottom">
+    <div class="bottom" v-if="props.mobile">
+    <div class="weather-title">Today <span> Next 7 days</span> </div>
+      <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth"/>
+    </div>
+    <div class="bottom" v-else>
       <div class="stats-card">
         <div class="stats-left">
         <div class="title">Wind</div>
@@ -92,11 +96,13 @@
 
 <script>
 import { ref } from "@vue/reactivity";
+import WeatherStrip from "@/components/WeatherStrip.vue";
 import LineChart from "@/components/Chart.vue";
 import { onMounted, watch } from "@vue/runtime-core";
 export default {
   props: ["mobile", "data", "ready"],
   components: {
+    WeatherStrip,
     LineChart,
   },
   setup(props) {
@@ -105,7 +111,9 @@ export default {
     const location = ref(null);
     const current = ref(null);
     const forecast = ref(null);
-    const hey = ref(null);
+    const upperLimit = ref(4);
+    const dateCounter = ref(1);
+    const windowWidth = ref(props.windowWidth);
     const dataArray = ref([]);
     watch(
       props,
@@ -114,12 +122,6 @@ export default {
         location.value = props.data.location;
         current.value = props.data.current;
         forecast.value = props.data.forecast;
-        // hey.value = forecast.value.forecastday[0].hour.slice(0, 3);
-        // console.log(
-        //   props.data.forecast.forecastday[0].hour.slice(3),
-        //   "dashboard-props"
-        // );
-        // console.log(forecast.value.forecastday[0].hour, "hour");
         forecast.value.forecastday[0].hour.forEach((element) => {
           var index = forecast.value.forecastday[0].hour.indexOf(element);
           if (
@@ -136,11 +138,6 @@ export default {
       },
       { immediate: false, deep: false }
     );
-
-    // watch(props.ready, ()=> {
-    //   console.log("ready")
-    // })
-
     onMounted(() => {
       if (props) {
         if (props.ready) {
@@ -164,7 +161,17 @@ export default {
         }
       }
     });
-    return { publicPath, props, location, current, forecast, hey, dataArray };
+    return {
+      publicPath,
+      props,
+      location,
+      current,
+      forecast,
+      dataArray,
+      dateCounter,
+      upperLimit,
+      windowWidth,
+    };
   },
 };
 </script>
@@ -273,11 +280,19 @@ div.outer {
   }
   .bottom {
     // background: blue;
-
+    .weather-title {
+      display: flex;
+      justify-content: space-around;
+    }
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 1fr 1fr;
-    grid-gap: 20px 25px;
+    grid-template-rows: auto 1fr;
+    grid-gap: 20px;
+
+    @media (min-width: 600px) {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      grid-gap: 20px 25px;
+    }
     padding: 5px;
     width: clamp(95%, calc(94% + 20px), 98%);
     // width: 95%;
