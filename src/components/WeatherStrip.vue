@@ -1,5 +1,9 @@
 <template>
-  <div class="today-section" v-touch:swipe.left="decrement" v-touch:swipe.right="increment">
+  <div
+    class="today-section"
+    v-touch:swipe.left="decrement"
+    v-touch:swipe.right="increment"
+  >
     <div class="forecast" v-if="props.data">
       <div
         class="forecast-day"
@@ -20,7 +24,7 @@
 <script>
 import { useWindowSize } from "vue-window-size";
 import { ref } from "@vue/reactivity";
-import { onMounted, watch } from "@vue/runtime-core";
+import { onMounted, watch, watchEffect } from "@vue/runtime-core";
 // @ is an alias to /src
 
 export default {
@@ -53,6 +57,18 @@ export default {
         }
       },
       { immediate: true }
+    );
+
+    watch(
+      props,
+      (props) => {
+        if (props.data) {
+          let dateNow = new Date();
+          let currentTime = dateNow.getHours();
+          dateCounter.value = currentTime; //sets the weather strip to current time
+        }
+      },
+      { immediate: true, deep: true }
     );
 
     onMounted(() => {
