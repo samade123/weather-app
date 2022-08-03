@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../components/HomePage.vue'
 import MainBit from '../views/DashboardView.vue'
+import MapView from '../views/MapView.vue'
 
 const routes = [
   // {
@@ -16,7 +17,7 @@ const routes = [
   {
     path: '/map',
     name: 'map',
-    component: MainBit
+    component: MapView
   }, 
   {
     path: '/saved',

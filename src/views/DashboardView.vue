@@ -98,6 +98,7 @@
 import { ref } from "@vue/reactivity";
 import WeatherStrip from "@/components/WeatherStrip.vue";
 import LineChart from "@/components/Chart.vue";
+import { useRouter } from "vue-router";
 import { onMounted, watch } from "@vue/runtime-core";
 export default {
   props: ["mobile", "data", "ready"],
@@ -116,10 +117,12 @@ export default {
     const windowWidth = ref(props.windowWidth);
     const dataArray = ref([]);
 
-    const shout = () => {
+    const router = useRouter();
 
-      console.log("Sadasds")
-    }
+
+    const shout = () => {
+      console.log("Sadasds");
+    };
     watch(
       props,
       (props) => {
@@ -193,6 +196,9 @@ div.outer {
   //   .top {
   //     background: orange;
 
+  min-height: 100vh;
+  overflow: scroll;
+
   @media (max-width: 600px) {
     grid-template-rows: 4fr 2fr;
   }
@@ -201,6 +207,7 @@ div.outer {
     display: grid;
     place-items: center;
     color: rgb(36, 96, 155);
+    // overflow: auto;
     .today-board {
       height: 95%;
       width: clamp(95%, calc(94% + 20px), 98%);

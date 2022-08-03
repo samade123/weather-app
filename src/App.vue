@@ -29,7 +29,7 @@ export default {
     const weatherData = ref(null);
     const { width, height } = useWindowSize();
     const dataReady = ref(false);
-
+    console.log(router.currentRoute.value.path, "sadasdsadsadsa")
     getWeather()
       .then((data) => {
         weatherData.value = data;
@@ -100,6 +100,7 @@ export default {
 
 <style lang="scss">
 @import "./../node_modules/normalize.css/normalize.css";
+@import "./../node_modules/leaflet/dist/leaflet.css";
 @import "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css";
 
 #app {
@@ -115,6 +116,8 @@ export default {
 
   height: 100%;
   width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
 
   // max-width: 1400px;
   margin: 0 auto;
