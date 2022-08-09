@@ -21,6 +21,9 @@ export default {
     const dateCounter = ref(1);
     const windowWidth = ref(props.windowWidth);
     const dataArray = ref([]);
+    let mapCoords = [51.5, -0.09];
+    var map = {};
+    var marker = {};
 
     const shout = () => {
       console.log("Sadasds");
@@ -29,21 +32,32 @@ export default {
       props,
       (props) => {
         console.log("sadasd");
-        // location.value = props.data.location;
-        // current.value = props.data.current;
-        // forecast.value = props.data.forecast;
+        location.value = props.data.location;
+        current.value = props.data.current;
+        forecast.value = props.data.forecast;
+
+        mapCoords.length = 0; //empty the coordinates array
+        mapCoords.push(location.value.lat, location.value.lon);
+        map.setView(mapCoords, 13);
+        let text = `<div>The weather here is ${current.value.temp_c} degrees <img :src="${current.value.condition.icon}" width="30" alt="" /> <div/>`;
+        var popup = L.popup()
+          .setLatLng([location.value.lat, location.value.lon])
+          .setContent(text)
+          .openOn(map);
+
+          popup.update()                                                 
       },
       { immediate: false, deep: false }
     );
     onMounted(() => {
-      var map = L.map("map").setView([51.505, -0.09], 13);
+      map = L.map("map").setView(mapCoords, 13);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution: "© OpenStreetMap",
       }).addTo(map);
       shout();
     });
-    return {};
+    return { mapCoords };
   },
 };
 </script>
