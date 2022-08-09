@@ -39,7 +39,7 @@ export default {
         mapCoords.length = 0; //empty the coordinates array
         mapCoords.push(location.value.lat, location.value.lon);
         map.setView(mapCoords, 13);
-        let text = `<div>${location.value.name} <div/><div>${current.value.temp_c} degrees <img :src="${current.value.condition.icon}" width="30" alt="" /> <div/>`;
+        let text = `<h3>${location.value.name} <h3/><div class='map-temp'>${current.value.temp_c} &#176; <img :src="${current.value.condition.icon}" width="30" alt="" /> <div/>`;
         var popup = L.popup()
           .setLatLng([location.value.lat, location.value.lon])
           .setContent(text)
@@ -56,6 +56,23 @@ export default {
         attribution: "© OpenStreetMap",
       }).addTo(map);
       shout();
+
+      if (props.ready) {
+        location.value = props.data.location;
+        current.value = props.data.current;
+        forecast.value = props.data.forecast;
+        
+        mapCoords.length = 0; //empty the coordinates array
+        mapCoords.push(location.value.lat, location.value.lon);
+        map.setView(mapCoords, 13);
+        let text = `<h3>${location.value.name} <h3/><div class='map-temp'>${current.value.temp_c} &#176; <img :src="${current.value.condition.icon}" width="30" alt="" /> <div/>`;
+        var popup = L.popup()
+          .setLatLng([location.value.lat, location.value.lon])
+          .setContent(text)
+          .openOn(map);
+
+        popup.update();
+      }
     });
     return { mapCoords };
   },
