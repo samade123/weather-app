@@ -34,11 +34,8 @@ export default {
       .then((data) => {
         weatherData.value = data;
         dataReady.value = true;
-        // console.log(weatherData.value, "weatherData value");
       })
       .catch((error) => console.error(error));
-
-    // console.log(longitude.value, latitude.value, positions.value);
 
     const nav = ref([
       { title: "Dashboard", link: "/", icon: "la-border-all", current: true },

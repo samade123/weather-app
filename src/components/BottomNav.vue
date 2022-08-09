@@ -172,6 +172,8 @@ div.outer {
     bottom: 50px;
     width: 100vw;
     background: white;
+    display: grid;
+    place-items: center;
   }
   .circle {
     // position: absolute;
@@ -181,7 +183,7 @@ div.outer {
     width: 50px;
     background: black;
     color: white;
-    border-radius: 50%;
+    border-radius: 15%;
     display: grid;
     place-items: center;
     // i {

@@ -39,13 +39,13 @@ export default {
         mapCoords.length = 0; //empty the coordinates array
         mapCoords.push(location.value.lat, location.value.lon);
         map.setView(mapCoords, 13);
-        let text = `<div>The weather here is ${current.value.temp_c} degrees <img :src="${current.value.condition.icon}" width="30" alt="" /> <div/>`;
+        let text = `<div>${location.value.name} <div/><div>${current.value.temp_c} degrees <img :src="${current.value.condition.icon}" width="30" alt="" /> <div/>`;
         var popup = L.popup()
           .setLatLng([location.value.lat, location.value.lon])
           .setContent(text)
           .openOn(map);
 
-          popup.update()                                                 
+        popup.update();
       },
       { immediate: false, deep: false }
     );
@@ -71,7 +71,7 @@ div.outer {
   height: 100%;
   //   width: 100%;
   grid-gap: 1px;
-  border: solid 0 5px 0 0 #e6ebf4;
+  border: solid 9px white;
   //   .top {
   //     background: orange;
 
@@ -82,6 +82,7 @@ div.outer {
     height: 100%;
     width: 100%;
     z-index: 32;
+    border-radius: 8px;
   }
 }
 </style>
