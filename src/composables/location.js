@@ -14,6 +14,7 @@ export function getLocation() {
     positions.value = position
     latitude.value = position.coords.latitude;
     longitude.value = position.coords.longitude;
+    // console.log(positions)
 
     // status.textContent = '';
     // mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
