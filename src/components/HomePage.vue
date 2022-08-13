@@ -15,6 +15,7 @@
         :mobile="setMobile"
         :data="props.data"
         :ready="props.ready"
+        @open-settings="openSettings"
       />
       <div class="bottom">
         <BottomNav

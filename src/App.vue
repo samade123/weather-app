@@ -7,7 +7,11 @@
     @current-obj="newPage"
     @open-settings="openSettings"
   />
-
+  <div class="toast-bg">
+    <div class="toast" v-if="!dataReady" @click="showMenu = true">
+      Looking to turn on location? click here!
+    </div>
+  </div>
   <div class="menu-bg" v-if="showMenu" @click="whatElement" ref="menu">
     <div class="menu">
       <h1 class="title">Settings</h1>
@@ -72,10 +76,23 @@ export default {
     const longitude = ref(null);
     const positions = ref(null);
     const menu = ref(null);
-    var showMenu = ref(true);
+    var showMenu = ref(false);
 
     const openSettings = () => {
       showMenu.value = !showMenu.value;
+    };
+
+    var toastState = ref(true);
+    const isToastVisible = () => {
+      if (width < 600) {
+        toastState.value = true;
+        if (latitude.value) {
+          toastState.value = false;
+        }
+        toastState.value = !dataReady.value;
+      }
+
+      return toastState.value;
     };
 
     const setLocation = (locationData) => {
@@ -83,17 +100,31 @@ export default {
       longitude.value = locationData.longitude;
       positions.value = locationData.positions;
 
-      setTimeout(() => {
-        if (latitude.value) {
-          getWeather({ lat: latitude.value, long: longitude.value })
-            .then((data) => {
-              weatherData.value = data;
-              dataReady.value = true;
-              refreshDataReady();
-            })
-            .catch((error) => console.error(error));
-        }
-      });
+      console.log("errorStatus", locationData.locationError);
+      if (locationData.locationError) {
+        latitude.value = false;
+        longitude.value = false;
+        positions.value = false;
+        weatherData.value = false;
+        dataReady.value = false;
+      } else {
+        setTimeout(() => {
+          if (latitude.value) {
+            getWeather({ lat: latitude.value, long: longitude.value })
+              .then((data) => {
+                weatherData.value = data;
+                dataReady.value = true;
+                refreshDataReady();
+              })
+              .catch((error) => {
+                console.error(error);
+
+                weatherData.value = false;
+                dataReady.value = false;
+              });
+          }
+        });
+      }
     };
 
     const whatElement = (event) => {
@@ -162,6 +193,8 @@ export default {
       whatElement,
       menu,
       openSettings,
+      isToastVisible,
+      toastState
     };
   },
 };
@@ -252,5 +285,17 @@ nav {
 
 a {
   text-decoration: underline;
+}
+.toast-bg {
+  width: 100%;
+  position: fixed;
+  top: 50px;
+  .toast {
+    background: white;
+    border-radius: 7px;
+    margin: 0 auto;
+    padding: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
 }
 </style>

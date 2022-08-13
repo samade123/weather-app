@@ -15,7 +15,6 @@ export function getWeather(locationRequest) {
             .then(response => response.json())
             .then(data => {
                 location.value = data
-                // console.log(location.value)
                 resolve(location.value)
             })
             .catch(error => {

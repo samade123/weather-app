@@ -11,7 +11,8 @@
       >        <div class="left">
           <div class="left-top">
             <div class="location-name"><div class="icon"><i class="las la-map-marker"></i></div><div>{{location? location.name : ".."}}</div></div>
-            <div class="location-date">{{location? location.localtime.substring(11) : ".."}}</div>
+          
+            <div class="location-date">{{location? location.localtime.substring(11) : ".."}}<i class="las la-lg la-cog" @click="openSettings"></i></div>
           </div>
           <div class="left-middle">
             <div class="temp">{{current? current.temp_c : "0"}}<span class="small"> &#8451</span></div>
@@ -101,12 +102,13 @@ import LineChart from "@/components/Chart.vue";
 import { useRouter } from "vue-router";
 import { onMounted, watch } from "@vue/runtime-core";
 export default {
+  emits: ["openSettings"],
   props: ["mobile", "data", "ready"],
   components: {
     WeatherStrip,
     LineChart,
   },
-  setup(props) {
+  setup(props, ctx) {
     const publicPath = process.env.BASE_URL;
 
     const location = ref(null);
@@ -122,11 +124,15 @@ export default {
     const shout = () => {
       console.log("Sadasds");
     };
+
+    const openSettings = () => {
+      ctx.emit("openSettings");
+    };
     watch(
       props,
       (props) => {
-        console.log("sadasd");
-        if (location) {
+        // console.log("sadasd");
+        if (props.ready) {
           location.value = props.data.location;
           current.value = props.data.current;
           forecast.value = props.data.forecast;
@@ -181,6 +187,7 @@ export default {
       upperLimit,
       windowWidth,
       shout,
+      openSettings,
     };
   },
 };
@@ -242,6 +249,10 @@ div.outer {
 
           .location-date {
             margin: 10px 0 0 0;
+
+            i {
+              margin-left: 10px;
+            }
           }
         }
         .left-middle {

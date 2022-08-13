@@ -6,9 +6,7 @@ export default function handler(request, res) {
   
   var axios = require('axios');
   var key = process.env.WEATHER_API_KEY;
-
   
-
   var config = {
     method: 'get',
     url: `http://api.weatherapi.com/v1/forecast.json?key=${key}&q=51.3934149,0.1216487&days=7&aqi=no&alerts=no`,
@@ -25,11 +23,6 @@ export default function handler(request, res) {
       res.status(200).json(response.data)
     })
     .catch(function (error) {
-      console.log(error);
+      console.error(error);
     });
 }
-
-// export default function handler(request, response) {
-//   const { name } = request.query;
-//   response.status(200).send(`Hello ${name}!`);
-// }
