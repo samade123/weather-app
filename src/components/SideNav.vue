@@ -23,7 +23,14 @@
         </div>
       </div>
     </div>
-    <div class="bottom" ref="bottom"></div>
+    <div class="bottom" ref="bottom">
+      <div class="navigation" @click="openSettings">
+        <div class="icon">
+          <i class="las la-lg la-cog"></i>
+        </div>
+        <div class="setting" >Settings</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,7 +42,7 @@ import { useWindowSize } from "vue-window-size";
 
 export default {
   props: ["nav", "windowWidth", "windowHeight"],
-  emits: ["currentObj"],
+  emits: ["currentObj", "openSettings"],
   setup(props, ctx) {
     const windowWidth = ref(props.windowWidth);
     const windowHeight = ref(props.windowHeight);
@@ -57,10 +64,14 @@ export default {
       return;
     };
 
+    const openSettings = () => {
+      ctx.emit("openSettings");
+    }
+
     const getRef = (pageObj) => {
       return nav.value.indexOf(pageObj).toString();
     };
-    return { nav, returnIconClass, routeLink, getRef, stripDimensions };
+    return { nav, returnIconClass, routeLink, getRef, stripDimensions, openSettings };
   },
   watch: {
     windowWidth() {
@@ -210,6 +221,40 @@ div.outer {
       // .target {
       //   transition: all 0.35s ease-in-out;
       // }
+    }
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px 0;
+    .navigation {
+      font-weight: bold;
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      place-items: center;
+      grid-gap: 7px;
+      transition: all ease-out 0.1s;
+      width: 99%;
+
+      &:hover {
+        background: #0f162111;
+        color: #0f1621;
+        font-size: 17px;
+        cursor: pointer;
+      }
+      .icon {
+        width: 100%;
+        text-align: right;
+      }
+
+      .setting {
+        width: 100%;
+        text-align: left;
+        margin: 0 5px;
+        font-size: clamp(13px, 1vw, 16px);
+      }
     }
   }
   .target {

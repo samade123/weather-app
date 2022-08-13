@@ -5,16 +5,17 @@
     :data="weatherData"
     :ready="dataReady"
     @current-obj="newPage"
+    @open-settings="openSettings"
   />
 
-  <div class="menu-bg" v-if="showMenu">
+  <div class="menu-bg" v-if="showMenu" @click="whatElement" ref="menu">
     <div class="menu">
       <h1 class="title">Settings</h1>
       <div class="menu-body">
         <p>
           Hi! Welcome to this weather dashboard. The design of this weather
           dashboard was taken from
-          <a :href="designLink">here. </a>
+          <a :href="designLink">here</a>.
         </p>
         <p>
           If this is your first time visiting this site. You will need to accept
@@ -23,7 +24,18 @@
         </p>
         <p>
           <LocationSwitch @location-emit="setLocation"> </LocationSwitch>
-          {{ latitude ? latitude : "Adsad" }}
+        </p>
+        <p>
+          If you're interested in the codebase this can be found
+          <a :href="designLink">here</a>.
+        </p>
+        <p>
+          My Github can be found
+          <a :href="designLink">here</a>.
+        </p>
+        <p>
+          And you can see more work from my portfolio
+          <a :href="designLink">here</a>.
         </p>
       </div>
     </div>
@@ -52,7 +64,6 @@ export default {
     const weatherData = ref(null);
     const { width, height } = useWindowSize();
     const dataReady = ref(false);
-    const showMenu = ref(true);
     const allowLocation = ref(false);
     const designLink = "https://dribbble.com/shots/18070219-Cuacane-Dashboard";
 
@@ -60,10 +71,14 @@ export default {
     const latitude = ref(null);
     const longitude = ref(null);
     const positions = ref(null);
+    const menu = ref(null);
+    var showMenu = ref(true);
+
+    const openSettings = () => {
+      showMenu.value = !showMenu.value;
+    };
 
     const setLocation = (locationData) => {
-      console.log("sdad");
-
       latitude.value = locationData.latitude;
       longitude.value = locationData.longitude;
       positions.value = locationData.positions;
@@ -80,12 +95,12 @@ export default {
         }
       });
     };
-    // getWeather()
-    //   .then((data) => {
-    //     weatherData.value = data;
-    //     dataReady.value = true;
-    //   })
-    //   .catch((error) => console.error(error));
+
+    const whatElement = (event) => {
+      if (event.target === menu.value) {
+        showMenu.value = !showMenu.value;
+      }
+    };
 
     const nav = ref([
       { title: "Dashboard", link: "/", icon: "la-border-all", current: true },
@@ -144,6 +159,9 @@ export default {
       designLink,
       allowLocation,
       setLocation,
+      whatElement,
+      menu,
+      openSettings,
     };
   },
 };
@@ -230,5 +248,9 @@ nav {
       color: #42b983;
     }
   }
+}
+
+a {
+  text-decoration: underline;
 }
 </style>

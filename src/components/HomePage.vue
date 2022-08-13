@@ -6,6 +6,7 @@
         :windowWidth="width"
         :windowHeight="height"
         @current-obj="routeLink"
+        @open-settings="openSettings"
       />
     </div>
     <div class="middle">
@@ -26,7 +27,7 @@
       </div>
     </div>
     <div class="right" v-if="!setMobile">
-    <!-- <div class="right" v-if="!setMobile && router.currentRoute.value.path == '/'"> -->
+      <!-- <div class="right" v-if="!setMobile && router.currentRoute.value.path == '/'"> -->
       <ThisWeek
         v-if="props.ready"
         :mobile="setMobile"
@@ -58,6 +59,7 @@ export default {
     MainBit,
     ThisWeek,
   },
+  emits: ["openSettings"],
   props: ["nav", "data", "ready"],
   setup(props, ctx) {
     const setMobile = ref(false);
@@ -73,6 +75,10 @@ export default {
     };
     const router = useRouter();
 
+    const openSettings = () => {
+      ctx.emit("openSettings");
+    };
+
     const routeLink = (linkObj) => {
       ctx.emit("currentObj", linkObj);
 
@@ -87,7 +93,17 @@ export default {
     );
 
     // onMounted(() => console.log(setMobile));
-    return { width, height, setMobile, nav, newPage, routeLink, props, router };
+    return {
+      width,
+      height,
+      setMobile,
+      nav,
+      newPage,
+      routeLink,
+      props,
+      router,
+      openSettings,
+    };
   },
 };
 </script>
@@ -99,12 +115,11 @@ export default {
   grid-gap: 2px;
   height: 100%;
   overflow: hidden;
-.middle {
-  // background-image: url("./img/background.jpg")
-  overflow: auto;
+  .middle {
+    // background-image: url("./img/background.jpg")
+    overflow: auto;
+  }
 }
-}
-
 
 .bottom {
   position: fixed;
