@@ -7,7 +7,7 @@
     @current-obj="newPage"
   />
 
-  <div class="menu-bg">
+  <div class="menu-bg" v-if="showMenu">
     <div class="menu">
       <h1 class="title">Settings</h1>
       <div class="menu-body">
@@ -52,7 +52,7 @@ export default {
     const weatherData = ref(null);
     const { width, height } = useWindowSize();
     const dataReady = ref(false);
-    const showMenu = ref(false);
+    const showMenu = ref(true);
     const allowLocation = ref(false);
     const designLink = "https://dribbble.com/shots/18070219-Cuacane-Dashboard";
 
@@ -68,21 +68,24 @@ export default {
       longitude.value = locationData.longitude;
       positions.value = locationData.positions;
 
-      // if (latitude.value) {
-      //   getWeather(latitude.value, longitude.value)
-      //     .then((data) => {
-      //       weatherData.value = data;
-      //       dataReady.value = true;
-      //     })
-      //     .catch((error) => console.error(error));
-      // }
+      setTimeout(() => {
+        if (latitude.value) {
+          getWeather({ lat: latitude.value, long: longitude.value })
+            .then((data) => {
+              weatherData.value = data;
+              dataReady.value = true;
+              refreshDataReady();
+            })
+            .catch((error) => console.error(error));
+        }
+      });
     };
-    getWeather()
-      .then((data) => {
-        weatherData.value = data;
-        dataReady.value = true;
-      })
-      .catch((error) => console.error(error));
+    // getWeather()
+    //   .then((data) => {
+    //     weatherData.value = data;
+    //     dataReady.value = true;
+    //   })
+    //   .catch((error) => console.error(error));
 
     const nav = ref([
       { title: "Dashboard", link: "/", icon: "la-border-all", current: true },

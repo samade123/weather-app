@@ -119,7 +119,6 @@ export default {
 
     const router = useRouter();
 
-
     const shout = () => {
       console.log("Sadasds");
     };
@@ -127,22 +126,24 @@ export default {
       props,
       (props) => {
         console.log("sadasd");
-        location.value = props.data.location;
-        current.value = props.data.current;
-        forecast.value = props.data.forecast;
-        forecast.value.forecastday[0].hour.forEach((element) => {
-          var index = forecast.value.forecastday[0].hour.indexOf(element);
-          if (
-            index == 6 ||
-            index == 9 ||
-            index == 11 ||
-            index == 13 ||
-            index == 18 ||
-            index == 22
-          ) {
-            dataArray.value.push(element);
-          }
-        });
+        if (location) {
+          location.value = props.data.location;
+          current.value = props.data.current;
+          forecast.value = props.data.forecast;
+          forecast.value.forecastday[0].hour.forEach((element) => {
+            var index = forecast.value.forecastday[0].hour.indexOf(element);
+            if (
+              index == 6 ||
+              index == 9 ||
+              index == 11 ||
+              index == 13 ||
+              index == 18 ||
+              index == 22
+            ) {
+              dataArray.value.push(element);
+            }
+          });
+        }
       },
       { immediate: false, deep: false }
     );

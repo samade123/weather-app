@@ -9,6 +9,7 @@ export function getLocation() {
   const latitude = ref("")
   const longitude = ref("")
   const positions = ref(null)
+  // const locationError = ref(false);
 
   const success = (position) => {
     positions.value = position
