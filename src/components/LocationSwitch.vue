@@ -17,9 +17,10 @@
 </template>
 
 <script>
+import { storageManager } from "../composables/storage.js";
 import { getLocation } from "../composables/location";
 import { ref } from "@vue/reactivity";
-import { watch } from "@vue/runtime-core";
+import { onMounted, watch } from "@vue/runtime-core";
 // @ is an alias to /src
 
 export default {
@@ -32,7 +33,16 @@ export default {
     const longitude = ref(false);
     const positions = ref(false);
     const locationError = ref(false);
+
+    const { storage } = storageManager();
+
+    if (storage.doesDataExist("allow-location")) {
+      allowLocation.value = storage.getData("allow-location");
+    }
+
     const clickMe = () => {
+      storage.storeData("allow-location", allowLocation.value);
+
       if (allowLocation.value) {
         console.log(allowLocation.value, "allowLocation");
 
@@ -84,6 +94,7 @@ export default {
       },
       { immediate: false, deep: false }
     );
+
     return { allowLocation, clickMe };
   },
 };
