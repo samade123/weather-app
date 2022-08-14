@@ -8,7 +8,7 @@
     @open-settings="openSettings"
   />
   <div class="toast-bg">
-    <div class="toast" v-if="!dataReady" @click="showMenu = true">
+    <div class="toast" v-if="showToast" @click="showMenu = true">
       Looking to turn on location? click here!
     </div>
   </div>
@@ -50,6 +50,7 @@
 import { ref } from "@vue/reactivity";
 import HomeView from "./components/HomePage.vue";
 import LocationSwitch from "./components/LocationSwitch.vue";
+import { getLocation } from "./composables/location";
 import { getWeather } from "./composables/weatherReponse";
 import { storageManager } from "./composables/storage.js";
 import { useWindowSize } from "vue-window-size";
@@ -77,6 +78,7 @@ export default {
     const positions = ref(null);
     const menu = ref(null);
     var showMenu = ref(false);
+    const showToast = ref(true);
 
     const { storage } = storageManager();
 
@@ -104,11 +106,15 @@ export default {
 
       console.log("errorStatus", locationData.locationError);
       if (locationData.locationError) {
+        //this deals with location being turned off and any other errors
         latitude.value = false;
         longitude.value = false;
         positions.value = false;
         weatherData.value = false;
         dataReady.value = false;
+
+        showToast.value = !dataReady.value;
+        storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
       } else {
         setTimeout(() => {
           if (latitude.value) {
@@ -117,12 +123,16 @@ export default {
                 weatherData.value = data;
                 dataReady.value = true;
                 refreshDataReady();
+                showToast.value = !dataReady.value;
+                storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
               })
               .catch((error) => {
                 console.error(error);
 
                 weatherData.value = false;
                 dataReady.value = false;
+                showToast.value = !dataReady.value;
+                storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
               });
           }
         });
@@ -179,11 +189,39 @@ export default {
     //   { immediate: false }
     // );
     onMounted(() => {
-      console.log((storage.doesDataExist("first-time")), "first-time");
+      console.log(storage.doesDataExist("first-time"), "first-time");
 
-      if (!storage.doesDataExist("first-time")){
-        storage.storeData("first-time", false)
+      if (!storage.doesDataExist("first-time")) {
+        storage.storeData("first-time", false);
         showMenu.value = true;
+      }
+
+      if (storage.doesDataExist("show-toast")) {
+        showToast.value = storage.getData("show-toast");
+        if (!showToast.value) {
+        getLocation()
+          .then((data) => {
+            latitude.value = data.latitude;
+            longitude.value = data.longitude;
+            positions.value = data.positions;
+
+            setLocation({
+              latitude: ref(data.latitude) ,
+              longitude: ref(data.longitude) ,
+              positions: ref(data.positions) ,
+              locationError: false,
+            })
+          })
+          .catch((err) => {
+            console.log(err)
+            setLocation({
+              latitude: false,
+              longitude: false,
+              positions: false,
+              locationError: true,
+            })
+          });
+        }
       }
     });
 
@@ -205,7 +243,8 @@ export default {
       openSettings,
       isToastVisible,
       toastState,
-      storage
+      storage,
+      showToast,
     };
   },
 };
