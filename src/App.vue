@@ -51,8 +51,9 @@ import { ref } from "@vue/reactivity";
 import HomeView from "./components/HomePage.vue";
 import LocationSwitch from "./components/LocationSwitch.vue";
 import { getWeather } from "./composables/weatherReponse";
+import { storageManager } from "./composables/storage.js";
 import { useWindowSize } from "vue-window-size";
-import { watch } from "@vue/runtime-core";
+import { watch, onMounted } from "@vue/runtime-core";
 
 import { useRouter } from "vue-router";
 
@@ -71,12 +72,13 @@ export default {
     const allowLocation = ref(false);
     const designLink = "https://dribbble.com/shots/18070219-Cuacane-Dashboard";
 
-    // const { latitude, longitude, positions } = getLocation();
     const latitude = ref(null);
     const longitude = ref(null);
     const positions = ref(null);
     const menu = ref(null);
     var showMenu = ref(false);
+
+    const { storage } = storageManager();
 
     const openSettings = () => {
       showMenu.value = !showMenu.value;
@@ -176,6 +178,14 @@ export default {
       },
       { immediate: false }
     );
+    onMounted(() => {
+      console.log((storage.doesDataExist("first-time")), "first-time");
+
+      if (!storage.doesDataExist("first-time")){
+        storage.storeData("first-time", false)
+        showMenu.value = true;
+      }
+    });
 
     return {
       nav,
@@ -194,7 +204,8 @@ export default {
       menu,
       openSettings,
       isToastVisible,
-      toastState
+      toastState,
+      storage
     };
   },
 };
@@ -295,6 +306,8 @@ a {
     border-radius: 7px;
     margin: 0 auto;
     padding: 5px;
+    width: 80%;
+    max-width: 700px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }
 }

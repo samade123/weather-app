@@ -1,27 +1,29 @@
-import { ref } from 'vue'
-// import * as data from './weatherJson.json';
-export function getWeather(locationRequest) {
+export function storageManager() {
 
-    var urlExt = "";
-
-    if (locationRequest.lat) {
-        urlExt = `?lat=${locationRequest.lat.value}&long=${locationRequest.long.value}`
+    var storage = {};
+    storage.storeData = (key, value) => {
+        localStorage.setItem(key, JSON.stringify(value));
     }
-    const urlReq = `api/getWeather` + urlExt;
-    return new Promise((resolve, reject) => {
-        console.log("Initial");
-        const location = ref(null);
-        fetch(urlReq)
-            .then(response => response.json())
-            .then(data => {
-                location.value = data
-                resolve(location.value)
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                reject(error)
-            });;
-    })
+
+    storage.removeData = (key) => {
+        localStorage.removeItem(key);
+    }
+
+    storage.doesDataExist = (key) => {
+        return localStorage.getItem(key) ? true : false;
+    }
+
+    storage.clearAll = () => {
+        localStorage.clear();
+    }
+
+    storage.getData = (key) => {
+        return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : '';
+    }
+
+    return {storage};
+
+
 }
 
 
