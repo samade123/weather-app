@@ -171,13 +171,13 @@ export default {
       refreshDataReady();
     };
 
-    watch(
-      width,
-      (width) => {
-        refreshDataReady();
-      },
-      { immediate: false }
-    );
+    // watch(
+    //   width,
+    //   (width) => {
+    //     refreshDataReady();
+    //   },
+    //   { immediate: false }
+    // );
     onMounted(() => {
       console.log((storage.doesDataExist("first-time")), "first-time");
 
