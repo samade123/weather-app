@@ -199,7 +199,6 @@ div.outer {
   .navigation {
     &.unavailable {
       text-decoration: line-through;
-      // background: grey;
       color: #00000055;
       .icon {
         i {

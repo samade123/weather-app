@@ -26,3 +26,7 @@ pnpm-debug.log*
 dist/*
 src/assets/day/*
 src/assets/night/*
+public/img/icons/*
+public/img/icons_old/*
+public/img/favicon_io.zip
+public/img/pwa-app-icons.zip
