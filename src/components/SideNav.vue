@@ -7,7 +7,11 @@
     <div class="middle" ref="sidebar">
       <div
         class="navigation"
-        :class="{ unselected: !link.current }"
+        :class="{
+          unselected: !link.current,
+          available: link.available,
+          unavailable: !link.available,
+        }"
         v-for="link in nav"
         :key="link.link"
         @click="routeLink(link.link, link)"
@@ -28,7 +32,7 @@
         <div class="icon">
           <i class="las la-lg la-cog"></i>
         </div>
-        <div class="setting" >Settings</div>
+        <div class="setting">Settings</div>
       </div>
     </div>
   </div>
@@ -58,20 +62,27 @@ export default {
     };
 
     const routeLink = (linkRef, pageObj) => {
-      // router.push(linkRef);
-      ctx.emit("currentObj", pageObj);
-
+      if (pageObj.available) {
+        ctx.emit("currentObj", pageObj);
+      }
       return;
     };
 
     const openSettings = () => {
       ctx.emit("openSettings");
-    }
+    };
 
     const getRef = (pageObj) => {
       return nav.value.indexOf(pageObj).toString();
     };
-    return { nav, returnIconClass, routeLink, getRef, stripDimensions, openSettings };
+    return {
+      nav,
+      returnIconClass,
+      routeLink,
+      getRef,
+      stripDimensions,
+      openSettings,
+    };
   },
   watch: {
     windowWidth() {
@@ -101,51 +112,52 @@ export default {
       // console.log(this.$refs[elementRef][0].getBoundingClientRect())
       let element = this.$refs[elementRef][0];
       let target = this.$refs["target"];
+      if (pageObj.available) {
+        if (currentPage) {
+          const currentObj = this.nav.filter(
+            (page) => page.link == `${this.currentPage}`
+          )[0];
 
-      if (currentPage) {
-        const currentObj = this.nav.filter(
-          (page) => page.link == `${this.currentPage}`
-        )[0];
+          console.debug(
+            this.nav,
+            currentObj,
+            `${this.currentPage}`,
+            "inside function"
+          );
+          elementRef = this.getRef(currentObj);
+          element = this.$refs[elementRef][0];
+          target = this.$refs["target-2"];
+          this.currentObj = currentObj; //for setting the resizing window
+        }
+        //remove current styling from the current link divfunction here
 
-        console.debug(
-          this.nav,
-          currentObj,
-          `${this.currentPage}`,
-          "inside function"
-        );
-        elementRef = this.getRef(currentObj);
-        element = this.$refs[elementRef][0];
-        target = this.$refs["target-2"];
-        this.currentObj = currentObj; //for setting the resizing window
-      }
-      //remove current styling from the current link divfunction here
+        // add current styling to the mouse over link div
+        this.stripDimensions.width = element.getBoundingClientRect().width;
+        this.stripDimensions.height = element.getBoundingClientRect().height;
+        // this.stripDimensions.left =
+        //   element.getBoundingClientRect().right + window.pageXOffset;
+        this.stripDimensions.left =
+          this.$refs["sidebar"].getBoundingClientRect().right +
+          window.pageXOffset;
 
-      // add current styling to the mouse over link div
-      this.stripDimensions.width = element.getBoundingClientRect().width;
-      this.stripDimensions.height = element.getBoundingClientRect().height;
-      // this.stripDimensions.left =
-      //   element.getBoundingClientRect().right + window.pageXOffset;
-      this.stripDimensions.left =
-        this.$refs["sidebar"].getBoundingClientRect().right +
-        window.pageXOffset;
+        this.stripDimensions.top =
+          element.getBoundingClientRect().top + window.pageYOffset;
 
-      this.stripDimensions.top =
-        element.getBoundingClientRect().top + window.pageYOffset;
+        // target.style.width = `${this.stripDimensions.width}px`;
+        // resize ? target.classList.remove("smooth") : false;
+        // resize ? target.classList.add("resize") : false;
 
-      // target.style.width = `${this.stripDimensions.width}px`;
-      // resize ? target.classList.remove("smooth") : false;
-      // resize ? target.classList.add("resize") : false;
-
-      if (resize) {
-        target.classList.remove("smooth");
-        target.classList.add("resize");
-      }
-      this.resizeFunction(target, resize);
-      if (resize) {
-        target = this.$refs["target-2"];
-        target.classList.remove("smooth");
-        target.classList.add("resize");
-        this.resizeFunction(target, true);
+        if (resize) {
+          target.classList.remove("smooth");
+          target.classList.add("resize");
+        }
+        this.resizeFunction(target, resize);
+        if (resize) {
+          target = this.$refs["target-2"];
+          target.classList.remove("smooth");
+          target.classList.add("resize");
+          this.resizeFunction(target, true);
+        }
       }
     },
     resizeFunction(target, resize) {
@@ -198,7 +210,19 @@ div.outer {
       &.unselected {
         color: #7f7f8a;
       }
-      &:hover {
+
+      &.unavailable {
+        text-decoration: line-through;
+        .icon {
+          i {
+            text-decoration: line-through;
+          }
+        }
+        &:hover {
+          cursor: no-drop;
+        }
+      }
+      &.available:hover {
         background: #0f162111;
         color: #0f1621;
 

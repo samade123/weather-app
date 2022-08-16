@@ -150,27 +150,27 @@ export default {
     };
 
     const nav = ref([
-      { title: "Dashboard", link: "/", icon: "la-border-all", current: true },
-      { title: "Map", link: "/map", icon: "la-map-marked", current: false },
+      { title: "Dashboard", link: "/", icon: "la-border-all", current: true, available: true, },
+      { title: "Map", link: "/map", icon: "la-map-marked", current: false, available: true, },
       {
         title: "Saved Location",
         link: "/saved",
         icon: "la-hdd",
         current: false,
+        available: false,
       },
       {
         title: "Calendar",
         link: "/calendar",
         icon: "la-calendar",
         current: false,
+        available: false,
       },
     ]);
 
     const refreshDataReady = () => {
-      // if (dataReady.value) {
       dataReady.value = false;
       dataReady.value = true;
-      // }
     };
 
     const newPage = (linkObj) => {
@@ -185,21 +185,7 @@ export default {
       refreshDataReady();
     };
 
-    
-    // watch(darkMode, (darkMode) => {
-    //   let htmlElement = document.documentElement;
-
-    //   if (darkMode) {
-    //     localStorage.setItem("theme", "sunny-light");
-    //     htmlElement.setAttribute("theme", "sunny-light");
-    //   } else {
-    //     localStorage.setItem("theme", "light");
-    //     htmlElement.setAttribute("theme", "light");
-    //   }
-    // });
     onMounted(() => {
-      console.log(storage.doesDataExist("first-time"), "first-time");
-
       if (!storage.doesDataExist("first-time")) {
         storage.storeData("first-time", false);
         showMenu.value = true;
