@@ -280,6 +280,7 @@ div.outer {
       @media (max-width: 600px) {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
+        margin-top: 10px;
       }
 
       .left {
