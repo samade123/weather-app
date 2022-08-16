@@ -197,9 +197,9 @@ export default {
 div.outer {
   display: grid;
   grid-template-rows: 1fr 4fr 4fr;
-  height: 100%;
+  height: 100vh;
   //   width: 100%;
-  grid-gap: 1px;
+  grid-gap: 10px;
   border: solid 0 5px 0 0 #e6ebf4;
   //   .top {
   //     background: orange;
@@ -217,7 +217,7 @@ div.outer {
     color: var(--dynamic-text-color);
     // overflow: auto;
     .today-board {
-      height: 95%;
+      height: 100%;
       width: clamp(95%, calc(94% + 20px), 98%);
       background: var(--dynamic-background-color);
       background-size: cover;
