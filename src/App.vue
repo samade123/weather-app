@@ -30,6 +30,9 @@
           <LocationSwitch @location-emit="setLocation"> </LocationSwitch>
         </p>
         <p>
+          <input type="checkbox" class="theme-switch" v-model="darkMode" />
+        </p>
+        <p>
           If you're interested in the codebase this can be found
           <a :href="designLink">here</a>.
         </p>
@@ -79,6 +82,7 @@ export default {
     const menu = ref(null);
     var showMenu = ref(false);
     const showToast = ref(true);
+    const darkMode = ref(false);
 
     const { storage } = storageManager();
 
@@ -188,6 +192,18 @@ export default {
     //   },
     //   { immediate: false }
     // );
+
+    watch(darkMode, (darkMode) => {
+      let htmlElement = document.documentElement;
+
+      if (darkMode) {
+        localStorage.setItem("theme", "sunny-light");
+        htmlElement.setAttribute("theme", "sunny-light");
+      } else {
+        localStorage.setItem("theme", "light");
+        htmlElement.setAttribute("theme", "light");
+      }
+    });
     onMounted(() => {
       console.log(storage.doesDataExist("first-time"), "first-time");
 
@@ -199,28 +215,28 @@ export default {
       if (storage.doesDataExist("show-toast")) {
         showToast.value = storage.getData("show-toast");
         if (!showToast.value) {
-        getLocation()
-          .then((data) => {
-            latitude.value = data.latitude;
-            longitude.value = data.longitude;
-            positions.value = data.positions;
+          getLocation()
+            .then((data) => {
+              latitude.value = data.latitude;
+              longitude.value = data.longitude;
+              positions.value = data.positions;
 
-            setLocation({
-              latitude: ref(data.latitude) ,
-              longitude: ref(data.longitude) ,
-              positions: ref(data.positions) ,
-              locationError: false,
+              setLocation({
+                latitude: ref(data.latitude),
+                longitude: ref(data.longitude),
+                positions: ref(data.positions),
+                locationError: false,
+              });
             })
-          })
-          .catch((err) => {
-            console.log(err)
-            setLocation({
-              latitude: false,
-              longitude: false,
-              positions: false,
-              locationError: true,
-            })
-          });
+            .catch((err) => {
+              console.log(err);
+              setLocation({
+                latitude: false,
+                longitude: false,
+                positions: false,
+                locationError: true,
+              });
+            });
         }
       }
     });
@@ -245,6 +261,7 @@ export default {
       toastState,
       storage,
       showToast,
+      darkMode,
     };
   },
 };
@@ -252,6 +269,7 @@ export default {
 
 <style lang="scss">
 @import "./../node_modules/normalize.css/normalize.css";
+@import "./stylesheets/theme-color.scss";
 @import "./../node_modules/leaflet/dist/leaflet.css";
 @import "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css";
 
@@ -260,7 +278,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: var(--app-text-color);
+  background: var(--app-background-color);
 
   display: grid;
   // grid-template-rows: 40px auto;
@@ -325,7 +344,7 @@ nav {
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--app-text-color);
 
     &.router-link-exact-active {
       color: #42b983;

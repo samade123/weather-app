@@ -1,0 +1,26 @@
+:root {
+    --app-background-color: #FFFFFF;
+    --app-text-color: #1F1E31;
+    --dynamic-background-color: #C4E2FF;
+    --dynamic-background-color-transparent: #c4e2ffaa;
+    --dynamic-board-bg-color: #ECF3F8;
+    --dynamic-text-color: #24609B;
+}
+
+[theme="clear-dark"] {
+    --app-background-color: #FFFFFF;
+    --app-text-color: #1F1E31;
+    --dynamic-background-color: #233B52;
+    --dynamic-background-color-transparent: #626E7E;
+    --dynamic-board-bg-color: #ECF3F8;
+    --dynamic-text-color: #FFFFFF;
+}
+
+[theme="sunny-light"] {
+    --app-background-color: #FFFFFF;
+    --app-text-color: #1F1E31;
+    --dynamic-background-color: #FFD99D;
+    --dynamic-background-color-transparent: #FEE3BA;
+    --dynamic-board-bg-color: #ECF3F8;
+    --dynamic-text-color: #201D31;
+}

@@ -157,12 +157,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// @import "./stylesheets/theme-color.scss";
 div.outer {
   display: grid;
   grid-template-rows: 1fr 7fr;
   height: 100%;
   grid-gap: 5px;
-  border: solid 0 5px 0 0 #e6ebf4;
+  border-left: 1px solid #e6ebf4;
 
   div.top {
     display: grid;
@@ -192,7 +193,7 @@ div.outer {
           border-radius: 8px;
 
           &:hover {
-            background: rgba(196, 226, 255, 0.6666666667);
+            background: var(--dynamic-background-color);
             cursor: pointer;
           }
         }

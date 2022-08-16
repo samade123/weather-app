@@ -162,10 +162,10 @@ div.outer {
   grid-template-columns: repeat(4, 1fr);
   height: 100%;
   grid-gap: 5px;
-  border: solid #e6ebf4;
+  // border: solid #e6ebf4;
   border-width: 0 2px 0 0;
-  color: #0f1621;
-  background: white;
+  color: var(--app-text-color);
+  background: var(--app-background-color);
   padding: 10px 0;
   .circle-bg {
     position: fixed;

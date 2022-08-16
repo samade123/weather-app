@@ -122,7 +122,7 @@ export default {
       border-radius: 8px;
 
       &:hover {
-        background: rgba(196, 226, 255, 0.6666666667);
+            background: var(--dynamic-background-color-transparent);
         cursor: pointer;
       }
     }

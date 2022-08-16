@@ -214,12 +214,12 @@ div.outer {
   .middle {
     display: grid;
     place-items: center;
-    color: rgb(36, 96, 155);
+    color: var(--dynamic-text-color);
     // overflow: auto;
     .today-board {
       height: 95%;
       width: clamp(95%, calc(94% + 20px), 98%);
-      background: #c4e2ff;
+      background: var(--dynamic-background-color);
       background-size: cover;
       border-radius: 8px;
 
@@ -287,7 +287,7 @@ div.outer {
         .temp-board {
           height: 95%;
           width: 90%;
-          background: #c4e2ffaa;
+          background: var(--dynamic-background-color-transparent);
           border-radius: 7px;
           .forecast {
             display: grid;
@@ -304,7 +304,6 @@ div.outer {
     }
   }
   .bottom {
-    // background: blue;
     .weather-title {
       display: flex;
       justify-content: space-around;
@@ -324,7 +323,7 @@ div.outer {
     margin: 0 auto;
     // place-items: center;
     div.stats-card {
-      background: #edf3f8;
+      background: var(--dynamic-board-bg-color);
       border-radius: 7px;
 
       display: grid;
