@@ -11,7 +11,26 @@
     --app-background-color: #FFFFFF;
     --app-text-color: #1F1E31;
     --dynamic-background-color: #233B52;
-    --dynamic-background-color-transparent: #626E7E;
+    --dynamic-background-color-transparent: #626E7Ebb;
+    --dynamic-board-bg-color: #ECF3F8;
+    --dynamic-text-color: #FFFFFF;
+}
+
+[theme="clear-light"] {
+    --app-background-color: #FFFFFF;
+    --app-text-color: #1F1E31;
+    --dynamic-background-color: #C4E2FF;
+    --dynamic-background-color-transparent: #f9f9f9aa;
+    // --dynamic-background-color-transparent: #c4e2ffaa;
+    --dynamic-board-bg-color: #ECF3F8;
+    --dynamic-text-color: #FFFFFF;
+}
+
+[theme="rain-dark"] {
+    --app-background-color: #FFFFFF;
+    --app-text-color: #1F1E31;
+    --dynamic-background-color:  #c4e2ffaa;
+    --dynamic-background-color-transparent: #626E7Ebb;
     --dynamic-board-bg-color: #ECF3F8;
     --dynamic-text-color: #FFFFFF;
 }
@@ -20,7 +39,7 @@
     --app-background-color: #FFFFFF;
     --app-text-color: #1F1E31;
     --dynamic-background-color: #FFD99D;
-    --dynamic-background-color-transparent: #FEE3BA;
+    --dynamic-background-color-transparent: #FEE3BAbb;
     --dynamic-board-bg-color: #ECF3F8;
     --dynamic-text-color: #201D31;
 }

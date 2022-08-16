@@ -185,25 +185,18 @@ export default {
       refreshDataReady();
     };
 
-    // watch(
-    //   width,
-    //   (width) => {
-    //     refreshDataReady();
-    //   },
-    //   { immediate: false }
-    // );
+    
+    // watch(darkMode, (darkMode) => {
+    //   let htmlElement = document.documentElement;
 
-    watch(darkMode, (darkMode) => {
-      let htmlElement = document.documentElement;
-
-      if (darkMode) {
-        localStorage.setItem("theme", "sunny-light");
-        htmlElement.setAttribute("theme", "sunny-light");
-      } else {
-        localStorage.setItem("theme", "light");
-        htmlElement.setAttribute("theme", "light");
-      }
-    });
+    //   if (darkMode) {
+    //     localStorage.setItem("theme", "sunny-light");
+    //     htmlElement.setAttribute("theme", "sunny-light");
+    //   } else {
+    //     localStorage.setItem("theme", "light");
+    //     htmlElement.setAttribute("theme", "light");
+    //   }
+    // });
     onMounted(() => {
       console.log(storage.doesDataExist("first-time"), "first-time");
 

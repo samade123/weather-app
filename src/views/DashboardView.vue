@@ -3,12 +3,22 @@
     <div class="top" v-if="!props.mobile"></div>
     <div class="middle">
       
-      <div
-        class="today-board"
+      <!-- <div
+        class="today-board" ref="today"
         :style="{
           backgroundImage: 'url(' + require('@/assets/background.jpg') + ')',
         }"
-      >        <div class="left">
+      >  -->
+
+      <!-- <div
+        class="today-board" ref="today"
+        :style="{
+          backgroundImage: backgroundJPG,
+        }"
+      >  -->
+
+      <div class="today-board" ref="today"> 
+      <div class="left">
           <div class="left-top">
             <div class="location-name"><div class="icon"><i class="las la-map-marker"></i></div><div>{{location? location.name : ".."}}</div></div>
           
@@ -36,12 +46,7 @@
         </div>
         <div class="right">
           <div class="temp-board">
-          <!-- <div class="forecast" v-if="forecast">
-            <div class="forecast-day"  v-for="temp in forecast.forecastday[0].hour.slice(0,3)" :key="temp.time">
-              <img :src="temp.condition.icon" width="100" alt="">
-              {{temp.time.substring(11)}} {{temp.temp_c}}</div>
-          </div> -->
-          <lineChart  v-if="forecast" :data="dataArray"/>
+            <lineChart  v-if="forecast" :data="dataArray"/>
           </div>
         </div>
       </div>
@@ -118,6 +123,8 @@ export default {
     const dateCounter = ref(1);
     const windowWidth = ref(props.windowWidth);
     const dataArray = ref([]);
+    const backgroundJPG = ref(`url(${require("@/assets/background.jpg")})`);
+    const today = ref(null);
 
     const router = useRouter();
 
@@ -127,6 +134,45 @@ export default {
 
     const openSettings = () => {
       ctx.emit("openSettings");
+    };
+
+    const setTheme = () => {
+      console.log("running theming");
+      const themes = {
+        Sunny: {
+          theme: "sunny-light",
+          img: `url(${require("@/assets/background-clear-skies.jpg")})`,
+        },
+        "Partly cloudy": {
+          theme: "normal",
+          img: `url(${require("@/assets/background.jpg")})`,
+        },
+        Cloudy: {
+          theme: "clear-dark",
+          img: `url(${require("@/assets/background-cloudy.jpg")})`,
+        },
+        rain: {
+          theme: "clear-dark",
+          img: `url(${require("@/assets/background-cloudy.jpg")})`,
+        },
+        "Clear": {
+          theme: "clear-light",
+          img: `url(${require("@/assets/background-clear-skies-1.jpg")})`,
+        },
+      };
+
+      let condition = current.value.condition.text.includes("rain")
+        ? "rain"
+        : current.value.condition.text;
+      console.log(condition, themes[condition]);
+      let htmlElement = document.documentElement;
+      if (themes.hasOwnProperty(condition)) {
+        htmlElement.setAttribute("theme", themes[condition].theme);
+        today.value.style.backgroundImage = themes[condition].img;
+      } else {
+        htmlElement.setAttribute("theme", themes["Partly cloudy"].theme);
+        today.value.style.backgroundImage = themes["Partly cloudy"].img;
+      }
     };
     watch(
       props,
@@ -149,11 +195,15 @@ export default {
               dataArray.value.push(element);
             }
           });
+          setTheme();
         }
       },
       { immediate: false, deep: false }
     );
     onMounted(() => {
+      // console.log(today.value.style.backgroundImage);
+
+      // today.value.style.backgroundImage = `url(${require("@/assets/background.jpg")})`;
       if (props) {
         if (props.ready) {
           location.value = props.data.location;
@@ -188,6 +238,8 @@ export default {
       windowWidth,
       shout,
       openSettings,
+      backgroundJPG,
+      today,
     };
   },
 };
@@ -289,16 +341,6 @@ div.outer {
           width: 90%;
           background: var(--dynamic-background-color-transparent);
           border-radius: 7px;
-          .forecast {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            height: 100%;
-
-            .forecast-day {
-              display: grid;
-              place-items: center;
-            }
-          }
         }
       }
     }
