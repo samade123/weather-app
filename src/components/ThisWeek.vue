@@ -98,7 +98,7 @@ export default {
         "December",
       ];
 
-      return date.substring(9) + " " + month[newDate.getMonth()];
+      return date.substring(8) + " " + month[newDate.getMonth()];
     };
     watch(
       props,
