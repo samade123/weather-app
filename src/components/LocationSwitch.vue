@@ -12,6 +12,9 @@
       <i class="las la-lg la-map-marker"></i>
     </template>
     </vs-switch>
+    <img src="@/assets/spinner.gif" v-if="loading" width="20" alt="">
+      <i class="las la-lg la-check" v-if="check"></i>
+
   </div>
 </p>
 </template>
@@ -33,6 +36,8 @@ export default {
     const longitude = ref(false);
     const positions = ref(false);
     const locationError = ref(false);
+    const loading = ref(false);
+    const check = ref(false);
 
     const { storage } = storageManager();
 
@@ -45,6 +50,7 @@ export default {
 
       if (allowLocation.value) {
         console.log(allowLocation.value, "allowLocation");
+        loading.value = true;
 
         getLocation()
           .then((data) => {
@@ -52,6 +58,8 @@ export default {
             longitude.value = data.longitude;
             positions.value = data.positions;
             locationError.value = data.locationError;
+            loading.value = false;
+            check.value = true;
 
             ctx.emit("locationEmit", {
               latitude,
@@ -95,10 +103,19 @@ export default {
       { immediate: false, deep: false }
     );
 
-    return { allowLocation, clickMe };
+    return { allowLocation, clickMe, loading, check };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+// .input-switch{
+//   display: flex;
+//   flex-direction: column;
+// }
+
+.la-check {
+  color: green;
+  font-weight: bold;
+}
 </style>
