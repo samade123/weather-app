@@ -11,6 +11,7 @@
           unselected: !link.current,
           available: link.available,
           unavailable: !link.available,
+          bottom: link.bottom,
         }"
         v-for="link in nav"
         :key="link.link"
@@ -221,6 +222,9 @@ div.outer {
         &:hover {
           cursor: no-drop;
         }
+      }
+      &.bottom {
+        display: none;
       }
       &.available:hover {
         background: #0f162111;

@@ -2,17 +2,18 @@
   <div class="outer">
     <!-- <span class="target smooth" ref="target"></span>
     <span class="target smooth" ref="target-2"></span> -->
-    <div class="circle-bg">
+    <!-- <div class="circle-bg">
       <div class="circle">
         <i class="las la-2x la-search"></i>
       </div>
-    </div>
+    </div> -->
     <div
       class="navigation"
       :class="{
         unselected: !link.current,
         available: link.available,
         unavailable: !link.available,
+        bottom: link.bottom,
       }"
       v-for="link in nav"
       :key="link.link"
@@ -53,7 +54,7 @@ export default {
     };
 
     const routeLink = (linkRef, pageObj) => {
-      if (pageObj.available) {
+      if (pageObj.available && !pageObj.bottom) {
         ctx.emit("currentObj", pageObj);
       }
       return;
@@ -163,14 +164,14 @@ export default {
 <style lang="scss" scoped>
 div.outer {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   height: 100%;
   grid-gap: 5px;
   // border: solid #e6ebf4;
   border-width: 0 2px 0 0;
   color: var(--app-text-color);
   background: var(--app-background-color);
-  padding: 10px 0;
+  // padding: 10px 0;
   .circle-bg {
     position: fixed;
     bottom: 50px;
@@ -197,6 +198,7 @@ div.outer {
   }
 
   .navigation {
+    padding: 10px 0;
     &.unavailable {
       text-decoration: line-through;
       color: #00000055;
@@ -204,6 +206,20 @@ div.outer {
         i {
           text-decoration: line-through;
         }
+      }
+      &:hover {
+        cursor: no-drop;
+      }
+    }
+
+    &.bottom {
+      text-decoration: line-through;
+      color: #f7f7f7;
+      background: black;
+
+      border-radius: 7px 7px 0 0;
+      .icon {
+        
       }
       &:hover {
         cursor: no-drop;
