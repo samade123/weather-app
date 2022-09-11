@@ -152,7 +152,7 @@ export default {
           img: `url(${require("@/assets/background-cloudy.jpg")})`,
         },
         rain: {
-          theme: "clear-dark",
+          theme: "rain-dark",
           img: `url(${require("@/assets/background-cloudy.jpg")})`,
         },
         "Clear": {
@@ -360,11 +360,9 @@ div.outer {
       grid-template-rows: 1fr 1fr;
       grid-gap: 20px 25px;
     }
-    padding: 5px;
+    // padding: 5px;
     width: clamp(95%, calc(94% + 20px), 98%);
-    // width: 95%;
     margin: 0 auto;
-    // place-items: center;
     div.stats-card {
       background: var(--dynamic-board-bg-color);
       border-radius: 7px;
