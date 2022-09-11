@@ -30,9 +30,6 @@
           <LocationSwitch @location-emit="setLocation"> </LocationSwitch>
         </p>
         <p>
-          <input type="checkbox" class="theme-switch" v-model="darkMode" />
-        </p>
-        <p>
           If you're interested in the codebase this can be found
           <a :href="designLink">here</a>.
         </p>
@@ -47,6 +44,8 @@
       </div>
     </div>
   </div>
+
+  <PWAModal />
 </template>
 
 <script>
@@ -58,6 +57,7 @@ import { getWeather } from "./composables/weatherReponse";
 import { storageManager } from "./composables/storage.js";
 import { useWindowSize } from "vue-window-size";
 import { watch, onMounted } from "@vue/runtime-core";
+import PWAModal from "@/components/PWAModal.vue";
 
 import { useRouter } from "vue-router";
 
@@ -66,6 +66,7 @@ export default {
   components: {
     HomeView,
     LocationSwitch,
+    PWAModal,
   },
   setup() {
     const router = useRouter();
@@ -82,7 +83,6 @@ export default {
     const menu = ref(null);
     var showMenu = ref(false);
     const showToast = ref(true);
-    const darkMode = ref(false);
 
     const { storage } = storageManager();
 
@@ -150,8 +150,20 @@ export default {
     };
 
     const nav = ref([
-      { title: "Dashboard", link: "/", icon: "la-border-all", current: true, available: true, },
-      { title: "Map", link: "/map", icon: "la-map-marked", current: false, available: true, },
+      {
+        title: "Dashboard",
+        link: "/",
+        icon: "la-border-all",
+        current: true,
+        available: true,
+      },
+      {
+        title: "Map",
+        link: "/map",
+        icon: "la-map-marked",
+        current: false,
+        available: true,
+      },
       {
         title: "Saved Location",
         link: "/saved",
@@ -240,7 +252,6 @@ export default {
       toastState,
       storage,
       showToast,
-      darkMode,
     };
   },
 };
@@ -311,7 +322,7 @@ body {
 
       .input-switch {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 10px;
       }
     }
