@@ -165,6 +165,14 @@ export default {
         available: true,
       },
       {
+        title: "Search",
+        link: "/search",
+        icon: "la-search",
+        current: false,
+        available: true,
+        bottom: true,
+      },
+      {
         title: "Saved Location",
         link: "/saved",
         icon: "la-hdd",

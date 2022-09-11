@@ -134,6 +134,14 @@ export default {
   .home {
     grid-template-columns: auto;
     width: 100%;
+
+    .middle {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 50px;
+    }
   }
 }
 
