@@ -1,4 +1,4 @@
-# weather-app-1
+# Weather App
 
 This is a weather app based off the https://www.weatherapi.com/ api. This PWA is made with vue cli and the site was developed and served using VERCEL @ https://vercel.com/
 
