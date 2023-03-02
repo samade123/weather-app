@@ -133,17 +133,29 @@ export default {
               .catch((error) => {
                 console.error(error);
 
-                
                 weatherData.value = error.data;
                 dataReady.value = true;
                 refreshDataReady();
                 showToast.value = !dataReady.value;
                 storage.storeData("show-toast", showToast.value);
-                
+
                 // weatherData.value = false;
                 // dataReady.value = false;
                 // showToast.value = !dataReady.value;
                 // storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
+
+                if (process.env.NODE_ENV === "production") {
+                  weatherData.value = false;
+                  dataReady.value = false;
+                  showToast.value = !dataReady.value;
+                  storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
+                } else {
+                  weatherData.value = error.data;
+                  dataReady.value = true;
+                  refreshDataReady();
+                  showToast.value = !dataReady.value;
+                  storage.storeData("show-toast", showToast.value);
+                }
               });
           }
         });
