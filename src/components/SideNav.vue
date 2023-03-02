@@ -188,7 +188,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-:root:has(#old-theme:checked) {
+:root:has(#theme-old:checked) {
   div.outer {
     display: grid;
     grid-template-rows: 1fr 5fr 2fr;

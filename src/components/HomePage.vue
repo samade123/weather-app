@@ -121,7 +121,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-:root:has(#old-theme:checked) {
+:root:has(#theme-old:checked) {
   .home {
     display: grid;
     grid-template-columns: minmax(150px, 2fr) 6fr 3fr;

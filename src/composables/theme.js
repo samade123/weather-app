@@ -4,7 +4,7 @@ export function getTheme() {
   const theme = ref('old')
 
   const handleThemeChange = () => {
-    const oldThemeInput = document.querySelector('#old-theme')
+    const oldThemeInput = document.querySelector('#theme-old')
     const newThemeInput = document.querySelector('#theme-new')
     if (oldThemeInput.checked) {
       theme.value = 'old'
@@ -18,7 +18,7 @@ export function getTheme() {
 
 
     watchEffect(() => {
-      const oldThemeInput = document.querySelector('#old-theme')
+      const oldThemeInput = document.querySelector('#theme-old')
       const newThemeInput = document.querySelector('#theme-new')
       oldThemeInput.addEventListener('change', handleThemeChange)
       newThemeInput.addEventListener('change', handleThemeChange)

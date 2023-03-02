@@ -72,6 +72,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+:root:has(#theme-old:checked) {
 .chart-bg {
   display: grid;
   place-items: center;

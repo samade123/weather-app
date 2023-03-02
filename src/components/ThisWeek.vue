@@ -142,7 +142,7 @@ export default {
 <style lang="scss" scoped>
 // @import "./stylesheets/theme-color.scss";
 
-:root:has(#old-theme:checked) {
+:root:has(#theme-old:checked) {
   div.outer {
     display: grid;
     grid-template-rows: 1fr 7fr;

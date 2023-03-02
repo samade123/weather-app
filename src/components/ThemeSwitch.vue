@@ -10,13 +10,13 @@
         <div class="theme-option">
           <input
             type="radio"
-            id="old-theme"
+            id="theme-old"
             name="theme"
             value="light"
             checked
-            aria-labelledby="old-theme-label"
+            aria-labelledby="theme-old-label"
           />
-          <label for="old-theme" id="old-theme-label">Old theme</label>
+          <label for="theme-old" id="theme-old-label">Old theme</label>
         </div>
         <div class="theme-option">
           <input
@@ -63,7 +63,7 @@ export default {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
-:root:has(#old-theme:checked) {
+:root:has(#theme-old:checked) {
   .theme-body {
     // background: #00000033;
   }
