@@ -1,0 +1,40 @@
+.modal-overlay,
+.fade-leave-from {
+  content: "";
+  position: absolute;
+  position: fixed;
+  // top: 0;
+  right: 0;
+  bottom: 0;
+  // left: 0;
+  z-index: 998;
+  background: #2c3e5000;
+  // opacity: 0.1;
+  cursor: pointer;
+
+  width: 100vw;
+
+  display: flex;
+  grid-gap: 20px;
+  flex-wrap: wrap;
+  flex-direction: column;
+
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* ---------------------------------- */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s linear;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.pop-enter-active,
+.pop-leave-active {
+  transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
+}
