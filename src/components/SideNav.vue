@@ -188,115 +188,117 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div.outer {
-  display: grid;
-  grid-template-rows: 1fr 5fr 2fr;
-  height: 100%;
-  grid-gap: 5px;
-  border: solid #e6ebf4;
-  border-width: 0 2px 0 0;
-  color: #0f1621;
-
-  .middle {
+:root:has(#old-theme:checked) {
+  div.outer {
     display: grid;
-    grid-template-rows: repeat(7, 1fr);
-    div.navigation {
-      font-weight: bold;
-      display: grid;
-      grid-template-columns: 1fr 3fr;
-      place-items: center;
-      grid-gap: 7px;
-      transition: all ease-out 0.1s;
-      width: 99%;
-      &.unselected {
-        color: #7f7f8a;
-      }
+    grid-template-rows: 1fr 5fr 2fr;
+    height: 100%;
+    grid-gap: 5px;
+    border: solid #e6ebf4;
+    border-width: 0 2px 0 0;
+    color: #0f1621;
 
-      &.unavailable {
-        text-decoration: line-through;
-        .icon {
-          i {
-            text-decoration: line-through;
+    .middle {
+      display: grid;
+      grid-template-rows: repeat(7, 1fr);
+      div.navigation {
+        font-weight: bold;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        place-items: center;
+        grid-gap: 7px;
+        transition: all ease-out 0.1s;
+        width: 99%;
+        &.unselected {
+          color: #7f7f8a;
+        }
+
+        &.unavailable {
+          text-decoration: line-through;
+          .icon {
+            i {
+              text-decoration: line-through;
+            }
+          }
+          &:hover {
+            cursor: no-drop;
           }
         }
+        &.bottom {
+          display: none;
+        }
+        &.available:hover {
+          background: #0f162111;
+          color: #0f1621;
+
+          font-size: 17px;
+          // font-weight: bolder;
+          cursor: pointer;
+        }
+        .icon {
+          width: 100%;
+          text-align: right;
+        }
+        .title {
+          width: 100%;
+          text-align: left;
+          margin: 0 5px;
+          font-size: clamp(13px, 1vw, 16px);
+        }
+
+        // .mynav a,
+        // .target {
+        //   transition: all 0.35s ease-in-out;
+        // }
+      }
+    }
+
+    .bottom {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px 0;
+      .navigation {
+        font-weight: bold;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        place-items: center;
+        grid-gap: 7px;
+        transition: all ease-out 0.1s;
+        width: 99%;
+
         &:hover {
-          cursor: no-drop;
+          background: #0f162111;
+          color: #0f1621;
+          font-size: 17px;
+          cursor: pointer;
+        }
+        .icon {
+          width: 100%;
+          text-align: right;
+        }
+
+        .setting {
+          width: 100%;
+          text-align: left;
+          margin: 0 5px;
+          font-size: clamp(13px, 1vw, 16px);
         }
       }
-      &.bottom {
+    }
+    .target {
+      position: absolute;
+      border-left: 2px solid transparent;
+      z-index: 2;
+      display: block;
+      // transform: translateX(-60px);
+
+      &.smooth {
+        transition: all 0.3s ease-in-out;
+      }
+      &.resize {
         display: none;
       }
-      &.available:hover {
-        background: #0f162111;
-        color: #0f1621;
-
-        font-size: 17px;
-        // font-weight: bolder;
-        cursor: pointer;
-      }
-      .icon {
-        width: 100%;
-        text-align: right;
-      }
-      .title {
-        width: 100%;
-        text-align: left;
-        margin: 0 5px;
-        font-size: clamp(13px, 1vw, 16px);
-      }
-
-      // .mynav a,
-      // .target {
-      //   transition: all 0.35s ease-in-out;
-      // }
-    }
-  }
-
-  .bottom {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 20px 0;
-    .navigation {
-      font-weight: bold;
-      display: grid;
-      grid-template-columns: 1fr 3fr;
-      place-items: center;
-      grid-gap: 7px;
-      transition: all ease-out 0.1s;
-      width: 99%;
-
-      &:hover {
-        background: #0f162111;
-        color: #0f1621;
-        font-size: 17px;
-        cursor: pointer;
-      }
-      .icon {
-        width: 100%;
-        text-align: right;
-      }
-
-      .setting {
-        width: 100%;
-        text-align: left;
-        margin: 0 5px;
-        font-size: clamp(13px, 1vw, 16px);
-      }
-    }
-  }
-  .target {
-    position: absolute;
-    border-left: 2px solid transparent;
-    z-index: 2;
-    display: block;
-    // transform: translateX(-60px);
-
-    &.smooth {
-      transition: all 0.3s ease-in-out;
-    }
-    &.resize {
-      display: none;
     }
   }
 }

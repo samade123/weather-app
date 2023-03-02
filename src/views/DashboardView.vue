@@ -249,18 +249,18 @@ export default {
 div.outer {
   display: grid;
   grid-template-rows: 1fr 4fr 4fr;
-  height: 100vh;
+  height: 100%;
   //   width: 100%;
   grid-gap: 10px;
   border: solid 0 5px 0 0 #e6ebf4;
   //   .top {
   //     background: orange;
 
-  min-height: 100vh;
   overflow: scroll;
-
+  
   @media (max-width: 600px) {
     grid-template-rows: 4fr 2fr;
+    // min-height: 100vh;
   }
   //   }
   .middle {
@@ -359,6 +359,7 @@ div.outer {
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       grid-gap: 20px 25px;
+      padding: 0 0 10px 0;
     }
     // padding: 5px;
     width: clamp(95%, calc(94% + 20px), 98%);

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-if="props.theme=='old'">
     <div class="left" v-if="!setMobile">
       <SideNav
         :nav="nav"
@@ -39,6 +39,13 @@
       />
     </div>
   </div>
+
+  <router-view v-else
+        :mobile="setMobile"
+        :data="props.data"
+        :ready="props.ready"
+        @open-settings="openSettings"
+      />
 </template>
 
 <script>
@@ -61,7 +68,7 @@ export default {
     ThisWeek,
   },
   emits: ["openSettings"],
-  props: ["nav", "data", "ready"],
+  props: ["nav", "data", "ready", "theme"],
   setup(props, ctx) {
     const setMobile = ref(false);
     const { width, height } = useWindowSize();
@@ -93,6 +100,10 @@ export default {
       { immediate: true }
     );
 
+    // watch(theme, (newValue, oldValue) => {
+    //   console.log(`Theme changed from ${oldValue} to ${newValue}`)
+    // })
+
     // onMounted(() => console.log(setMobile));
     return {
       width,
@@ -110,42 +121,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
-  display: grid;
-  grid-template-columns: minmax(150px, 2fr) 6fr 3fr;
-  grid-gap: 2px;
-  height: 100%;
-  overflow: hidden;
-  .middle {
-    // background-image: url("./img/background.jpg")
-    overflow: auto;
-  }
-}
-
-.bottom {
-  position: fixed;
-  bottom: 0;
-  // height: 30px;
-  width: 100%;
-  z-index: 50;
-}
-
-@media (max-width: 600px) {
+:root:has(#old-theme:checked) {
   .home {
-    grid-template-columns: auto;
-    width: 100%;
-
+    display: grid;
+    grid-template-columns: minmax(150px, 2fr) 6fr 3fr;
+    grid-gap: 2px;
+    height: 100%;
+    overflow: hidden;
     .middle {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 50px;
+      // background-image: url("./img/background.jpg")
+      overflow: auto;
+    }
+  }
+
+  .bottom {
+    position: fixed;
+    bottom: 0;
+    // height: 30px;
+    width: 100%;
+    z-index: 50;
+  }
+
+  @media (max-width: 600px) {
+    .home {
+      grid-template-columns: auto;
+      width: 100%;
+
+      .middle {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 50px;
+      }
     }
   }
 }
-
-// .left {
-//   background: black;
-// }
 </style>

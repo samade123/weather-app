@@ -8,22 +8,6 @@
       </div>
     </div>
     <div class="middle">
-      <!-- <div class="today-section">
-        <div class="forecast" v-if="forecast">
-          <div
-            class="forecast-day"
-            v-for="temp in forecast.forecastday[0].hour.slice(
-              0 + dateCounter,
-              upperLimit + dateCounter
-            )"
-            :key="temp.time"
-          >
-            <div class="time">{{ temp.time.substring(11) }}</div>
-            <img :src="temp.condition.icon" width="80" alt="" />
-            <div class="temperature">{{ temp.temp_c }}</div>
-          </div>
-        </div>
-      </div> -->
       <WeatherStrip
         :data="props.data"
         :upperLimit="upperLimit"
@@ -49,7 +33,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="bottom"></div> -->
   </div>
 </template>
 
@@ -158,74 +141,77 @@ export default {
 
 <style lang="scss" scoped>
 // @import "./stylesheets/theme-color.scss";
-div.outer {
-  display: grid;
-  grid-template-rows: 1fr 7fr;
-  height: 100%;
-  grid-gap: 5px;
-  border-left: 1px solid #e6ebf4;
 
-  div.top {
+:root:has(#old-theme:checked) {
+  div.outer {
     display: grid;
-    place-items: center;
-    div.ThisWeek {
-      width: 100%;
-      height: 100%;
+    grid-template-rows: 1fr 7fr;
+    height: 100%;
+    grid-gap: 5px;
+    border-left: 1px solid #e6ebf4;
+
+    div.top {
       display: grid;
       place-items: center;
-      overflow: scroll;
-      grid-template-columns: 2fr 2fr 2fr;
-    }
-  }
-
-  div.middle {
-    display: grid;
-    grid-template-rows: 1fr 5fr;
-    // max-height: 100%;
-    .today-section {
-      overflow: scroll;
-      .forecast {
+      div.ThisWeek {
+        width: 100%;
+        height: 100%;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-gap: 5px;
-
-        .forecast-day {
-          border-radius: 8px;
-
-          &:hover {
-            background: var(--dynamic-background-color);
-            cursor: pointer;
-          }
-        }
-      }
-
-      @media (max-width: 1300px) {
-        .forecast {
-          grid-template-columns: repeat(3, 1fr);
-        }
+        place-items: center;
+        overflow: scroll;
+        grid-template-columns: 2fr 2fr 2fr;
       }
     }
 
-    .next-seven-days {
-      .forecast {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        .forecast-days {
+    div.middle {
+      display: grid;
+      grid-template-rows: 1fr 5fr;
+      // max-height: 100%;
+      .today-section {
+        overflow: scroll;
+        .forecast {
           display: grid;
-          grid-template-columns: 1fr 2fr 1fr;
-          margin: 10px;
-          .date-left {
-            display: grid;
-            place-items: center;
+          grid-template-columns: repeat(4, 1fr);
+          grid-gap: 5px;
+
+          .forecast-day {
+            border-radius: 8px;
+
+            &:hover {
+              background: var(--dynamic-background-color);
+              cursor: pointer;
+            }
           }
-          .text {
-            display: grid;
-            place-items: center;
+        }
+
+        @media (max-width: 1300px) {
+          .forecast {
+            grid-template-columns: repeat(3, 1fr);
           }
-          .img {
+        }
+      }
+
+      .next-seven-days {
+        .forecast {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          .forecast-days {
             display: grid;
-            place-items: center;
+            grid-template-columns: 1fr 2fr 1fr;
+            margin: 10px;
+            .date-left {
+              display: grid;
+              place-items: center;
+            }
+            .text {
+              display: grid;
+              place-items: center;
+            }
+            .img {
+              display: grid;
+              place-items: center;
+            }
           }
         }
       }

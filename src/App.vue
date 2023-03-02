@@ -4,6 +4,7 @@
     :nav="nav"
     :data="weatherData"
     :ready="dataReady"
+    :theme="theme"
     @current-obj="newPage"
     @open-settings="openSettings"
   />
@@ -46,6 +47,7 @@
   </div>
 
   <PWAModal />
+  <ThemeSwitch />
 </template>
 
 <script>
@@ -53,11 +55,13 @@ import { ref } from "@vue/reactivity";
 import HomeView from "./components/HomePage.vue";
 import LocationSwitch from "./components/LocationSwitch.vue";
 import { getLocation } from "./composables/location";
+import { getTheme } from "./composables/theme.js";
 import { getWeather } from "./composables/weatherReponse";
 import { storageManager } from "./composables/storage.js";
 import { useWindowSize } from "vue-window-size";
 import { watch, onMounted } from "@vue/runtime-core";
 import PWAModal from "@/components/PWAModal.vue";
+import ThemeSwitch from "@/components/ThemeSwitch.vue";
 
 import { useRouter } from "vue-router";
 
@@ -67,6 +71,7 @@ export default {
     HomeView,
     LocationSwitch,
     PWAModal,
+    ThemeSwitch,
   },
   setup() {
     const router = useRouter();
@@ -102,6 +107,12 @@ export default {
 
       return toastState.value;
     };
+
+    var { theme } = getTheme();
+
+    // const themeClass = computed(() => {
+    //   return `theme-${theme.value}`
+    // })
 
     const setLocation = (locationData) => {
       latitude.value = locationData.latitude;
@@ -279,6 +290,7 @@ export default {
       toastState,
       storage,
       showToast,
+      theme,
     };
   },
 };
@@ -304,7 +316,7 @@ export default {
 
   height: 100%;
   width: 100%;
-  min-height: 100vh;
+  // min-height: 100vh;
   overflow: hidden;
 
   // max-width: 1400px;
