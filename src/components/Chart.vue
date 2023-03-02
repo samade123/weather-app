@@ -21,7 +21,7 @@ export default {
     });
 
     console.log(data, "data");
-    
+
     onMounted(() => {
       const ctx = document.getElementById("myChart").getContext("2d");
 
@@ -66,23 +66,39 @@ export default {
         },
       });
     });
-    return { };
+    return {};
   },
 };
 </script>
 
 <style lang="scss" scoped>
 :root:has(#theme-old:checked) {
-.chart-bg {
-  display: grid;
-  place-items: center;
-  // background: black;
-  position: relative;
-  width: 100%;
-  height: 100%;
+  .chart-bg {
+    display: grid;
+    place-items: center;
+    // background: black;
+    position: relative;
+    width: 100%;
+    height: 100%;
 
-  #myChart {
-    width: 90% !important;
+    #myChart {
+      width: 90% !important;
+    }
+  }
+}
+
+:root:has(#theme-new:checked) {
+  .chart-bg {
+    display: grid;
+    place-items: center;
+    // background: black;
+    position: relative;
+    // width: 100%;
+    height: min(100%, 100px);
+
+    #myChart {
+      width: auto !important;
+    }
   }
 }
 </style>

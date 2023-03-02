@@ -1,0 +1,58 @@
+:root:has(#theme-new:checked) {
+  div.outer {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    height: 100dvh;
+
+    div.middle {
+      display: grid;
+      grid-template-rows: 8fr 2fr 3fr;
+
+      div.title {
+        padding: 20px;
+      }
+
+      div.temp-summary {
+        display: grid;
+        grid-template-columns: 2fr 2fr 1fr;
+        grid-gap: 2px;
+        padding: 10px;
+        place-content: center end;
+
+        div.temp {
+          font-size: 5rem;
+          text-align: end;
+          
+        }
+
+        div.location {
+          display: grid;
+          grid-template-rows: 2fr 1fr;
+          grid-gap: 5px;
+
+          div.location-name {
+            font-size: 2.5rem;
+            display: grid;
+            place-content: end center;
+            text-align: end;
+          }
+
+          div.location-date {
+            display: grid;
+            place-content: start center;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            grid-gap: 5px;
+            font-size: 1.1rem;
+          }
+        }
+
+        div.condition{
+          display: grid;
+          grid-template-rows: 2fr 1fr;
+          grid-gap: 5px;
+        }
+
+      }
+    }
+  }
+}
