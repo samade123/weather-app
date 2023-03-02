@@ -15,6 +15,7 @@
         :mobile="setMobile"
         :data="props.data"
         :ready="props.ready"
+        :theme="props.theme"
         @open-settings="openSettings"
       />
       <div class="bottom">
@@ -44,6 +45,7 @@
         :mobile="setMobile"
         :data="props.data"
         :ready="props.ready"
+        :theme="props.theme"
         @open-settings="openSettings"
       />
 </template>
@@ -100,9 +102,9 @@ export default {
       { immediate: true }
     );
 
-    // watch(theme, (newValue, oldValue) => {
-    //   console.log(`Theme changed from ${oldValue} to ${newValue}`)
-    // })
+    watch(props.theme, (newValue, oldValue) => {
+      console.log(`Theme changed from ${oldValue} to ${newValue}`)
+    })
 
     // onMounted(() => console.log(setMobile));
     return {
