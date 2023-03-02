@@ -1,5 +1,18 @@
 import { ref } from 'vue'
 // import * as data from './weatherJson.json';
+let data = null
+if (process.env.NODE_ENV === 'development') {
+    import('./weatherJson.json')
+    .then((weatherData) => {
+      data = weatherData.default
+      // Use weatherData here
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+  
+
 export function getWeather(locationRequest) {
 
     var urlExt = "";
@@ -19,8 +32,8 @@ export function getWeather(locationRequest) {
                 resolve(location.value)
             })
             .catch(error => {
-                console.error('Error:', error);
-                reject(error)
+                console.error('Error:', error, data.value);
+                reject({error, data: data}, )
             });;
     })
 }

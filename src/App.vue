@@ -155,7 +155,7 @@ export default {
                 // showToast.value = !dataReady.value;
                 // storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
 
-                if (process.env.NODE_ENV === "production") {
+                if (process.env.NODE_ENV === "production" ||  process.env.NODE_ENV === "preview" ) {
                   weatherData.value = false;
                   dataReady.value = false;
                   showToast.value = !dataReady.value;
