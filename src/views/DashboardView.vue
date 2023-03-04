@@ -56,6 +56,7 @@
 
         </div>
         <div class="condition">
+          <WeatherSVG />
           <div class="cloudy">{{ current ? current.condition.text : "Mostly Clear" }}</div>
         </div>
       </div>
@@ -115,6 +116,7 @@
 import { ref } from "@vue/reactivity";
 import WeatherStrip from "@/components/WeatherStrip.vue";
 import LineChart from "@/components/Chart.vue";
+import WeatherSVG from "@/components/WeatherSVG.vue";
 import { useRouter } from "vue-router";
 import { onMounted, watch } from "@vue/runtime-core";
 export default {
@@ -123,6 +125,7 @@ export default {
   components: {
     WeatherStrip,
     LineChart,
+    WeatherSVG,
   },
   setup(props, ctx) {
     const publicPath = process.env.BASE_URL;
