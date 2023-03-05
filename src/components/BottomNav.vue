@@ -66,9 +66,9 @@ export default {
     return { nav, returnIconClass, routeLink, getRef, stripDimensions };
   },
   watch: {
-    windowWidth() {
-      this.mouseenterFunc(this.currentObj, true);
-    },
+    // windowWidth() {
+    //   this.mouseenterFunc(this.currentObj, true); // taking this out for now as it may not be necessary
+    // },
     "props.nav"() {
       const currentObj = this.nav.filter((page) => page.current == true)[0];
 
@@ -83,58 +83,58 @@ export default {
   },
 
   methods: {
-    mouseenterFunc(
-      pageObj,
-      resize = false,
-      currentPage = false,
-      leave = false
-    ) {
-      let elementRef = this.getRef(pageObj);
-      // console.log(this.$refs[elementRef][0].getBoundingClientRect())
-      let element = this.$refs[elementRef][0];
-      let target = this.$refs["target"];
-      if (pageObj.available) {
-        if (currentPage) {
-          const currentObj = this.nav.filter(
-            (page) => page.link == `${this.currentPage}`
-          )[0];
+    // mouseenterFunc(
+    //   pageObj,
+    //   resize = false,
+    //   currentPage = false,
+    //   leave = false
+    // ) {
+    //   let elementRef = this.getRef(pageObj);
+    //   // console.log(this.$refs[elementRef][0].getBoundingClientRect())
+    //   let element = this.$refs[elementRef][0];
+    //   let target = this.$refs["target"];
+    //   if (pageObj.available) {
+    //     if (currentPage) {
+    //       const currentObj = this.nav.filter(
+    //         (page) => page.link == `${this.currentPage}`
+    //       )[0];
 
-          elementRef = this.getRef(currentObj);
-          element = this.$refs[elementRef][0];
-          target = this.$refs["target-2"];
-          this.currentObj = currentObj; //for setting the resizing window
-        }
-        //remove current styling from the current link divfunction here
+    //       elementRef = this.getRef(currentObj);
+    //       element = this.$refs[elementRef][0];
+    //       target = this.$refs["target-2"];
+    //       this.currentObj = currentObj; //for setting the resizing window
+    //     }
+    //     //remove current styling from the current link divfunction here
 
-        // add current styling to the mouse over link div
-        this.stripDimensions.width = element.getBoundingClientRect().width;
-        this.stripDimensions.height = element.getBoundingClientRect().height;
-        // this.stripDimensions.left =
-        //   element.getBoundingClientRect().right + window.pageXOffset;
-        this.stripDimensions.left =
-          this.$refs["sidebar"].getBoundingClientRect().right +
-          window.pageXOffset;
+    //     // add current styling to the mouse over link div
+    //     this.stripDimensions.width = element.getBoundingClientRect().width;
+    //     this.stripDimensions.height = element.getBoundingClientRect().height;
+    //     // this.stripDimensions.left =
+    //     //   element.getBoundingClientRect().right + window.pageXOffset;
+    //     this.stripDimensions.left =
+    //       this.$refs["sidebar"].getBoundingClientRect().right +
+    //       window.pageXOffset;
 
-        this.stripDimensions.top =
-          element.getBoundingClientRect().top + window.pageYOffset;
+    //     this.stripDimensions.top =
+    //       element.getBoundingClientRect().top + window.pageYOffset;
 
-        // target.style.width = `${this.stripDimensions.width}px`;
-        // resize ? target.classList.remove("smooth") : false;
-        // resize ? target.classList.add("resize") : false;
+    //     // target.style.width = `${this.stripDimensions.width}px`;
+    //     // resize ? target.classList.remove("smooth") : false;
+    //     // resize ? target.classList.add("resize") : false;
 
-        if (resize) {
-          target.classList.remove("smooth");
-          target.classList.add("resize");
-        }
-        this.resizeFunction(target, resize);
-        if (resize) {
-          target = this.$refs["target-2"];
-          target.classList.remove("smooth");
-          target.classList.add("resize");
-          this.resizeFunction(target, true);
-        }
-      }
-    },
+    //     if (resize) {
+    //       target.classList.remove("smooth");
+    //       target.classList.add("resize");
+    //     }
+    //     this.resizeFunction(target, resize);
+    //     if (resize) {
+    //       target = this.$refs["target-2"];
+    //       target.classList.remove("smooth");
+    //       target.classList.add("resize");
+    //       this.resizeFunction(target, true);
+    //     }
+    //   }
+    // },
     resizeFunction(target, resize) {
       target.style.width = `2px`;
       target.style.height = `${this.stripDimensions.height}px`;
