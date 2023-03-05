@@ -13,7 +13,7 @@
       Looking to turn on location? click here!
     </div>
   </div>
-  <div class="menu-bg" v-if="showMenu" @click="whatElement" ref="menu">
+  <div class="menu-bg" v-if="showMenu" @click="hideMenuWhenBGClicked" ref="menu">
     <div class="menu">
       <h1 class="title">Settings</h1>
       <div class="menu-body">
@@ -173,7 +173,7 @@ export default {
       }
     };
 
-    const whatElement = (event) => {
+    const hideMenuWhenBGClicked = (event) => {
       if (event.target === menu.value) {
         showMenu.value = !showMenu.value;
       }
@@ -283,7 +283,7 @@ export default {
       designLink,
       allowLocation,
       setLocation,
-      whatElement,
+      hideMenuWhenBGClicked,
       menu,
       openSettings,
       isToastVisible,
