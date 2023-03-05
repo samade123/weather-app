@@ -110,10 +110,6 @@ export default {
 
     var { theme } = getTheme();
 
-    // const themeClass = computed(() => {
-    //   return `theme-${theme.value}`
-    // })
-
     const setLocation = (locationData) => {
       latitude.value = locationData.latitude;
       longitude.value = locationData.longitude;
@@ -150,12 +146,7 @@ export default {
                 showToast.value = !dataReady.value;
                 storage.storeData("show-toast", showToast.value);
 
-                // weatherData.value = false;
-                // dataReady.value = false;
-                // showToast.value = !dataReady.value;
-                // storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
-
-                if (process.env.NODE_ENV === "production" ||  process.env.NODE_ENV === "preview" ) {
+                if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "preview") {
                   weatherData.value = false;
                   dataReady.value = false;
                   showToast.value = !dataReady.value;
@@ -341,6 +332,7 @@ body {
   display: grid;
   place-items: center;
   background: #2c3e5000;
+
   .menu {
     background: white;
     border: solid black;
@@ -384,10 +376,12 @@ nav {
 a {
   text-decoration: underline;
 }
+
 .toast-bg {
   width: 100%;
   position: fixed;
   top: 50px;
+
   .toast {
     background: white;
     border-radius: 7px;
