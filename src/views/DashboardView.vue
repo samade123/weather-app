@@ -115,6 +115,7 @@
 <script>
 import { ref } from "@vue/reactivity";
 import WeatherStrip from "@/components/WeatherStrip.vue";
+import { storageManager } from "@/composables/storage.js";
 import LineChart from "@/components/Chart.vue";
 import WeatherSVG from "@/components/WeatherSVG.vue";
 import { useRouter } from "vue-router";
@@ -129,6 +130,7 @@ export default {
   },
   setup(props, ctx) {
     const publicPath = process.env.BASE_URL;
+    const { storage } = storageManager();
 
     const location = ref(null);
     const current = ref(null);
@@ -206,17 +208,20 @@ export default {
         },
       };
 
+      let themeType = storage.getData('theme') // check are we using old theem or new theme - only change the background image if we are onold theme
       let condition = current.value.condition.text.includes("rain")
         ? "rain"
         : current.value.condition.text;
       console.log(condition, themes[condition]);
       let htmlElement = document.documentElement;
+      if (themeType == 'old') {
       if (themes.hasOwnProperty(condition)) {
         htmlElement.setAttribute("theme", themes[condition].theme);
         today.value.style.backgroundImage = themes[condition].img;
       } else {
         htmlElement.setAttribute("theme", themes["Partly cloudy"].theme);
         today.value.style.backgroundImage = themes["Partly cloudy"].img;
+        }
       }
     };
     watch(

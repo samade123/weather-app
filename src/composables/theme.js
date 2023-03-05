@@ -1,7 +1,9 @@
+import { storageManager } from "@/composables/storage.js";
 import { ref, onMounted, watchEffect } from 'vue'
 
 export function getTheme() {
   const theme = ref('old')
+  const { storage } = storageManager();
 
   const handleThemeChange = () => {
     const oldThemeInput = document.querySelector('#theme-old')
@@ -11,6 +13,9 @@ export function getTheme() {
     } else if (newThemeInput.checked) {
       theme.value = 'new'
     }
+
+    storage.storeData("theme", theme.value); //don't showtoast as weather data is avaliable now
+
   }
 
   onMounted(() => {
