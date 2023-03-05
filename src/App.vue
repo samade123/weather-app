@@ -58,6 +58,7 @@ import { getLocation } from "./composables/location";
 import { getTheme } from "./composables/theme.js";
 import { getWeather } from "./composables/weatherReponse";
 import { storageManager } from "./composables/storage.js";
+import { widthFunction } from "./composables/Mobile.js";
 import { useWindowSize } from "vue-window-size";
 import { watch, onMounted } from "@vue/runtime-core";
 import PWAModal from "@/components/PWAModal.vue";
@@ -77,7 +78,7 @@ export default {
     const router = useRouter();
 
     const weatherData = ref(null);
-    const { width, height } = useWindowSize();
+    // const { width, height } = useWindowSize();
     const dataReady = ref(false);
     const allowLocation = ref(false);
     const designLink = "https://dribbble.com/shots/18070219-Cuacane-Dashboard";
@@ -90,6 +91,7 @@ export default {
     const showToast = ref(true);
 
     const { storage } = storageManager();
+    const { width, setMobile, getScreenCategory } = widthFunction();
 
     const openSettings = () => {
       showMenu.value = !showMenu.value;
@@ -282,6 +284,7 @@ export default {
       storage,
       showToast,
       theme,
+      setMobile, getScreenCategory
     };
   },
 };

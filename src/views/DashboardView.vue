@@ -42,7 +42,7 @@
     <div class="middle new" v-if="props.theme == 'new'">
       <div class="title">Your weather</div>
       <div class="temp-summary">
-        <div class="temp">{{ current ? current.temp_c : "0" }}<span class="small"> &#176;</span></div>
+        <div class="temp">{{ current ? current.temp_c : "0" }}&#176;</div>
         <div class="location">
           <div class="location-name">
             <div>{{ location ? location.name : ".." }}</div>
@@ -60,14 +60,18 @@
           <div class="cloudy">{{ current ? current.condition.text : "Mostly Clear" }}</div>
         </div>
       </div>
-      <div class="spacer condition">
+      <div class="spacer condition" v-if="setMobile">
       </div>
     </div>
-    <div class="bottom" v-if="props.mobile">
+
+    <div class="bottom new" v-if="props.theme == 'new' && setMobile">
+
+      mobile bottom</div>
+    <div class="bottom" v-if="props.mobile && props.theme == 'old'">
       <div class="weather-title">Today <span> Next 7 days</span> </div>
       <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth" />
     </div>
-    <div class="bottom" v-else>
+    <div class="bottom" v-if="!props.mobile && props.theme == 'old'">
       <div class="stats-card">
         <div class="stats-left">
           <div class="title">Wind</div>
@@ -117,6 +121,7 @@ import { ref } from "@vue/reactivity";
 import WeatherStrip from "@/components/WeatherStrip.vue";
 import { storageManager } from "@/composables/storage.js";
 import LineChart from "@/components/Chart.vue";
+import { widthFunction } from "@/composables/Mobile.js";
 import WeatherSVG from "@/components/WeatherSVG.vue";
 import { useRouter } from "vue-router";
 import { onMounted, watch } from "@vue/runtime-core";
@@ -130,6 +135,7 @@ export default {
   },
   setup(props, ctx) {
     const publicPath = process.env.BASE_URL;
+    const { width, setMobile, getScreenCategory } = widthFunction();
     const { storage } = storageManager();
 
     const location = ref(null);
@@ -215,12 +221,12 @@ export default {
       console.log(condition, themes[condition]);
       let htmlElement = document.documentElement;
       if (themeType == 'old') {
-      if (themes.hasOwnProperty(condition)) {
-        htmlElement.setAttribute("theme", themes[condition].theme);
-        today.value.style.backgroundImage = themes[condition].img;
-      } else {
-        htmlElement.setAttribute("theme", themes["Partly cloudy"].theme);
-        today.value.style.backgroundImage = themes["Partly cloudy"].img;
+        if (themes.hasOwnProperty(condition)) {
+          htmlElement.setAttribute("theme", themes[condition].theme);
+          today.value.style.backgroundImage = themes[condition].img;
+        } else {
+          htmlElement.setAttribute("theme", themes["Partly cloudy"].theme);
+          today.value.style.backgroundImage = themes["Partly cloudy"].img;
         }
       }
     };
@@ -289,6 +295,7 @@ export default {
       getDay,
       getMonth,
       getTime,
+      width, setMobile, getScreenCategory,
     };
   },
 };
