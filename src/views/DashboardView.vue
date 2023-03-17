@@ -39,30 +39,26 @@
       </div>
     </div>
 
-    <div class="middle new" v-if="props.theme == 'new'">
-      <div class="title">Your weather</div>
-      <div class="temp-summary">
-        <div class="temp">{{ current ? current.temp_c : "0" }}&#176;</div>
-        <div class="location">
-          <div class="location-name">
-            <div>{{ location ? location.name : ".." }}</div>
-          </div>
-          <div class="location-date">
-            <div>{{ location ? getTime(location.localtime) : ".." }}</div>
-            <div>{{ location ? getDay(location.localtime) : ".." }}</div>
-            <div>{{ location ? getMonth(location.localtime) : ".." }}</div>
-            <!-- {{ location ? location.localtime.substring(11) : ".." }} -->
-          </div>
-
-        </div>
-        <div class="condition">
-          <WeatherSVG />
-          <div class="cloudy">{{ current ? current.condition.text : "Mostly Clear" }}</div>
-        </div>
-      </div>
-      <div class="spacer condition" v-if="setMobile">
-      </div>
-    </div>
+    <WeatherDisplay v-if="theme === 'new'">
+      <template #temperature>
+        {{ current ? current.temp_c : '0' }}
+      </template>
+      <template #location>
+        {{ location ? location.name : '..' }}
+      </template>
+      <template #day-and-month>
+        {{ location ? getDay(location.localtime) : '..' }} {{ location ? getMonth(location.localtime) : '..' }}
+      </template>
+      <template #time>
+        {{ location ? getTime(location.localtime) : '..' }}
+      </template>
+      <template #weather-svg>
+        <WeatherSVG />
+      </template>
+      <template #condition>
+        {{ current ? current.condition.text : 'Mostly Clear' }}
+      </template>
+    </WeatherDisplay>
 
     <div class="bottom new" v-if="props.theme == 'new' && setMobile">
 
@@ -123,6 +119,7 @@ import { storageManager } from "@/composables/storage.js";
 import LineChart from "@/components/Chart.vue";
 import { widthFunction } from "@/composables/Mobile.js";
 import WeatherSVG from "@/components/WeatherSVG.vue";
+import WeatherDisplay from "@/components/WeatherDisplay.vue";
 import { useRouter } from "vue-router";
 import { onMounted, watch } from "@vue/runtime-core";
 export default {
@@ -132,6 +129,7 @@ export default {
     WeatherStrip,
     LineChart,
     WeatherSVG,
+    WeatherDisplay,
   },
   setup(props, ctx) {
     const publicPath = process.env.BASE_URL;

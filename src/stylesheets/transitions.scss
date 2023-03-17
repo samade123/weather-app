@@ -38,3 +38,53 @@
 .pop-leave-active {
   transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
 }
+
+
+// .fade-in {
+//   opacity: 0;
+//   animation: fade-in 2s ease-in-out;
+// }
+
+// @keyframes fade-in {
+//   0% {
+//     opacity: 0;
+//   }
+//   50% {
+//     opacity: 0;
+//   }
+//   100% {
+//     opacity: 1;
+//   }
+// }
+
+.fade-in-enter-active,
+.fade-in-leave-active {
+  transition: opacity 2s ease-in-out;
+}
+
+.fade-in-enter {
+  opacity: 0;
+}
+
+.fade-in-leave-to {
+  opacity: 0;
+  transition-delay: 0s;
+}
+
+.fade-in {
+  animation: fade-in 2s ease-in-out;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
