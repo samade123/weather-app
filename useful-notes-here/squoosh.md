@@ -10,4 +10,8 @@ I had a bg.jpg image that i wanted to convert to webp and into smaller sizes for
 
 ## Useful command
 
-`squoosh-cli bg.jpg \ --resize width=480 \ --quantum 75 \ --output bg-480.webp && \ squoosh-cli bg.jpg \ --resize width=960 \ --quantum 75 \ --output bg-960.webp && \ squoosh-cli bg.jpg \ --resize width=1920 \ --quantum 75 \ --output bg-1920.webp `
+`
+squoosh-cli bg.jpg --resize '{ "width": 480 }' --webp '{ "quality": 75 }' -s -480 && \
+squoosh-cli bg.jpg --resize '{ "width": 960 }' --webp '{ "quality": 75 }' -s -960 && \
+squoosh-cli bg.jpg --resize '{ "width": 1920 }' --webp '{ "quality": 75 }' -s -1920
+`
