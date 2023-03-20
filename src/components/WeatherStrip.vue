@@ -1,18 +1,10 @@
 <template>
-  <div
-    class="today-section"
-    v-touch:swipe.left="decrement"
-    v-touch:swipe.right="increment"
-  >
+  <div class="today-section" v-touch:swipe.left="decrement" v-touch:swipe.right="increment">
     <div class="forecast" v-if="props.data">
-      <div
-        class="forecast-day"
-        v-for="temp in props.data.forecast.forecastday[0].hour.slice(
-          0 + dateCounter,
-          upperLimit + dateCounter
-        )"
-        :key="temp.time"
-      >
+      <div class="forecast-day" v-for="temp in props.data.forecast.forecastday[0].hour.slice(
+        0 + dateCounter,
+        upperLimit + dateCounter
+      )" :key="temp.time">
         <div class="time">{{ temp.time.substring(11) }}</div>
         <img :src="temp.condition.icon" width="80" alt="" />
         <div class="temperature">{{ temp.temp_c }}</div>
@@ -25,6 +17,7 @@
 import { useWindowSize } from "vue-window-size";
 import { ref } from "@vue/reactivity";
 import { onMounted, watch, watchEffect } from "@vue/runtime-core";
+import { storageManager } from "@/composables/storage.js";
 // @ is an alias to /src
 
 export default {
@@ -38,6 +31,7 @@ export default {
     const dateCounter = ref(0);
     const upperLimit = ref(4);
     const { width, height } = useWindowSize();
+    const { storage } = storageManager();
 
     const decrement = () => {
       dateCounter.value--;
@@ -45,6 +39,9 @@ export default {
     const increment = () => {
       dateCounter.value++;
     };
+
+    let themeType = storage.getData('theme') // check are we using old theem or new theme - only change the background image if we are onold theme
+
     watch(
       width,
       (width) => {
@@ -53,6 +50,10 @@ export default {
         } else if (width < 600) {
           upperLimit.value = 4;
         } else {
+          upperLimit.value = 3;
+        }
+
+        if (themeType == 'new') {
           upperLimit.value = 3;
         }
       },
@@ -111,32 +112,57 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.today-section {
-  overflow: scroll;
-  .forecast {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 5px;
+:root:has(#theme-old:checked) {
 
-    .forecast-day {
-      border-radius: 8px;
+  .today-section {
+    overflow: scroll;
 
-      &:hover {
-            background: var(--dynamic-background-color);
-        cursor: pointer;
+    .forecast {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 5px;
+
+      .forecast-day {
+        border-radius: 8px;
+
+        &:hover {
+          background: var(--dynamic-background-color);
+          cursor: pointer;
+        }
+      }
+    }
+
+    @media (max-width: 1300px) {
+      .forecast {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .forecast {
+        grid-template-columns: repeat(4, 1fr);
       }
     }
   }
+}
 
-  @media (max-width: 1300px) {
+:root:has(#theme-new:checked) {
+  .today-section {
+    overflow: scroll;
+    margin-inline: var(--dynamic-right-margin-inline);
+
     .forecast {
+      display: grid;
       grid-template-columns: repeat(3, 1fr);
-    }
-  }
+      grid-gap: 5px;
 
-  @media (max-width: 600px) {
-    .forecast {
-      grid-template-columns: repeat(4, 1fr);
+      .forecast-day {
+        // border-radius: 8px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
 }
