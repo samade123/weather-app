@@ -11,7 +11,7 @@ export default {
 <style lang="scss" scoped>
 svg {
   width: auto;
-  height: min(88px, 8vw);
+  height: min(70px, 8vw);
   transition: height 0.1s ease-in-out;
 }
 

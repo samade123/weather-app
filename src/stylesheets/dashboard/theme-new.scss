@@ -48,7 +48,7 @@
 
         div.location-wrapper {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr auto;
         }
 
         div.location {
@@ -228,6 +228,10 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: stretch;
+
+        div.title {
+          text-align: center;
+        }
 
         div.temp-summary {
           grid-template-columns: 1fr 1fr 1fr;

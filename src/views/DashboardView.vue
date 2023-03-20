@@ -1,5 +1,6 @@
 <template>
   <div class="outer">
+    <div class="outer-bg" v-if="props.theme == 'new'" ></div>
     <div class="top" v-if="!props.mobile && props.theme == 'old'"></div>
     <div class="middle" v-if="props.theme == 'old'">
       <div class="today-board" ref="today">
@@ -73,8 +74,8 @@
     </WeatherDisplay>
 
     <div class="bottom new" v-if="props.theme == 'new' && setMobile">
-
-      mobile bottom</div>
+      <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth" />
+    </div>
     <div class="bottom" v-if="props.mobile && props.theme == 'old'">
       <div class="weather-title">Today <span> Next 7 days</span> </div>
       <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth" />
