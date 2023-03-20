@@ -210,6 +210,11 @@
           background: orange;
           width: 60px;
           flex: 1;
+
+          &:is(:hover, :focus) {
+            filter: brightness(90%);
+            cursor: pointer;
+          }
         }
       }
 
