@@ -11,7 +11,8 @@ I had a bg.jpg image that i wanted to convert to webp and into smaller sizes for
 ## Useful command
 
 `
-squoosh-cli bg.jpg --resize '{ "width": 480 }' --webp '{ "quality": 75 }' -s -480 && \
-squoosh-cli bg.jpg --resize '{ "width": 960 }' --webp '{ "quality": 75 }' -s -960 && \
-squoosh-cli bg.jpg --resize '{ "width": 1920 }' --webp '{ "quality": 75 }' -s -1920
+squoosh-cli bg.jpg --resize '{ "width": 700 }' --webp '{ "quality": 75 }' -s -700 && \
+squoosh-cli bg.jpg --resize '{ "width": 1200 }' --webp '{ "quality": 75 }' -s -1200 && \
+squoosh-cli bg.jpg --resize '{ "width": 2400 }' --webp '{ "quality": 75 }' -s -2400
+squoosh-cli bg.jpg --resize '{ "width": 3000 }' --webp '{ "quality": 75 }' -s -3000
 `
