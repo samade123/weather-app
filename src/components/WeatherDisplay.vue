@@ -1,6 +1,6 @@
 <template>
     <div class="middle new">
-        <div class="title">Your weather</div>
+        <div class="title">the.weather</div>
         <!-- <transition name="fade-in" mode="out-in" appear appear-class=""> -->
 
             <div class="temp-summary temp-one" v-if="!setMobile" :key="1">
@@ -63,6 +63,30 @@
             </div>
         <!-- </transition> -->
         <div class="spacer condition" v-if="!setMobile"></div>
+    </div>
+
+
+    <div class="right new" v-if="!setMobile">
+        <div class="search-container">
+            <input type="text" class="search">
+            <div class="search-icon">i</div>
+        </div>
+        <div class="search-results-container">
+            <div class="result">Birmingham</div>
+            <div class="result">Manchester</div>
+            <div class="result">New York</div>
+            <div class="result">California</div>
+        </div>
+        <div class="weather-details-title">Weather Details</div>
+        <div class="weather-details-container">
+            <div class="stats">Cloudy <span><slot name="cloudy">0</slot></span></div>
+            <div class="stats">Humidity <span><slot name="humidity">0</slot></span></div>
+            <div class="stats">Wind <span><slot name="wind">0</slot></span></div>
+        </div>
+        <div class="weather-details-title">Next 3 Hours</div>
+        <div class="next-seven-container">
+            <slot name="next-seven"></slot>
+        </div>
     </div>
 </template>
   

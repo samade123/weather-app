@@ -58,6 +58,18 @@
       <template #condition>
         {{ current ? current.condition.text : 'Mostly Clear' }}
       </template>
+      <template #cloudy>
+        {{ current ? current.cloud : ".." }}
+      </template>
+      <template #humidity>
+        {{ current ? current.humidity : ".." }}
+      </template>
+      <template #wind>
+        {{ current ? current.wind_kph : ".." }}
+      </template>
+      <template #next-seven>
+        <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth" />
+      </template>
     </WeatherDisplay>
 
     <div class="bottom new" v-if="props.theme == 'new' && setMobile">
