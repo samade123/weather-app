@@ -1,0 +1,42 @@
+/* Fallback for browsers that don't support image-set */
+@media (min-width: 0px) {
+  div.outer-bg {
+    background: url('./../assets/theme-new/bg-700.webp') center / cover no-repeat;
+  }
+}
+
+@media (min-width: 500px) {
+  div.outer-bg {
+    background: url('./../assets/theme-new/bg-1200.webp') center / cover no-repeat;
+  }
+}
+
+@media (min-width: 1000px) {
+  div.outer-bg {
+    background: url('./../assets/theme-new/bg-2400.webp') center / cover no-repeat;
+  }
+}
+
+div.outer-bg {
+  // background-image: -webkit-image-set(url('./../assets/theme-new/bg-700.webp') 1x,
+  //     url('./../assets/theme-new/bg-1200.webp') 2x,
+  //     url('./../assets/theme-new/bg-2400.webp') 3x);
+  // background-image: image-set(url('./../assets/theme-new/bg-700.webp') 1x,
+  //     url('./../assets/theme-new/bg-1200.webp') 2x,
+  //     url('./../assets/theme-new/bg-2400.webp') 3x);
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #000;
+  filter: blur(3px);
+  filter: brightness(0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+  z-index: -1;
+}
