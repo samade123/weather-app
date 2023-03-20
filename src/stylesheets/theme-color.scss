@@ -7,6 +7,11 @@
     --dynamic-text-color: #24609B;
 }
 
+:root:has(#theme-new:checked) {
+    --dynamic-right-color: #f7f7f799;
+    --dynamic-right-margin-inline: 30px;
+}  
+
 [theme="clear-dark"] {
     --app-background-color: #FFFFFF;
     --app-text-color: #1F1E31;
