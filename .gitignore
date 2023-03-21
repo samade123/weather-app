@@ -32,3 +32,6 @@ public/img/favicon_io.zip
 public/img/pwa-app-icons.zip
 src/composables/weatherReponse.js
 *.webp
+*.csv
+src/assets/*/*.py
+src/assets/*.py
