@@ -68,8 +68,9 @@
 
     <div class="right new" v-if="!setMobile">
         <div class="search-container">
-            <input type="text" class="search" ref="searchInput" @blur="playIcon">
-            <div class="search-icon" @click="playIcon">
+            <input type="text" class="search" ref="searchInput" v-model="searchTerm" @keydown.enter="search"
+                @focus=focusOnInput @blur="blurOffInput">
+            <div class="search-icon" @click="buttonClick(true)">
                 <Vue3Lottie :animationData="searchIconJson" height="100%" width="100%" ref="icon" :loop="false"
                     :pauseAnimation="false" :autoPlay="false" />
             </div>
@@ -114,20 +115,49 @@ export default {
         const { width, setMobile, getScreenCategory } = widthFunction();
         const icon = ref(null) //lottie player element
         const searchInput = ref(null) //input element
-        const iconPlayState = ref(false)
+        const playIconForwardNext = ref(true)
+        const searchInputFocus = ref(false);
 
-        const playIcon = () => {
-            iconPlayState.value = !iconPlayState.value
-            if (iconPlayState.value) {
-                icon.value.playSegments([0, 50], true)
-                searchInput.value.focus()
+
+        const buttonClick = () => {
+            if (!searchInputFocus.value) { //input has no focus
+                searchInput.value.focus();
+                searchInputFocus.value = true;
             } else {
-                icon.value.playSegments([50, 0], true)
+                searchInput.value.blur();
+                searchInputFocus.value = false;
             }
         }
 
+        const focusOnInput = () => {
+            if (playIconForwardNext.value) { // the next play direction is forward then play forward 
+                icon.value.playSegments([0, 50], true)
+                playIconForwardNext.value = false;
+            }
+        }
+
+        const blurOffInput = () => {
+            if (!playIconForwardNext.value) {
+                icon.value.playSegments([50, 0], true)
+                playIconForwardNext.value = true;
+            }
+        }
+
+        const searchTerm = ref('');
+
+        const search = () => {
+            // if (!searchTerm.value) return;
+            // const worker = new Worker('/path/to/worker.js');
+            // worker.postMessage(searchTerm.value);
+            // worker.onmessage = (event) => {
+            //     console.log(event.data);
+            //     // Do something with the search results
+            // };
+        };
+
         return {
-            width, setMobile, getScreenCategory, searchIconJson, icon, playIcon, searchInput,
+            width, setMobile, searchTerm,
+            search, getScreenCategory, searchIconJson, icon, focusOnInput, searchInput, blurOffInput, buttonClick
         };
 
     },
