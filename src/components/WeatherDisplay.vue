@@ -1,7 +1,6 @@
 <template>
     <div class="middle new">
         <div class="title">the.weather</div>
-        <!-- <transition name="fade-in" mode="out-in" appear appear-class=""> -->
 
         <div class="temp-summary temp-one" v-if="!setMobile" :key="1">
             <div class="temp">
@@ -61,26 +60,24 @@
                 <slot name="temperature">0</slot><span>&#176;</span>
             </div>
         </div>
-        <!-- </transition> -->
         <div class="spacer condition" v-if="!setMobile"></div>
     </div>
 
 
     <div class="right new" v-if="!setMobile">
         <div class="search-container">
-            <input type="text" class="search" ref="searchInput" v-model="searchTerm" @keydown.enter="search"
-                @focus=focusOnInput @blur="blurOffInput">
+            <input type="text" class="search" ref="searchInput" @input="inputChange" v-model="searchTerm"
+                @keydown.enter="search" @focus=focusOnInput @blur="blurOffInput">
             <div class="search-icon" @click="buttonClick(true)">
                 <Vue3Lottie :animationData="searchIconJson" height="100%" width="100%" ref="icon" :loop="false"
                     :pauseAnimation="false" :autoPlay="false" />
             </div>
         </div>
-        <div class="search-results-container">
-            <div class="result">Birmingham</div>
-            <div class="result">Manchester</div>
-            <div class="result">New York</div>
-            <div class="result">California</div>
-        </div>
+        <transition-group tag="div" class="search-results-container" mode="out-in" :css="false" appear
+            @before-enter="beforeEnter" @enter="enter" @leave="leave">
+            <div v-for="(city, index) in searchResults" :key="city.refIndex" :data-index="index" class="result">{{
+                city.item.name }}</div>
+        </transition-group>
         <div class="weather-details-title">Weather Details</div>
         <div class="weather-details-container">
             <div class="stats">Cloudy <span>
@@ -103,8 +100,11 @@
 <script>
 import WeatherSVG from "@/components/WeatherSVG.vue";
 import { widthFunction } from "@/composables/Mobile.js";
+import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
 import searchIconJson from "@/assets/lottie-files/search.json";
-import { ref } from 'vue';
+// import workerPath from "@/webworkers/searchCSV.js";
+import csvPath from "@/assets/cities-new.csv";
+import { ref, watch, onBeforeMount } from 'vue';
 
 export default {
     name: 'WeatherDisplay',
@@ -115,9 +115,19 @@ export default {
         const { width, setMobile, getScreenCategory } = widthFunction();
         const icon = ref(null) //lottie player element
         const searchInput = ref(null) //input element
+        const searchContainer = ref(null) //input element
         const playIconForwardNext = ref(true)
         const searchInputFocus = ref(false);
-
+        const searchTerm = ref('');
+        const searchResults = ref([]);
+        const {
+            transition,
+            beforeEnter,
+            enter,
+            leave,
+            delayedEnter
+        } = useStaggeredTransition();
+        const searchTermTimer = ref(false);
 
         const buttonClick = () => {
             if (!searchInputFocus.value) { //input has no focus
@@ -139,25 +149,69 @@ export default {
         const blurOffInput = () => {
             if (!playIconForwardNext.value) {
                 icon.value.playSegments([50, 0], true)
+                searchTerm.value = "";
+                search();
                 playIconForwardNext.value = true;
             }
         }
 
-        const searchTerm = ref('');
-
         const search = () => {
-            // if (!searchTerm.value) return;
-            // const worker = new Worker('/path/to/worker.js');
-            // worker.postMessage(searchTerm.value);
-            // worker.onmessage = (event) => {
-            //     console.log(event.data);
-            //     // Do something with the search results
-            // };
+            if (!searchTerm.value) {
+                document.getElementsByClassName('search-results-container')[0].classList.remove("searching");
+                document.getElementsByClassName('search-results-container')[0].classList.add("go-away");
+                document.getElementsByClassName('search-results-container')[0].classList.remove("searching");
+                setTimeout(() => {
+                    document.getElementsByClassName('search-results-container')[0].style.display = "none";
+                }, 900);
+                searchResults.value.length = 0;
+                return
+            };
+            // const worker = new Worker(workerPath);
+            const worker = new Worker(new URL('@/webworkers/searchCSV.js', import.meta.url));
+
+            worker.postMessage({ csvPath, searchTerm: searchTerm.value });
+            document.getElementsByClassName('search-results-container')[0].classList.remove("go-away");
+            document.getElementsByClassName('search-results-container')[0].classList.add("searching");
+            document.getElementsByClassName('search-results-container')[0].classList.remove("go-away");
+            document.getElementsByClassName('search-results-container')[0].style.overflowY = "hidden";
+            document.getElementsByClassName('search-results-container')[0].style.display = "grid";
+            
+            setTimeout(() => {
+                document.getElementsByClassName('search-results-container')[0].style.overflowY = "initial";
+            }, 1500);
+            worker.onmessage = (event) => {
+                searchResults.value.length = 0;
+                // setTimeout(() => {
+                searchResults.value = [...event.data];
+                // }, 400);
+            };
         };
+
+        // onBeforeMount(() => {
+        const inputChange = () => {
+
+            console.log("here")
+            if (searchTermTimer.value) {
+                clearTimeout(searchTermTimer.value)
+            }
+            searchTermTimer.value = setTimeout(() => {
+                search()
+            }, 400)
+        }
+        // })
 
         return {
             width, setMobile, searchTerm,
-            search, getScreenCategory, searchIconJson, icon, focusOnInput, searchInput, blurOffInput, buttonClick
+            search, getScreenCategory,
+            searchIconJson, icon, focusOnInput,
+            searchInput, blurOffInput, buttonClick,
+            searchResults, transition,
+            beforeEnter,
+            enter,
+            leave,
+            delayedEnter,
+            searchContainer,
+            inputChange,
         };
 
     },
