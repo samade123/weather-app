@@ -5,12 +5,15 @@
     --dynamic-background-color-transparent: #c4e2ffaa;
     --dynamic-board-bg-color: #ECF3F8;
     --dynamic-text-color: #24609B;
+
+    --focus-ring-color: #0e44af;
+    --background-color: #fff;
 }
 
 :root:has(#theme-new:checked) {
     --dynamic-right-color: #f7f7f799;
     --dynamic-right-margin-inline: 30px;
-}  
+}
 
 [theme="clear-dark"] {
     --app-background-color: #FFFFFF;
@@ -34,7 +37,7 @@
 [theme="rain-dark"] {
     --app-background-color: #FFFFFF;
     --app-text-color: #1F1E31;
-    --dynamic-background-color:  #c4e2ffaa;
+    --dynamic-background-color: #c4e2ffaa;
     --dynamic-background-color-transparent: #f9f9f977;
     --dynamic-board-bg-color: #ECF3F8;
     --dynamic-text-color: #1F1E31;
