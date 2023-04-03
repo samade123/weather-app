@@ -1,6 +1,6 @@
 <template>
   <HomeView v-if="location" :nav="nav" :data="weatherData" :ready="dataReady" :theme="theme" @current-obj="newPage"
-    @open-settings="openSettings" @city-search="(e)=>{updateWeather({ lat: false, long: false, name: e})}"/>
+    @open-settings="openSettings" @city-search="(e) => { updateWeather({ lat: false, long: false, name: e }) }" />
   <div class="toast-bg">
     <div class="toast" v-if="showToast" @click="showMenu = true">
       Looking to turn on location? click here!
@@ -124,7 +124,7 @@ export default {
       } else {
         setTimeout(() => {
           if (latitude.value) {
-            updateWeather({ lat: latitude.value, long: longitude.value, name: false});
+            updateWeather({ lat: latitude.value, long: longitude.value, name: false });
           }
         });
       }

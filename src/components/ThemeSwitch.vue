@@ -83,7 +83,7 @@ export default {
   }
 
   div.minimise {
-    opacity: 1!important;
+    opacity: 1 !important;
     position: relative;
     top: -10px;
     right: 0;
