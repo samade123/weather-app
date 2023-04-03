@@ -16,11 +16,22 @@ export function getTheme() {
 
     storage.storeData("theme", theme.value); //don't showtoast as weather data is avaliable now
 
+  const themeOnLoad = () => {
+    theme.value = storage.getData("theme");
+    const oldThemeInput = document.querySelector("#theme-old");
+    const newThemeInput = document.querySelector("#theme-new");
+
+    if (theme.value == "old") {
+      oldThemeInput.checked = true;
+      newThemeInput.checked = false;
+    } else if (theme.value == "new") {
+      newThemeInput.checked = true;
+      oldThemeInput.checked = false;
   }
+  };
 
   onMounted(() => {
-    handleThemeChange()
-
+    themeOnLoad();
 
     watchEffect(() => {
       const oldThemeInput = document.querySelector('#theme-old')
