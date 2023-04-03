@@ -19,7 +19,9 @@ export function getTheme() {
   };
 
   const themeOnLoad = () => {
-    theme.value = storage.getData("theme");
+    if (storage.doesDataExist("theme")) {
+      theme.value = storage.getData("theme");
+    }
     const oldThemeInput = document.querySelector("#theme-old");
     const newThemeInput = document.querySelector("#theme-new");
 
