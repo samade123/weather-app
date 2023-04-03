@@ -1,53 +1,26 @@
 <template>
-  <div class="home" v-if="props.theme=='old'">
+  <div class="home" v-if="props.theme == 'old'">
     <div class="left" v-if="!setMobile">
-      <SideNav
-        :nav="nav"
-        :windowWidth="width"
-        :windowHeight="height"
-        @current-obj="routeLink"
-        @open-settings="openSettings"
-      />
+      <SideNav :nav="nav" :windowWidth="width" :windowHeight="height" @current-obj="routeLink"
+        @open-settings="openSettings" />
     </div>
     <div class="middle">
       <!-- <MainBit /> -->
-      <router-view
-        :mobile="setMobile"
-        :data="props.data"
-        :ready="props.ready"
-        :theme="props.theme"
-        @open-settings="openSettings"
-      />
+      <router-view :mobile="setMobile" :data="props.data" :ready="props.ready" :theme="props.theme"
+        @open-settings="openSettings" @city-search="emitSearch" />
       <div class="bottom">
-        <BottomNav
-          v-if="setMobile"
-          :nav="nav"
-          :windowWidth="width"
-          :windowHeight="height"
-          @current-obj="routeLink"
-        />
+        <BottomNav v-if="setMobile" :nav="nav" :windowWidth="width" :windowHeight="height" @current-obj="routeLink" />
       </div>
     </div>
     <div class="right" v-if="!setMobile">
       <!-- <div class="right" v-if="!setMobile && router.currentRoute.value.path == '/'"> -->
-      <ThisWeek
-        v-if="props.ready"
-        :mobile="setMobile"
-        :data="props.data"
-        :ready="props.ready"
-        :windowWidth="width"
-        :windowHeight="height"
-      />
+      <ThisWeek v-if="props.ready" :mobile="setMobile" :data="props.data" :ready="props.ready" :windowWidth="width"
+        :windowHeight="height" />
     </div>
   </div>
 
-  <router-view v-else
-        :mobile="setMobile"
-        :data="props.data"
-        :ready="props.ready"
-        :theme="props.theme"
-        @open-settings="openSettings"
-      />
+  <router-view v-else :mobile="setMobile" :data="props.data" :ready="props.ready" :theme="props.theme"
+    @open-settings="openSettings" @city-search="emitSearch"  />
 </template>
 
 <script>
@@ -69,7 +42,7 @@ export default {
     MainBit,
     ThisWeek,
   },
-  emits: ["openSettings"],
+  emits: ["currentObj", "openSettings", "citySearch"],
   props: ["nav", "data", "ready", "theme"],
   setup(props, ctx) {
     const setMobile = ref(false);
@@ -89,6 +62,11 @@ export default {
       ctx.emit("openSettings");
     };
 
+    const emitSearch = (e) => {
+      console.log("homepage")
+      ctx.emit("citySearch", e);
+    };
+
     const routeLink = (linkObj) => {
       ctx.emit("currentObj", linkObj);
 
@@ -106,7 +84,6 @@ export default {
       console.log(`Theme changed from ${oldValue} to ${newValue}`)
     })
 
-    // onMounted(() => console.log(setMobile));
     return {
       width,
       height,
@@ -117,6 +94,7 @@ export default {
       props,
       router,
       openSettings,
+      emitSearch,
     };
   },
 };
@@ -130,6 +108,7 @@ export default {
     grid-gap: 2px;
     height: 100%;
     overflow: hidden;
+
     .middle {
       // background-image: url("./img/background.jpg")
       overflow: auto;

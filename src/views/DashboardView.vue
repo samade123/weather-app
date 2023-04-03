@@ -1,6 +1,6 @@
 <template>
   <div class="outer">
-    <div class="outer-bg" v-if="props.theme == 'new'" ></div>
+    <div class="outer-bg" v-if="props.theme == 'new'"></div>
     <div class="top" v-if="!props.mobile && props.theme == 'old'"></div>
     <div class="middle" v-if="props.theme == 'old'">
       <div class="today-board" ref="today">
@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <WeatherDisplay v-if="theme === 'new'">
+    <WeatherDisplay @city-search='emitSearch' v-if="theme === 'new'">
       <template #temperature>
         {{ current ? current.temp_c : '0' }}
       </template>
@@ -136,7 +136,7 @@ import WeatherDisplay from "@/components/WeatherDisplay.vue";
 import { useRouter } from "vue-router";
 import { onMounted, watch } from "@vue/runtime-core";
 export default {
-  emits: ["openSettings"],
+  emits: ["openSettings", "citySearch"],
   props: ["mobile", "data", "ready", "theme"],
   components: {
     WeatherStrip,
@@ -160,7 +160,6 @@ export default {
     const today = ref(null);
 
     const router = useRouter();
-
     const shout = () => {
       console.log("Sadasds");
     };
@@ -199,6 +198,12 @@ export default {
     const openSettings = () => {
       ctx.emit("openSettings");
     };
+
+    const emitSearch = (e) => {
+      console.log("dashboard")
+
+      ctx.emit("citySearch", e)
+    }
 
     const setTheme = () => {
       console.log("running theming");
@@ -306,7 +311,7 @@ export default {
       getDay,
       getMonth,
       getTime,
-      width, setMobile, getScreenCategory,
+      width, setMobile, getScreenCategory, emitSearch,
     };
   },
 };

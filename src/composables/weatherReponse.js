@@ -20,7 +20,11 @@ export function getWeather(locationRequest) {
     if (locationRequest.lat) {
         urlExt = `?lat=${locationRequest.lat.value}&long=${locationRequest.long.value}`
     }
+    if (locationRequest.lat === false) {
+        urlExt = `?lat=false&long=false&name=${locationRequest.name}`
+    }
     const urlReq = `api/getWeather` + urlExt;
+    // console.log("Initial", urlReq);
     return new Promise((resolve, reject) => {
         console.log("Initial");
         const location = ref(null);
@@ -37,5 +41,6 @@ export function getWeather(locationRequest) {
             });;
     })
 }
+
 
 

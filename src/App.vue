@@ -1,13 +1,6 @@
 <template>
-  <HomeView
-    v-if="location"
-    :nav="nav"
-    :data="weatherData"
-    :ready="dataReady"
-    :theme="theme"
-    @current-obj="newPage"
-    @open-settings="openSettings"
-  />
+  <HomeView v-if="location" :nav="nav" :data="weatherData" :ready="dataReady" :theme="theme" @current-obj="newPage"
+    @open-settings="openSettings" @city-search="(e)=>{updateWeather({ lat: false, long: false, name: e})}"/>
   <div class="toast-bg">
     <div class="toast" v-if="showToast" @click="showMenu = true">
       Looking to turn on location? click here!
@@ -131,40 +124,45 @@ export default {
       } else {
         setTimeout(() => {
           if (latitude.value) {
-            getWeather({ lat: latitude.value, long: longitude.value })
-              .then((data) => {
-                weatherData.value = data;
-                dataReady.value = true;
-                refreshDataReady();
-                showToast.value = !dataReady.value;
-                storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
-              })
-              .catch((error) => {
-                console.error(error);
-
-                weatherData.value = error.data;
-                dataReady.value = true;
-                refreshDataReady();
-                showToast.value = !dataReady.value;
-                storage.storeData("show-toast", showToast.value);
-
-                if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "preview") {
-                  weatherData.value = false;
-                  dataReady.value = false;
-                  showToast.value = !dataReady.value;
-                  storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
-                } else {
-                  weatherData.value = error.data;
-                  dataReady.value = true;
-                  refreshDataReady();
-                  showToast.value = !dataReady.value;
-                  storage.storeData("show-toast", showToast.value);
-                }
-              });
+            updateWeather({ lat: latitude.value, long: longitude.value, name: false});
           }
         });
       }
     };
+
+    const updateWeather = (queryObj) => {
+      console.log("checking query obj", queryObj)
+      getWeather(queryObj)
+        .then((data) => {
+          weatherData.value = data;
+          dataReady.value = true;
+          refreshDataReady();
+          showToast.value = !dataReady.value;
+          storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
+        })
+        .catch((error) => {
+          console.error(error);
+
+          weatherData.value = error.data;
+          dataReady.value = true;
+          refreshDataReady();
+          showToast.value = !dataReady.value;
+          storage.storeData("show-toast", showToast.value);
+
+          if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "preview") {
+            weatherData.value = false;
+            dataReady.value = false;
+            showToast.value = !dataReady.value;
+            storage.storeData("show-toast", showToast.value); //don't showtoast as weather data is avaliable now
+          } else {
+            weatherData.value = error.data;
+            dataReady.value = true;
+            refreshDataReady();
+            showToast.value = !dataReady.value;
+            storage.storeData("show-toast", showToast.value);
+          }
+        });
+    }
 
     const hideMenuWhenBGClicked = (event) => {
       if (event.target === menu.value) {
@@ -284,7 +282,7 @@ export default {
       storage,
       showToast,
       theme,
-      setMobile, getScreenCategory
+      setMobile, getScreenCategory, updateWeather,
     };
   },
 };

@@ -24,7 +24,7 @@ export default function useStaggeredTransition() {
     gsap.to(el, {
       opacity: 0,
       translateX: 10,
-      duration: 0.4,
+      duration: 0.1,
       ease: "ease-in-out",
       onComplete: done,
     });

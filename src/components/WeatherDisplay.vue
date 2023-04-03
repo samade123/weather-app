@@ -68,15 +68,16 @@
         <div class="search-container">
             <input type="text" class="search" ref="searchInput" @input="inputChange" v-model="searchTerm"
                 @keydown.enter="search" @focus=focusOnInput @blur="blurOffInput">
-            <div class="search-icon" @click="buttonClick(true)">
+            <div class="search-icon" @click="buttonClick($event)">
                 <Vue3Lottie :animationData="searchIconJson" height="100%" width="100%" ref="icon" :loop="false"
                     :pauseAnimation="false" :autoPlay="false" />
             </div>
         </div>
         <transition-group tag="div" class="search-results-container" mode="out-in" :css="false" appear
-            @before-enter="beforeEnter" @enter="enter" @leave="leave">
-            <div v-for="(city, index) in searchResults" :key="city.refIndex" :data-index="index" class="result">{{
-                city.item.name }}</div>
+            @before-enter="beforeEnter" @enter="enter">
+            <div v-for="(city, index) in searchResults" :key="city.refIndex" @mousedown="emitSearch(city.item.name)"
+                :data-index="index" class="result">{{
+                    city.item.name }}</div>
         </transition-group>
         <div class="weather-details-title">Weather Details</div>
         <div class="weather-details-container">
@@ -108,6 +109,7 @@ import { ref, watch, onBeforeMount } from 'vue';
 
 export default {
     name: 'WeatherDisplay',
+    emits: ["citySearch"],
     components: {
         WeatherSVG,
     },
@@ -128,8 +130,22 @@ export default {
             delayedEnter
         } = useStaggeredTransition();
         const searchTermTimer = ref(false);
+        const buttonClickTimer = ref(false);
 
-        const buttonClick = () => {
+        const emitSearch = (e) => {
+            ctx.emit("citySearch", e)
+        }
+        const buttonClick = (e) => {
+            console.log(e)
+
+            // if (buttonClickTimer.value) {
+            //     return
+            // }
+            // buttonClickTimer.value = setTimeout(() => {
+            //     clearTimeout(buttonClickTimer.value)
+            //     buttonClickTimer.value = false
+            // }, 800)
+
             if (!searchInputFocus.value) { //input has no focus
                 searchInput.value.focus();
                 searchInputFocus.value = true;
@@ -175,10 +191,10 @@ export default {
             document.getElementsByClassName('search-results-container')[0].classList.remove("go-away");
             document.getElementsByClassName('search-results-container')[0].style.overflowY = "hidden";
             document.getElementsByClassName('search-results-container')[0].style.display = "grid";
-            
+
             setTimeout(() => {
                 document.getElementsByClassName('search-results-container')[0].style.overflowY = "initial";
-            }, 1500);
+            }, 500);
             worker.onmessage = (event) => {
                 searchResults.value.length = 0;
                 // setTimeout(() => {
@@ -190,13 +206,13 @@ export default {
         // onBeforeMount(() => {
         const inputChange = () => {
 
-            console.log("here")
+            // console.log("here")
             if (searchTermTimer.value) {
                 clearTimeout(searchTermTimer.value)
             }
             searchTermTimer.value = setTimeout(() => {
                 search()
-            }, 400)
+            }, 200)
         }
         // })
 
@@ -212,6 +228,7 @@ export default {
             delayedEnter,
             searchContainer,
             inputChange,
+            emitSearch,
         };
 
     },
