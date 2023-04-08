@@ -54,7 +54,10 @@
         {{ location ? getTime(location.localtime) : '..' }}
       </template>
       <template #weather-svg>
-        <WeatherSVG />
+        <WeatherSVG :condition="current ? current.condition.text : false" />
+      </template>
+      <template #weather-svg-mobile>
+        <WeatherSVG :condition="current ? current.condition.text : false" />
       </template>
       <template #condition>
         {{ current ? current.condition.text : 'Mostly Clear' }}
