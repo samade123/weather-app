@@ -95,6 +95,10 @@
         <div class="next-seven-container">
             <slot name="next-seven"></slot>
         </div>
+        <div class="weather-details-title">Progress Chart</div>
+        <div class="progress-chart-container">
+            <slot name="progress-chart"></slot>
+        </div>
     </div>
 </template>
   

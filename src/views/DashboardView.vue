@@ -74,6 +74,9 @@
       <template #next-seven>
         <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth" />
       </template>
+      <template #progress-chart>
+        <lineChart v-if="forecast" :data="dataArray" :theme="props.theme" />
+      </template>
     </WeatherDisplay>
 
     <div class="bottom new" v-if="props.theme == 'new' && setMobile">
