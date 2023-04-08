@@ -1,12 +1,14 @@
 <template>
-  <div class="today-section" v-touch:swipe.left="decrement" v-touch:swipe.right="increment">
+  <div class="today-section" v-touch:swipe.left="increment" v-touch:swipe.right="decrement">
     <div class="forecast" v-if="props.data">
       <div class="forecast-day" v-for="temp in props.data.forecast.forecastday[0].hour.slice(
         0 + dateCounter,
         upperLimit + dateCounter
       )" :key="temp.time">
         <div class="time">{{ temp.time.substring(11) }}</div>
-        <img :src="temp.condition.icon" width="80" alt="" />
+        <!-- <img :src="temp.condition.icon" width="80" alt="" /> -->
+        <WeatherSVG :condition="temp.condition ? temp.condition.text : false "/>
+
         <div class="temperature">{{ temp.temp_c }}</div>
       </div>
     </div>
@@ -17,12 +19,16 @@
 import { useWindowSize } from "vue-window-size";
 import { ref } from "@vue/reactivity";
 import { onMounted, watch, watchEffect } from "@vue/runtime-core";
+import WeatherSVG from "@/components/WeatherSVG.vue";
 import { storageManager } from "@/composables/storage.js";
 // @ is an alias to /src
 
 export default {
   name: "weatherStrip",
   props: ["data", "upperLimit", "dateCounter", "windowWidth", "ready"],
+  components: {
+    WeatherSVG,
+  },
   setup(props) {
     const location = ref(null);
     const current = ref(null);
