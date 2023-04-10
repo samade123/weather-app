@@ -5,67 +5,84 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Chart from "chart.js";
-import { onMounted } from "@vue/runtime-core";
+import Chart from "chart.js/auto";
+import { onMounted, watch } from "vue";
+import { widthFunction } from "@/composables/Mobile.js";
 
 export default {
   name: "lineChart",
   props: ["data"],
   setup(props) {
-    const data = { names: [], values: [] };
-
-    props.data.forEach((element) => {
-      data.names.push(element.time.substring(11));
-      data.values.push(element.temp_c);
-    });
-
-    console.log(data, "data");
+    const { width, setMobile, getScreenCategory } = widthFunction();
 
     onMounted(() => {
       const ctx = document.getElementById("myChart").getContext("2d");
-
-      const myChart = new Chart(ctx, {
+      let chart = new Chart(ctx, {
         type: "line",
         data: {
-          labels: data.names,
+          labels: props.data.map((element) => element.time.substring(11)),
           datasets: [
             {
               label: "Temperature",
-              data: data.values,
-              backgroundColor: ["rgba(255, 99, 132, 0)"],
-              borderColor: ["white"],
-              pointBorderWidth: 2,
+              data: props.data.map((element) => element.temp_c),
+              backgroundColor: "rgba(255, 99, 132, 0)",
+              borderColor: "white",
               pointRadius: 4,
-              pointColor: ["transparent"],
+              pointBackgroundColor: "transparent",
               pointHoverRadius: 6,
               borderJoinStyle: "miter",
             },
           ],
         },
         options: {
-          maintainAspectRatio: false,
+          maintainAspectRatio: true,
+          aspectRatio: setMobile.value ? 1.4 : 1,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
           scales: {
-            yAxes: [
-              {
-                display: true,
-                ticks: {
-                  beginAtZero: false,
-                },
+            y: {
+              beginAtZero: false,
+              display: true,
+              grid: {
+                color: "rgba(255, 99, 132, 0)",
               },
-            ],
-            xAxes: [
-              {
-                display: true,
-                ticks: {
-                  beginAtZero: false,
-                },
+              ticks: {
+                borderColor: "white",
+                color: "white",
               },
-            ],
+            },
+            x: {
+              beginAtZero: false,
+              display: true,
+              grid: {
+                color: "transparent",
+              },
+              ticks: {
+                borderColor: "white",
+                color: "white",
+              },
+            },
           },
         },
       });
+
+      watch(
+        () => props.data,
+        (newValue) => {
+          chart.data.labels = newValue.map((element) =>
+            element.time.substring(11)
+          );
+          chart.data.datasets[0].data = newValue.map(
+            (element) => element.temp_c
+          );
+          chart.update();
+        }
+      );
     });
+
     return {};
   },
 };
@@ -76,12 +93,11 @@ export default {
   .chart-bg {
     display: grid;
     place-items: center;
-    // background: black;
     position: relative;
     width: 100%;
     height: 100%;
 
-    #myChart {
+    canvas {
       width: 90% !important;
     }
   }
@@ -91,14 +107,25 @@ export default {
   .chart-bg {
     display: grid;
     place-items: center;
-    // background: black;
     position: relative;
-    // width: 100%;
-    height: min(100%, 100px);
+    aspect-ratio: 1;
+    width: min(80%, 250px);
+    margin-inline: auto;
+    // height: min(100%, 100px);
 
-    #myChart {
+    canvas {
       width: auto !important;
     }
   }
+
+
+  @media (max-width: 600px) {
+    .chart-bg {
+      width: 100%;
+
+      aspect-ratio: 1.4;
+    }
+  }
+
 }
 </style>
