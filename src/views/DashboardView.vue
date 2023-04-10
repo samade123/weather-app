@@ -80,7 +80,15 @@
     </WeatherDisplay>
 
     <div class="bottom new" v-if="props.theme == 'new' && setMobile">
-      <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth" />
+      <MobileBottom>
+        <template #weather-strip>
+          <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter"
+            :windowWidth="windowWidth" />
+        </template>
+        <template #progress-chart>
+        <lineChart v-if="forecast" :data="dataArray" :theme="props.theme" />
+      </template>
+      </MobileBottom>
     </div>
     <div class="bottom" v-if="props.mobile && props.theme == 'old'">
       <div class="weather-title">Today <span> Next 7 days</span> </div>
@@ -134,6 +142,7 @@
 <script>
 import { ref } from "@vue/reactivity";
 import WeatherStrip from "@/components/WeatherStrip.vue";
+import MobileBottom from "@/components/MobileBottom.vue";
 import { storageManager } from "@/composables/storage.js";
 import LineChart from "@/components/Chart.vue";
 import { widthFunction } from "@/composables/Mobile.js";
@@ -149,6 +158,7 @@ export default {
     LineChart,
     WeatherSVG,
     WeatherDisplay,
+    MobileBottom,
   },
   setup(props, ctx) {
     const publicPath = process.env.BASE_URL;
