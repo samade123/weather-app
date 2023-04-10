@@ -1,19 +1,19 @@
 /* Fallback for browsers that don't support image-set */
 @media (min-width: 0px) {
   div.outer-bg {
-    background: url('./../assets/theme-new/bg-700.webp') center / cover no-repeat;
+    background: url('./../assets/theme-new/bg-1200.webp') center / cover no-repeat;
   }
 }
 
 @media (min-width: 500px) {
   div.outer-bg {
-    background: url('./../assets/theme-new/bg-1200.webp') center / cover no-repeat;
+    background: url('./../assets/theme-new/bg-2400.webp') center / cover no-repeat;
   }
 }
 
 @media (min-width: 1000px) {
   div.outer-bg {
-    background: url('./../assets/theme-new/bg-2400.webp') center / cover no-repeat;
+    background: url('./../assets/theme-new/bg-3000.webp') center / cover no-repeat;
   }
 }
 
