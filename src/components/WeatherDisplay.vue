@@ -82,13 +82,13 @@
         <div class="weather-details-title">Weather Details</div>
         <div class="weather-details-container">
             <div class="stats">Cloudy <span>
-                    <slot name="cloudy">0</slot>
+                    <slot name="cloudy">0</slot>%
                 </span></div>
             <div class="stats">Humidity <span>
-                    <slot name="humidity">0</slot>
+                    <slot name="humidity">0</slot>%
                 </span></div>
             <div class="stats">Wind <span>
-                    <slot name="wind">0</slot>
+                    <slot name="wind">0</slot>km/h
                 </span></div>
         </div>
         <div class="weather-details-title">Next 3 Hours</div>
