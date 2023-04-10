@@ -159,7 +159,7 @@
 
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 20px;
       box-sizing: border-box;
 
       width: min(370px, 40vw);
@@ -190,7 +190,8 @@
         gap: var(--dynamic-right-margin-inline);
         height: 60px;
         margin-bottom: 10px;
-        position: relative;
+        position: sticky;
+        top: 0;
 
         input {
           /* Reset default styling */
@@ -263,11 +264,28 @@
           opacity: 0;
         }
 
+        div {
+          width: 100%;
+          height: 100%;
+          text-align: left;
+          padding-block: 5px;
+          padding-inline-start: 5px;
+          border-radius: 10px;
+
+          &:hover {
+            cursor: pointer;
+            filter: brightness(0.8);
+            background: #f7f7f722;
+          }
+        }
+
+
       }
 
       div.weather-details-title {
         padding-top: 10px;
         margin-inline: var(--dynamic-right-margin-inline) 0;
+        margin-bottom: 15px;
         text-align: left;
       }
 
@@ -286,6 +304,18 @@
           justify-content: space-between;
         }
 
+      }
+
+      div.next-seven-container {
+        margin-inline: var(--dynamic-right-margin-inline);
+        border-bottom: var(--dynamic-right-color) 1px solid;
+        padding-bottom: 10px;
+      }
+
+      div.progress-chart-container {
+        margin-inline: var(--dynamic-right-margin-inline);
+        // border-bottom: var(--dynamic-right-color) 1px solid;
+        padding-bottom: 10px;
       }
     }
   }
