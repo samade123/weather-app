@@ -140,16 +140,6 @@ export default {
             ctx.emit("citySearch", e)
         }
         const buttonClick = (e) => {
-            console.log(e)
-
-            // if (buttonClickTimer.value) {
-            //     return
-            // }
-            // buttonClickTimer.value = setTimeout(() => {
-            //     clearTimeout(buttonClickTimer.value)
-            //     buttonClickTimer.value = false
-            // }, 800)
-
             if (!searchInputFocus.value) { //input has no focus
                 searchInput.value.focus();
                 searchInputFocus.value = true;
@@ -186,7 +176,6 @@ export default {
                 searchResults.value.length = 0;
                 return
             };
-            // const worker = new Worker(workerPath);
             const worker = new Worker(new URL('@/webworkers/searchCSV.js', import.meta.url));
 
             worker.postMessage({ csvPath, searchTerm: searchTerm.value });
@@ -207,10 +196,7 @@ export default {
             };
         };
 
-        // onBeforeMount(() => {
         const inputChange = () => {
-
-            // console.log("here")
             if (searchTermTimer.value) {
                 clearTimeout(searchTermTimer.value)
             }
@@ -218,7 +204,7 @@ export default {
                 search()
             }, 200)
         }
-        // })
+
 
         return {
             width, setMobile, searchTerm,
