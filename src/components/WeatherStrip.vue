@@ -133,7 +133,7 @@ export default {
 
         &:hover {
           background: var(--dynamic-background-color);
-          cursor: pointer;
+          // cursor: pointer;
         }
       }
     }
@@ -166,7 +166,7 @@ export default {
         // border-radius: 8px;
 
         &:hover {
-          cursor: pointer;
+          // cursor: pointer;
         }
       }
     }
