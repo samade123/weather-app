@@ -155,10 +155,10 @@ export default {
             selectedValue.value = selectValue(selectedObj);
             currentObj.value = selectedObj;
             element.value.classList.add(selectedObj["selectedClass"])
-            setTimeout(() => {
-                element.value.classList.remove("transition")
 
-            }, 600);
+            element.value.addEventListener("animationend", () => {
+                element.value.classList.remove("transition")
+            });
         }
 
         return {
