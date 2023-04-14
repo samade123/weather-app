@@ -412,38 +412,79 @@
 
       div.bottom {
         flex: 5;
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: space-evenly;
+
         display: grid;
         grid-template-rows: 50px 1fr;
         gap: 15px;
         place-content: center;
         place-items: center;
-        width: 85vw;
+        width: 95vw;
         padding-bottom: 1vh;
 
 
 
         &>div {
-          background: linear-gradient(109.46deg, #95959544 40%, #7474741a 100%);
-          border-radius: 15px;
-          backdrop-filter: blur(10px);
-          // max-height: fit-content;
-          // width: 100;
-
           &.bottom-main {
-            height: fit-content;
-            height: -moz-fit-content;
+            height: 100%;
             min-height: 15vh;
             min-height: 15dvh;
             min-height: 15svh;
             padding: 7px 10px;
-            min-width: 95%;
+            min-width: 95vw;
+            width: min(100%, 95vw);
+
+            &:has(.slide-enter-active, .slide-leave-active,
+              .inverse-slide-enter-active,
+              .inverse-slide-leave-active) {
+              position: relative;
+            }
+
+            &>div {
+              background: linear-gradient(109.46deg, #95959544 40%, #7474741a 100%);
+              border-radius: 15px;
+              backdrop-filter: blur(10px);
+              min-width: 100%;
+              padding: 7px 10px;
+              width: min(100%, 95vw);
+
+            }
+
+            .slide-enter-active,
+            .slide-leave-active,
+            .inverse-slide-enter-active,
+            .inverse-slide-leave-active {
+              transition: all 0.2s ease;
+              position: absolute;
+            }
+
+            .slide-enter-from {
+              transform: translateX(-100%);
+            }
+
+            .slide-leave-to {
+              transform: translateX(100%);
+            }
+
+            .inverse-slide-enter-from {
+              transform: translateX(100%);
+            }
+
+            .inverse-slide-leave-to {
+              transform: translateX(-100%);
+            }
+
           }
+
         }
 
         .mobile-selectors {
+
+          background: linear-gradient(109.46deg, #95959544 40%, #7474741a 100%);
+          border-radius: 15px;
+          backdrop-filter: blur(10px);
+          // max-height: fit-content;
+          min-width: 100%;
+
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
           gap: 15px;
@@ -488,7 +529,7 @@
               overflow: hidden;
 
               &.transition {
-                animation: change 0.4s;
+                animation: change 0.2s;
               }
 
               @keyframes change {

@@ -35,8 +35,8 @@ export default {
           ],
         },
         options: {
-          maintainAspectRatio: true,
-          aspectRatio: setMobile.value ? 1.4 : 1,
+          maintainAspectRatio: false,
+          aspectRatio: setMobile.value ? 1.7 : 1,
           plugins: {
             legend: {
               display: false
@@ -122,8 +122,11 @@ export default {
   @media (max-width: 600px) {
     .chart-bg {
       width: 100%;
-
-      aspect-ratio: 1.4;
+      height: 100%;
+      aspect-ratio: auto;
+      // max-width: 95vw;
+      // max-height: 100%;
+      // aspect-ratio: 1.7;
     }
   }
 

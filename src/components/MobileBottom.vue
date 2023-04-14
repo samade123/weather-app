@@ -8,16 +8,19 @@
             </div>
         </div>
     </div>
+
     <div class="bottom-main">
-        <div class="bottom-sections" v-if="currentObj.name == `3-hours`">
-            <slot name="weather-strip"></slot>
-        </div>
-        <div class="bottom-sections" v-if="currentObj.name == `search`">
-            <slot name="weather-search"></slot>
-        </div>
-        <div class="bottom-sections" v-if="currentObj.name == `all-day`">
-            <slot name="progress-chart"></slot>
-        </div>
+        <transition :name="transitionName">
+            <div class="bottom-sections" v-if="currentObj.name == selectors[0].name">
+                <slot name="weather-search"></slot>
+            </div>
+            <div class="bottom-sections" v-else-if="currentObj.name == selectors[1].name">
+                <slot name="weather-strip"></slot>
+            </div>
+            <div class="bottom-sections" v-else-if="currentObj.name == selectors[2].name">
+                <slot name="progress-chart"></slot>
+            </div>
+        </transition>
     </div>
 </template>
   
@@ -28,7 +31,7 @@ import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
 import searchIconJson from "@/assets/lottie-files/search.json";
 // import workerPath from "@/webworkers/searchCSV.js";
 import csvPath from "@/assets/cities-new.csv";
-import { ref, watch, onMounted, computed } from 'vue';
+import { ref, watch, onMounted, computed, isProxy, toRaw } from 'vue';
 
 export default {
     name: 'MobileBottom',
@@ -55,6 +58,7 @@ export default {
         } = useStaggeredTransition();
         const searchTermTimer = ref(false);
         const currentObj = ref(false)
+        const transitionName = ref('slide')
 
         const emitSearch = (e) => {
             ctx.emit("citySearch", e)
@@ -118,7 +122,7 @@ export default {
 
         onMounted(() => {
             elementLeft.value = `${element.value.offsetLeft}px`;
-            currentObj.value = selectors.filter((selector) => selector.name == "3-hours")[0]
+            currentObj.value = selectors[1]
             element.value.classList.add(currentObj.value["selectedClass"])
 
         });
@@ -137,6 +141,14 @@ export default {
         const selectors = [{ "name": "search", "selected": false, "selectedClass": "one" }, { "name": "3-hours", "selected": true, "selectedClass": "two" }, { "name": "all-day", "selected": false, "selectedClass": "three" }]
         selectedValue.value = selectors.filter((selector) => selector.selected == true)[0].name
         const selectValue = (selectedObj) => {
+
+            if (selectors.indexOf(selectedObj) > selectors.indexOf(toRaw(currentObj.value))) {
+                transitionName.value = 'inverse-slide'
+                
+            } else if (selectors.indexOf(selectedObj) < selectors.indexOf(toRaw(currentObj.value))) {
+                transitionName.value = 'slide'
+
+            }
             selectors.forEach((selector) => selector["selected"] = false)
             selectedObj["selected"] = true;
 
@@ -179,6 +191,7 @@ export default {
             selectedValue,
             elementLeft,
             currentObj,
+            transitionName,
         };
 
     },

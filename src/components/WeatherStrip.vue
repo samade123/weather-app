@@ -7,7 +7,7 @@
       )" :key="temp.time">
         <div class="time">{{ temp.time.substring(11) }}</div>
         <!-- <img :src="temp.condition.icon" width="80" alt="" /> -->
-        <WeatherSVG :condition="temp.condition ? temp.condition.text : false "/>
+        <WeatherSVG :condition="temp.condition ? temp.condition.text : false" />
 
         <div class="temperature">{{ temp.temp_c }}</div>
       </div>
@@ -169,6 +169,13 @@ export default {
           // cursor: pointer;
         }
       }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .today-section {
+      overflow: scroll;
+      margin-inline: auto;
     }
   }
 }
