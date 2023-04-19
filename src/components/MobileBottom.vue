@@ -11,13 +11,38 @@
 
     <div class="bottom-main">
         <transition :name="transitionName">
-            <div class="bottom-sections" v-if="currentObj.name == selectors[0].name">
-                <slot name="weather-search"></slot>
+            <div class="bottom-sections" v-if="switchFunctionality(selectors[0].name)">
+                <div class="search-suggestion-wrapper">
+                    <div class="search-results-container" v-if="searchResults.length > 0">
+                        <div class="result-wrapper" v-for="(n, index) in 5" :key='n'>
+                            <transition  name="results" appear mode="out-in">
+                                <div class="results" @click="emitSearch(searchResults[index].item.name)" v-if="searchResults[index]" :key='searchResults[index].item.name'
+                                    :style="{'transition-delay': `${n*0.1}s`}"> {{
+                                        searchResults[index].item.name }}
+                                </div>
+
+                            </transition>
+                        </div>
+                    </div>
+                    <transition :name="transitionName">
+
+                        <Vue3Lottie v-if='searchResults.length == 0' :animationData="searchMapJson" :loop="false"
+                            :pauseAnimation="false" :autoPlay="false" />
+                    </transition>
+                </div>
+                <div class="search-container" @click="buttonClick($event)">
+                    <div class="search-icon">
+                        <Vue3Lottie :animationData="searchIconJson" height="40px" width="40px" ref="icon" :loop="false"
+                            :pauseAnimation="false" :autoPlay="false" />
+                    </div>
+                    <input type="text" class="search" ref="searchInput" @input="inputChange" v-model="searchTerm">
+                </div>
+
             </div>
-            <div class="bottom-sections" v-else-if="currentObj.name == selectors[1].name">
+            <div class="bottom-sections" v-else-if="switchFunctionality(selectors[1].name)">
                 <slot name="weather-strip"></slot>
             </div>
-            <div class="bottom-sections" v-else-if="currentObj.name == selectors[2].name">
+            <div class="bottom-sections" v-else-if="switchFunctionality(selectors[2].name)">
                 <slot name="progress-chart"></slot>
             </div>
         </transition>
@@ -29,9 +54,10 @@ import WeatherSVG from "@/components/WeatherSVG.vue";
 import { widthFunction } from "@/composables/Mobile.js";
 import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
 import searchIconJson from "@/assets/lottie-files/search.json";
+import searchMapJson from "@/assets/lottie-files/search-map.json";
 // import workerPath from "@/webworkers/searchCSV.js";
 import csvPath from "@/assets/cities-new.csv";
-import { ref, watch, onMounted, computed, isProxy, toRaw } from 'vue';
+import { ref, onMounted, toRaw } from 'vue';
 
 export default {
     name: 'MobileBottom',
@@ -45,7 +71,10 @@ export default {
         const searchInput = ref(null) //input element
         const searchContainer = ref(null) //input element
         const playIconForwardNext = ref(true)
+        const icon = ref(false) //lottie player element
+
         const searchInputFocus = ref(false);
+        const showSearch = ref(false);
         const searchTerm = ref('');
         const elementLeft = ref(0)
         const searchResults = ref([]);
@@ -60,20 +89,44 @@ export default {
         const currentObj = ref(false)
         const transitionName = ref('slide')
 
+        const selectedValue = ref("")
+        const selectors = [{ "name": "search", "selected": false, "selectedClass": "one" }, { "name": "3-hours", "selected": true, "selectedClass": "two" }, { "name": "all-day", "selected": false, "selectedClass": "three" }]
+
+
+        const switchFunctionality = (selectorName) => {
+
+            if (selectorName != selectors[0].name) {
+                searchResults.value.length = 0;
+
+                showSearch.value = false;
+                searchTerm.value = "";
+                playIconForwardNext.value = true;
+            }
+            return currentObj.value.name == selectorName
+        }
+
         const emitSearch = (e) => {
-            ctx.emit("citySearch", e)
+            ctx.emit("citySearch", e);
+            searchResults.value.length = 0;
+            icon.value.playSegments([50, 0], true)
+            showSearch.value = false;
+            searchTerm.value = "";
+            playIconForwardNext.value = true;
         }
         const buttonClick = (e) => {
             if (!searchInputFocus.value) { //input has no focus
                 searchInput.value.focus();
                 searchInputFocus.value = true;
+                focusOnInput();
             } else {
                 searchInput.value.blur();
                 searchInputFocus.value = false;
+                blurOffInput();
             }
         }
 
         const focusOnInput = () => {
+            // console.log(icon.value)
             if (playIconForwardNext.value) { // the next play direction is forward then play forward 
                 icon.value.playSegments([0, 50], true)
                 playIconForwardNext.value = false;
@@ -91,42 +144,25 @@ export default {
 
         const search = () => {
             if (!searchTerm.value) {
-                document.getElementsByClassName('search-results-container')[0].classList.remove("searching");
-                document.getElementsByClassName('search-results-container')[0].classList.add("go-away");
-                document.getElementsByClassName('search-results-container')[0].classList.remove("searching");
-                setTimeout(() => {
-                    document.getElementsByClassName('search-results-container')[0].style.display = "none";
-                }, 900);
                 searchResults.value.length = 0;
                 return
             };
+
+            if (searchTerm.value.length < 3) { return };
             const worker = new Worker(new URL('@/webworkers/searchCSV.js', import.meta.url));
 
             worker.postMessage({ csvPath, searchTerm: searchTerm.value });
-            document.getElementsByClassName('search-results-container')[0].classList.remove("go-away");
-            document.getElementsByClassName('search-results-container')[0].classList.add("searching");
-            document.getElementsByClassName('search-results-container')[0].classList.remove("go-away");
-            document.getElementsByClassName('search-results-container')[0].style.overflowY = "hidden";
-            document.getElementsByClassName('search-results-container')[0].style.display = "grid";
-
-            setTimeout(() => {
-                document.getElementsByClassName('search-results-container')[0].style.overflowY = "initial";
-            }, 500);
             worker.onmessage = (event) => {
-                searchResults.value.length = 0;
-                // setTimeout(() => {
                 searchResults.value = [...event.data];
-                // }, 400);
             };
+
         };
 
         onMounted(() => {
             elementLeft.value = `${element.value.offsetLeft}px`;
             currentObj.value = selectors[1]
             element.value.classList.add(currentObj.value["selectedClass"])
-
         });
-
 
         const inputChange = () => {
             if (searchTermTimer.value) {
@@ -134,17 +170,15 @@ export default {
             }
             searchTermTimer.value = setTimeout(() => {
                 search()
-            }, 200)
+            }, 500)
         }
 
-        const selectedValue = ref("")
-        const selectors = [{ "name": "search", "selected": false, "selectedClass": "one" }, { "name": "3-hours", "selected": true, "selectedClass": "two" }, { "name": "all-day", "selected": false, "selectedClass": "three" }]
         selectedValue.value = selectors.filter((selector) => selector.selected == true)[0].name
         const selectValue = (selectedObj) => {
 
             if (selectors.indexOf(selectedObj) > selectors.indexOf(toRaw(currentObj.value))) {
                 transitionName.value = 'inverse-slide'
-                
+
             } else if (selectors.indexOf(selectedObj) < selectors.indexOf(toRaw(currentObj.value))) {
                 transitionName.value = 'slide'
 
@@ -176,7 +210,7 @@ export default {
         return {
             width, setMobile, searchTerm,
             search, getScreenCategory,
-            searchIconJson, element, focusOnInput,
+            searchIconJson, searchMapJson, element, focusOnInput,
             searchInput, blurOffInput, buttonClick,
             searchResults, transition,
             beforeEnter,
@@ -192,6 +226,9 @@ export default {
             elementLeft,
             currentObj,
             transitionName,
+            showSearch,
+            icon,
+            switchFunctionality,
         };
 
     },
@@ -202,5 +239,18 @@ export default {
 @use "./../stylesheets/dashboard/theme-old.scss" as *;
 @use "./../stylesheets/dashboard/theme-new.scss" as *;
 @use "./../stylesheets/transitions.scss" as *;
+
+
+.search-suggestion-wrapper:has(.lottie-animation-container) {
+    position: relative;
+}
+
+.search-suggestion-wrapper .lottie-animation-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    aspect-ratio: 1;
+    margin-inline: auto;
+}
 </style>
   

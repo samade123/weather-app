@@ -80,14 +80,14 @@
     </WeatherDisplay>
 
     <div class="bottom new" v-if="props.theme == 'new' && setMobile">
-      <MobileBottom>
+      <MobileBottom @city-search='emitSearch'>
         <template #weather-strip>
           <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter"
             :windowWidth="windowWidth" />
         </template>
         <template #progress-chart>
-        <lineChart v-if="forecast" :data="dataArray" :theme="props.theme" />
-      </template>
+          <lineChart v-if="forecast" :data="dataArray" :theme="props.theme" />
+        </template>
       </MobileBottom>
     </div>
     <div class="bottom" v-if="props.mobile && props.theme == 'old'">
