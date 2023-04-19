@@ -6,7 +6,7 @@
 
 <script>
 import Chart from "chart.js/auto";
-import { onMounted, watch } from "vue";
+import { onMounted, watch,} from "vue";
 import { widthFunction } from "@/composables/Mobile.js";
 
 export default {
@@ -14,7 +14,6 @@ export default {
   props: ["data"],
   setup(props) {
     const { width, setMobile, getScreenCategory } = widthFunction();
-
     onMounted(() => {
       const ctx = document.getElementById("myChart").getContext("2d");
       let chart = new Chart(ctx, {
@@ -35,8 +34,9 @@ export default {
           ],
         },
         options: {
-          maintainAspectRatio: false,
-          aspectRatio: setMobile.value ? 1.7 : 1,
+          maintainAspectRatio:  false,
+          // maintainAspectRatio:  !setMobile.value,
+          aspectRatio: setMobile.value ? 1.7 : 2.1,
           plugins: {
             legend: {
               display: false
@@ -72,15 +72,25 @@ export default {
       watch(
         () => props.data,
         (newValue) => {
-          chart.data.labels = newValue.map((element) =>
-            element.time.substring(11)
-          );
-          chart.data.datasets[0].data = newValue.map(
-            (element) => element.temp_c
-          );
+          chart.data = {
+            labels: newValue.map((element) => element.time.substring(11)),
+            datasets: [
+              {
+                label: "Temperature",
+                data: newValue.map((element) => element.temp_c),
+                backgroundColor: "rgba(255, 99, 132, 0)",
+                borderColor: "white",
+                pointRadius: 4,
+                pointBackgroundColor: "transparent",
+                pointHoverRadius: 6,
+                borderJoinStyle: "miter",
+              },
+            ],
+          };
           chart.update();
         }
       );
+
     });
 
     return {};
@@ -108,8 +118,9 @@ export default {
     display: grid;
     place-items: center;
     position: relative;
-    aspect-ratio: 1;
-    width: min(80%, 250px);
+    aspect-ratio: 2.1;
+    width: 100%;
+    // width: min(80%, 250px);
     margin-inline: auto;
     // height: min(100%, 100px);
 

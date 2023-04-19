@@ -269,8 +269,10 @@ export default {
           location.value = props.data.location;
           current.value = props.data.current;
           forecast.value = props.data.forecast;
+          dataArray.value.length = 0;
           forecast.value.forecastday[0].hour.forEach((element) => {
             var index = forecast.value.forecastday[0].hour.indexOf(element);
+
             if (
               index == 6 ||
               index == 9 ||
@@ -294,8 +296,10 @@ export default {
           current.value = props.data.current;
           forecast.value = props.data.forecast;
 
+          dataArray.value.length = 0;
           forecast.value.forecastday[0].hour.forEach((element) => {
             var index = forecast.value.forecastday[0].hour.indexOf(element);
+
             if (
               index == 6 ||
               index == 9 ||
