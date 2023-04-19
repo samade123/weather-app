@@ -155,7 +155,7 @@ export default {
 :root:has(#theme-new:checked) {
   .today-section {
     overflow: scroll;
-    margin-inline: var(--dynamic-right-margin-inline);
+    // margin-inline: var(--dynamic-right-margin-inline);
 
     .forecast {
       display: grid;
