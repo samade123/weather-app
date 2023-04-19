@@ -1,6 +1,9 @@
 <template>
     <div class="middle new">
-        <div class="title">the.weather</div>
+        <div class="title"><span>the.weather</span><span>
+                <Vue3Lottie :animationData="settingCog" :loop="false" :pauseAnimation="false" playOnHover="true"
+                    :autoPlay="false" />
+            </span></div>
 
         <div class="temp-summary temp-one" v-if="!setMobile" :key="1">
             <div class="temp">
@@ -69,8 +72,8 @@
             <input type="text" class="search" ref="searchInput" @input="inputChange" v-model="searchTerm"
                 @keydown.enter="search" @focus=focusOnInput @blur="blurOffInput">
             <div class="search-icon" @click="buttonClick($event)">
-                <Vue3Lottie :animationData="searchIconJson" height="100%" width="100%" ref="icon" :loop="false"
-                    :pauseAnimation="false" :autoPlay="false" />
+                <Vue3Lottie :animationData="searchIconJson" height="45px" :loop="false" :pauseAnimation="false"
+                    :autoPlay="false" />
             </div>
         </div>
         <transition-group tag="div" class="search-results-container" mode="out-in" :css="false" appear
@@ -94,6 +97,7 @@
         <div class="weather-details-title">Next 3 Hours</div>
         <div class="next-seven-container">
             <slot name="next-seven"></slot>
+            <div class="next-seven-container-friend"></div>
         </div>
         <div class="weather-details-title">Progress Chart</div>
         <div class="progress-chart-container">
@@ -107,6 +111,7 @@ import WeatherSVG from "@/components/WeatherSVG.vue";
 import { widthFunction } from "@/composables/Mobile.js";
 import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
 import searchIconJson from "@/assets/lottie-files/search.json";
+import settingCog from "@/assets/lottie-files/settings-sliders.json";
 // import workerPath from "@/webworkers/searchCSV.js";
 import csvPath from "@/assets/cities-new.csv";
 import { ref, watch, onBeforeMount } from 'vue';
@@ -219,6 +224,7 @@ export default {
             searchContainer,
             inputChange,
             emitSearch,
+            settingCog
         };
 
     },
@@ -229,5 +235,28 @@ export default {
 @use "./../stylesheets/dashboard/theme-old.scss" as *;
 @use "./../stylesheets/dashboard/theme-new.scss" as *;
 @use "./../stylesheets/transitions.scss" as *;
+
+:root:has(#theme-new:checked) div.outer {
+    div.title {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+
+        span:first-child {
+            grid-column: 2;
+
+        }
+
+        span:nth-child(2) {
+            grid-column: 3;
+            text-align: end;
+
+            &>div {
+                height: 40px;
+                width: 40px;
+            }
+        }
+    }
+}
 </style>
   
