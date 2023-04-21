@@ -375,6 +375,7 @@
           div.location-wrapper {
             grid-template-rows: 1fr 1fr;
             grid-template-columns: none;
+            gap: 3px;
           }
 
           div.location div.location-date {

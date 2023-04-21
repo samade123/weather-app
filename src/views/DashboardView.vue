@@ -14,7 +14,7 @@
                 @click="openSettings"></i></div>
           </div>
           <div class="left-middle">
-            <div class="temp">{{ current ? current.temp_c : "0" }}<span class="small"> &#8451</span></div>
+            <div class="temp">{{ current ? current.temp_c : "0" }}<span class="small">&#8451;</span></div>
             <div class="cloudy">{{ current ? current.condition.text : "Mostly Clear" }}</div>
           </div>
           <div class="left-bottom old">
@@ -42,25 +42,45 @@
 
     <WeatherDisplay @city-search='emitSearch' v-if="theme === 'new'">
       <template #temperature>
-        {{ current ? current.temp_c : '0' }}
+        <span v-if='location'>
+          {{ current ? current.temp_c : '0' }}&#176;
+        </span>
+        <div v-else class="placeholder"></div>
       </template>
       <template #location>
-        {{ location ? location.name : '..' }}
+        <span v-if='location'>
+          {{ location ? location.name : '..' }}
+        </span>
+        <div v-else class="placeholder"></div>
       </template>
       <template #day-and-month>
-        {{ location ? getDay(location.localtime) : '..' }} {{ location ? getMonth(location.localtime) : '..' }}
+        <span v-if="location">
+          {{ location ? getDay(location.localtime) : '..' }} {{ location ? getMonth(location.localtime) : '..' }}
+        </span>
+        <div v-else class="placeholder"></div>
       </template>
       <template #time>
-        {{ location ? getTime(location.localtime) : '..' }}
+
+        <span v-if="current">
+
+          {{ location ? getTime(location.localtime) : '..' }}
+        </span>
+        <div v-else class="placeholder"></div>
       </template>
       <template #weather-svg>
-        <WeatherSVG :condition="current ? current.condition.text : false" />
+        <!-- <WeatherSVG :condition="current ? current.condition.text : false" /> -->
+        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false" />
+        <div v-else class="placeholder"></div>
       </template>
       <template #weather-svg-mobile>
-        <WeatherSVG :condition="current ? current.condition.text : false" />
+        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false" />
+        <div v-else class="placeholder"></div>
       </template>
       <template #condition>
-        {{ current ? current.condition.text : 'Mostly Clear' }}
+        <span v-if="current">
+          {{ current ? current.condition.text : 'Mostly Clear' }},
+        </span>
+        <div v-else class="placeholder"></div>
       </template>
       <template #cloudy>
         {{ current ? current.cloud : ".." }}
@@ -340,4 +360,6 @@ export default {
 <style lang="scss" scoped>
 @use "./../stylesheets/dashboard/theme-old.scss" as *;
 @use "./../stylesheets/dashboard/theme-new.scss" as *;
+@use "./../stylesheets/transitions.scss" as *;
+@use "./../stylesheets/placeholder.scss" as *;
 </style>

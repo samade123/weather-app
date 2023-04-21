@@ -7,7 +7,7 @@
 
         <div class="temp-summary temp-one" v-if="!setMobile" :key="1">
             <div class="temp">
-                <slot name="temperature">0</slot>&#176;
+                <slot name="temperature">0</slot>
             </div>
             <div class="location-wrapper">
                 <div class="location">
@@ -47,12 +47,14 @@
                 <div class="location">
                     <div class="location-name">
                         <div>
-                            <slot name="location">..</slot>
+                            <slot name="location">
+                                <div class="placeholder"></div>
+                            </slot>
                         </div>
                     </div>
                     <div class="location-date">
                         <div class="cloudy">
-                            <slot name="condition">Mostly Clear</slot>, <slot name="time">..</slot>
+                            <slot name="condition">Mostly Clear</slot> <slot name="time">..</slot>
                         </div>
                     </div>
                 </div>
@@ -60,7 +62,7 @@
             </div>
 
             <div class="temp">
-                <slot name="temperature">0</slot><span>&#176;</span>
+                <slot name="temperature">0</slot>
             </div>
         </div>
         <div class="spacer condition" v-if="!setMobile"></div>
@@ -235,6 +237,7 @@ export default {
 @use "./../stylesheets/dashboard/theme-old.scss" as *;
 @use "./../stylesheets/dashboard/theme-new.scss" as *;
 @use "./../stylesheets/transitions.scss" as *;
+@use "./../stylesheets/placeholder.scss" as *;
 
 :root:has(#theme-new:checked) div.outer {
     div.title {

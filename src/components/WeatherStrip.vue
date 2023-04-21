@@ -12,6 +12,10 @@
         <div class="temperature">{{ temp.temp_c }}</div>
       </div>
     </div>
+
+    <div class="forecast" v-else>
+      <div class="placeholder"  v-for="(n, index) in 3" :key="index"></div>
+    </div>
   </div>
 </template>
 
@@ -118,6 +122,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "./../stylesheets/placeholder.scss" as *;
+@use "./../stylesheets/transitions.scss" as *;
+
+
 :root:has(#theme-old:checked) {
 
   .today-section {
