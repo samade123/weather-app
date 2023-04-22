@@ -5,11 +5,11 @@
       <fieldset class="theme-switcher" role="radiogroup" ref="draggable" aria-labelledby="theme-switcher-label">
         <legend id="theme-switcher-label">Choose a theme:</legend>
         <div class="theme-option">
-          <input type="radio" id="theme-old" name="theme" value="light" checked aria-labelledby="theme-old-label" />
+          <input type="radio" id="theme-old" name="theme" value="light" aria-labelledby="theme-old-label" />
           <label for="theme-old" id="theme-old-label">Old theme</label>
         </div>
         <div class="theme-option">
-          <input type="radio" id="theme-new" name="theme" value="new" aria-labelledby="new-theme-label" />
+          <input type="radio" id="theme-new" name="theme" value="new" checked aria-labelledby="new-theme-label" />
           <label for="theme-new" id="new-theme-label">New theme</label>
         </div>
       </fieldset>
@@ -23,7 +23,7 @@ export default {
   name: "ThemeSwitch",
   setup(props, ctx) {
     const draggable = ref(null);
-    const dissapear = ref(false);
+    const dissapear = ref(true);
 
     onMounted(() => {
       draggable.value.addEventListener("mousedown", onMouseDown);
@@ -70,16 +70,16 @@ export default {
   display: grid;
   background: #f7f7f7;
   border-radius: 20px;
-
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   // white-space: ;
 
   &.dissapear {
-    opacity: 0;
+    // opacity: 0;
+    visibility: hidden;
     overflow: hidden;
     pointer-events: none;
-    width: 10px;
-    height: 10px;
+    width: 0;
+    height: 0;
   }
 
   div.minimise {

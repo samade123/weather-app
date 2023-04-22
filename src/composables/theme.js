@@ -2,7 +2,7 @@ import { storageManager } from "@/composables/storage.js";
 import { ref, onMounted, watchEffect } from "vue";
 
 export function getTheme() {
-  const theme = ref("old");
+  const theme = ref("new");
   const { storage } = storageManager();
 
   const handleThemeChange = () => {
