@@ -83,19 +83,29 @@
         <div v-else class="placeholder"></div>
       </template>
       <template #cloudy>
-        {{ current ? current.cloud : ".." }}
+        <span v-if="current">
+          {{ current ? current.cloud : ".." }}%
+        </span>
+        <div v-else class="placeholder"></div>
       </template>
       <template #humidity>
-        {{ current ? current.humidity : ".." }}
+        <span v-if="current">
+          {{ current ? current.humidity : ".." }}%
+        </span>
+        <div v-else class="placeholder"></div>
       </template>
       <template #wind>
-        {{ current ? current.wind_kph : ".." }}
+        <span v-if="current">
+          {{ current ? current.wind_kph : ".." }}km/h
+        </span>
+        <div v-else class="placeholder"></div>
       </template>
       <template #next-seven>
         <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth" />
       </template>
       <template #progress-chart>
         <lineChart v-if="forecast" :data="dataArray" :theme="props.theme" />
+        <div v-else class="placeholder"></div>
       </template>
     </WeatherDisplay>
 
