@@ -121,6 +121,14 @@
   z-index: 10;
 }
 
+.open-up-enter-active {
+  animation: change-max-height 0.3s;
+}
+
+.open-up-leave-active {
+  animation: change-min-height 0.3s;
+}
+
 
 @keyframes change-max-height {
   0% {
