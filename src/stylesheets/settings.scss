@@ -1,3 +1,83 @@
+.menu-body {
+  width: 100%;
+
+  &>* {
+    width: 80%;
+  }
+
+  div.lottie-wrapper {
+    width: 100%;
+    background: #0071;
+
+  }
+
+  .lottie-animation-container {
+    width: min(100%, 120px);
+    aspect-ratio: 1;
+  }
+
+  fieldset {
+    display: flex;
+    gap: 15px;
+    border: none;
+    padding: 0;
+    align-items: center;
+
+    legend {
+      float: left;
+    }
+
+    div.info {
+      border-radius: 100px;
+      border: rgba(0, 0, 119, 0.5) 2px solid;
+      padding: 3px;
+      aspect-ratio: 1;
+      min-height: 19px;
+      display: grid;
+      place-content: center;
+
+    }
+  }
+
+  .menu-sections {
+    display: flex;
+    gap: 15px;
+
+    .selected {
+      border-bottom: rgb(44, 62, 80) 1px solid;
+    }
+  }
+
+  .section {
+    display: grid;
+    grid-gap: 20px;
+    place-items: center start;
+
+    p {
+      text-align: left;
+    }
+
+    div:has(h2) {
+      text-align: left;
+      display: flex;
+      gap: 15px;
+      flex-direction: column;
+    }
+
+    div.wrapper {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 50px;
+
+      .theme-one {
+        margin-left: 20px;
+      }
+    }
+  }
+
+
+}
+
 :root:has(#theme-old:checked) {
   .menu-bg {
     position: absolute;
@@ -104,7 +184,7 @@
     }
 
     .menu {
-      background: white;
+      background: #f1f1f1;
       border: solid black;
       margin: 0 auto;
 
@@ -116,10 +196,15 @@
       align-items: center;
 
       .menu-body {
-        max-width: 80%;
+        // max-width: 80%;
         display: grid;
         grid-gap: 20px;
         place-items: center;
+
+        .lottie-animation-container {
+          width: min(100%, 120px);
+          aspect-ratio: 1;
+        }
 
         .input-switch {
           display: grid;

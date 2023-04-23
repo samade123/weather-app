@@ -10,31 +10,88 @@
     <div class="menu">
       <h1 class="title">Settings</h1>
       <div class="menu-body">
-        <p>
-          Hi! Welcome to this weather dashboard. The design of this weather
-          dashboard was taken from
-          <a :href="designLink">here</a>.
-        </p>
-        <p>
-          If this is your first time visiting this site. You will need to accept
-          location permissions below so you can get a reading of the weather in
-          your local area(See below!)
-        </p>
-        <p>
-          <LocationSwitch @location-emit="setLocation"> </LocationSwitch>
-        </p>
-        <p>
-          If you're interested in the codebase this can be found
-          <a :href="designLink">here</a>.
-        </p>
-        <p>
-          My Github can be found
-          <a :href="designLink">here</a>.
-        </p>
-        <p>
-          And you can see more work from my portfolio
-          <a :href="designLink">here</a>.
-        </p>
+        <div class="lottie-wrapper">
+          <Vue3Lottie :animationData="multiSetting" :loop="false" :pauseAnimation="false" playOnHover="true"
+            :autoPlay="false" />
+        </div>
+        <div class="menu-sections">
+          <div class="menu-section" :class="{ 'selected': section.name == selectedSection }" v-for="section in sections"
+            @click="selectedSection = section.name" :key="section.name">{{ section.name }}</div>
+        </div>
+
+        <div class="section-settings section" v-if="selectedSection == sections[0].name">
+          <p>
+            If this is your first time visiting this site. You will need to accept
+            location permissions below so you can get a reading of the weather in
+            your local area(See below!)
+          </p>
+          <p>
+            <LocationSwitch @location-emit="setLocation"> </LocationSwitch>
+          </p>
+
+          <span>
+            <fieldset class="theme-switcher" role="radiogroup" aria-labelledby="theme-switcher-label">
+              <legend id="theme-switcher-label">Theme: </legend>
+              <div class="theme-option" @click="setTheme('old')">
+                <input type="radio" id="theme-old-menu" aria-labelledby="theme-old-menu" :checked="theme == 'old'" />
+                <label for="theme-old-menu" id="theme-old-label-menu">1(Under Reconstruction)</label>
+              </div>
+              <div class="theme-option" @click="setTheme('new')">
+                <input type="radio" id="theme-new-menu" aria-labelledby="new-theme-label-menu"
+                  :checked="theme == 'new'" />
+                <label for="theme-new-menu" id="new-theme-label-menu">2</label>
+              </div>
+
+              <div class="info">i</div>
+            </fieldset>
+          </span>
+
+        </div>
+
+        <div class="section-about-me section" v-else>
+          <p>
+            Hi! Welcome to this weather dashboard. The design of this weather
+            dashboard was taken from
+            <a :href="designLink">here</a>.
+          </p>
+
+          <p>
+            If you're interested in the codebase this can be found
+            <a :href="designLink">here</a>.
+          </p>
+          <p>
+            My Github can be found
+            <a :href="designLink">here</a>.
+          </p>
+          <p>
+            And you can see more work from my portfolio
+            <a :href="designLink">here</a>.
+          </p>
+          <div>
+            <h2>Theme Differences</h2>
+            <div class="wrapper">
+              <div class="theme-one">
+                <h3>Theme 1</h3>
+                <ul>
+                  <li>Vue router</li>
+                  <li>Maps functionality</li>
+                  <li>Weather controlled themeing</li>
+                </ul>
+              </div>
+              <div class="theme-two">
+                <h3>Theme 2</h3>
+                <ul>
+                  <li>New search functionality</li>
+                  <li>New Design</li>
+                  <li>Cool animations</li>
+                  <li>More daily data available</li>
+                  <li class="coming-soon">Wai-aria spec compliant (coming soon)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -56,6 +113,7 @@ import { useWindowSize } from "vue-window-size";
 import { watch, onMounted } from "@vue/runtime-core";
 import PWAModal from "@/components/PWAModal.vue";
 import ThemeSwitch from "@/components/ThemeSwitch.vue";
+import multiSetting from "@/assets/lottie-files/multi-settings.json";
 
 import { useRouter } from "vue-router";
 
@@ -86,6 +144,9 @@ export default {
     const { storage } = storageManager();
     const { width, setMobile, getScreenCategory } = widthFunction();
 
+    const sections = [{ name: "Settings" }, { name: "About App" },]
+    const selectedSection = ref(sections[0].name)
+
     const openSettings = () => {
       showMenu.value = !showMenu.value;
     };
@@ -103,7 +164,8 @@ export default {
       return toastState.value;
     };
 
-    var { theme } = getTheme();
+
+    var { theme, setTheme, } = getTheme();
 
     const setLocation = (locationData) => {
       latitude.value = locationData.latitude;
@@ -282,7 +344,8 @@ export default {
       storage,
       showToast,
       theme,
-      setMobile, getScreenCategory, updateWeather,
+      setMobile, getScreenCategory, updateWeather, multiSetting, sections,
+      selectedSection, setTheme,
     };
   },
 };
@@ -323,5 +386,4 @@ body {
   left: 0;
   right: 0;
 }
-
 </style>
