@@ -289,8 +289,9 @@ export default {
 </script>
 
 <style lang="scss">
+@use "./stylesheets/settings.scss" as *;
+@use "./stylesheets/theme-color.scss" as *;
 @import "./../node_modules/normalize.css/normalize.css";
-@import "./stylesheets/theme-color.scss";
 @import "./../node_modules/leaflet/dist/leaflet.css";
 @import "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css";
 
@@ -323,74 +324,4 @@ body {
   right: 0;
 }
 
-.menu-bg {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 80;
-  display: grid;
-  place-items: center;
-  background: #2c3e5000;
-
-  .menu {
-    background: white;
-    border: solid black;
-    margin: 0 auto;
-
-    height: 80vh;
-    width: 80vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    .menu-body {
-      max-width: 80%;
-      display: grid;
-      grid-gap: 20px;
-      place-items: center;
-
-      .input-switch {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-gap: 10px;
-      }
-    }
-  }
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: var(--app-text-color);
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-
-a {
-  text-decoration: underline;
-}
-
-.toast-bg {
-  width: 100%;
-  position: fixed;
-  top: 50px;
-
-  .toast {
-    background: white;
-    border-radius: 7px;
-    margin: 0 auto;
-    padding: 5px;
-    width: 80%;
-    max-width: 700px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  }
-}
 </style>

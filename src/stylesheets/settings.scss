@@ -1,0 +1,165 @@
+:root:has(#theme-old:checked) {
+  .menu-bg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 80;
+    display: grid;
+    place-items: center;
+    background: #2c3e5000;
+
+    .menu {
+      background: white;
+      border: solid black;
+      margin: 0 auto;
+
+      height: 80vh;
+      width: 80vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      .menu-body {
+        max-width: 80%;
+        display: grid;
+        grid-gap: 20px;
+        place-items: center;
+
+        .input-switch {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-gap: 10px;
+        }
+      }
+    }
+  }
+
+  nav {
+    padding: 30px;
+
+    a {
+      font-weight: bold;
+      color: var(--app-text-color);
+
+      &.router-link-exact-active {
+        color: #42b983;
+      }
+    }
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  .toast-bg {
+    width: 100%;
+    position: fixed;
+    top: 50px;
+
+    .toast {
+      background: white;
+      border-radius: 7px;
+      margin: 0 auto;
+      padding: 5px;
+      width: 80%;
+      max-width: 700px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+  }
+}
+
+:root:has(#theme-new:checked) {
+  .menu-bg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 80;
+    display: grid;
+    place-items: center;
+    background: rgba(44, 62, 80, 0.6);
+    backdrop-filter: blur(30px);
+
+    animation: blur-in 0.5s;
+
+    @keyframes blur-in {
+      0% {
+        background-color: rgba(44, 62, 80, 0);
+        backdrop-filter: blur(0);
+      }
+
+      70% {
+        background-color: rgba(44, 62, 80, 0.5);
+        backdrop-filter: blur(29px);
+      }
+
+      100% {
+        background-color: rgba(44, 62, 80, 0.6);
+        backdrop-filter: blur(30px);
+      }
+    }
+
+    .menu {
+      background: white;
+      border: solid black;
+      margin: 0 auto;
+
+      height: 80vh;
+      width: 80vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      .menu-body {
+        max-width: 80%;
+        display: grid;
+        grid-gap: 20px;
+        place-items: center;
+
+        .input-switch {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-gap: 10px;
+        }
+      }
+    }
+  }
+
+  nav {
+    padding: 30px;
+
+    a {
+      font-weight: bold;
+      color: var(--app-text-color);
+
+      &.router-link-exact-active {
+        color: #42b983;
+      }
+    }
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  .toast-bg {
+    width: 100%;
+    position: fixed;
+    top: 50px;
+
+    .toast {
+      background: white;
+      border-radius: 7px;
+      margin: 0 auto;
+      padding: 5px;
+      width: 80%;
+      max-width: 700px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+  }
+}
