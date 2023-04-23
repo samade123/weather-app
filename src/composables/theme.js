@@ -36,6 +36,21 @@ export function getTheme() {
     }
   };
 
+  const setTheme = (selectedTheme) => {
+    theme.value = selectedTheme;
+
+    const oldThemeInput = document.querySelector("#theme-old");
+    const newThemeInput = document.querySelector("#theme-new");
+
+    if (theme.value == "old") {
+      oldThemeInput.checked = true;
+      newThemeInput.checked = false;
+    } else if (theme.value == "new") {
+      newThemeInput.checked = true;
+      oldThemeInput.checked = false;
+    }
+  }
+
   onMounted(() => {
     themeOnLoad();
 
@@ -53,5 +68,6 @@ export function getTheme() {
 
   return {
     theme,
+    setTheme,
   };
 }
