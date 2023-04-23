@@ -1,6 +1,6 @@
 <template>
     <div class="middle new">
-        <div class="title"><span>the.weather</span><span>
+        <div class="title"><span>the.weather</span><span @click="openSettings">
                 <Vue3Lottie :animationData="settingCog" :loop="false" :pauseAnimation="false" playOnHover="true"
                     :autoPlay="false" />
             </span></div>
@@ -54,7 +54,8 @@
                     </div>
                     <div class="location-date">
                         <div class="cloudy">
-                            <slot name="condition">Mostly Clear</slot> <slot name="time">..</slot>
+                            <slot name="condition">Mostly Clear</slot>
+                            <slot name="time">..</slot>
                         </div>
                     </div>
                 </div>
@@ -72,18 +73,35 @@
     <div class="right new" v-if="!setMobile">
         <div class="search-container">
             <input type="text" class="search" ref="searchInput" @input="inputChange" v-model="searchTerm"
-                @keydown.enter="search" @focus=focusOnInput @blur="blurOffInput">
+                @keydown.enter="search" @focus='focusOnInput' @blur="blurOffInput">
+            <!-- <input type="text" class="search" ref="searchInput" @input="inputChange" v-model="searchTerm"
+                @keydown.enter="search" @focus='focusOnInput'> -->
             <div class="search-icon" @click="buttonClick($event)">
-                <Vue3Lottie :animationData="searchIconJson" height="45px" :loop="false" :pauseAnimation="false"
+                <Vue3Lottie :animationData="searchIconJson" height="45px" ref="icon" :loop="false" :pauseAnimation="false"
                     :autoPlay="false" />
             </div>
         </div>
-        <transition-group tag="div" class="search-results-container" mode="out-in" :css="false" appear
+        <!-- <transition-group tag="div" class="search-results-container" mode="out-in" :css="false" appear
             @before-enter="beforeEnter" @enter="enter">
             <div v-for="(city, index) in searchResults" :key="city.refIndex" @mousedown="emitSearch(city.item.name)"
                 :data-index="index" class="result">{{
                     city.item.name }}</div>
-        </transition-group>
+        </transition-group> -->
+        <transition name="open-up" appear mode="out-in">
+
+            <div class="search-results-container" v-if="searchResults.length > 0">
+                <div class="result-wrapper" v-for="(n, index) in 5" :key='n'>
+                    <transition name="results" appear mode="out-in">
+                        <div class="results" @mousedown="emitSearch(searchResults[index].item.name)"
+                            v-if="searchResults[index]" :key='searchResults[index].item.name'
+                            :style="{ 'transition-delay': `${n * 0.1}s` }"> {{
+                                searchResults[index].item.name }}
+                        </div>
+
+                    </transition>
+                </div>
+            </div>
+        </transition>
         <div class="weather-details-title">Weather Details</div>
         <div class="weather-details-container">
             <div class="stats">Cloudy <span>
@@ -120,7 +138,7 @@ import { ref, watch, onBeforeMount } from 'vue';
 
 export default {
     name: 'WeatherDisplay',
-    emits: ["citySearch"],
+    emits: ["openSettings", "citySearch"],
     components: {
         WeatherSVG,
     },
@@ -156,6 +174,10 @@ export default {
             }
         }
 
+        const openSettings = () => {
+            ctx.emit("openSettings");
+        };
+
         const focusOnInput = () => {
             if (playIconForwardNext.value) { // the next play direction is forward then play forward 
                 icon.value.playSegments([0, 50], true)
@@ -174,32 +196,16 @@ export default {
 
         const search = () => {
             if (!searchTerm.value) {
-                document.getElementsByClassName('search-results-container')[0].classList.remove("searching");
-                document.getElementsByClassName('search-results-container')[0].classList.add("go-away");
-                document.getElementsByClassName('search-results-container')[0].classList.remove("searching");
-                setTimeout(() => {
-                    document.getElementsByClassName('search-results-container')[0].style.display = "none";
-                }, 900);
                 searchResults.value.length = 0;
                 return
             };
             const worker = new Worker(new URL('@/webworkers/searchCSV.js', import.meta.url));
 
             worker.postMessage({ csvPath, searchTerm: searchTerm.value });
-            document.getElementsByClassName('search-results-container')[0].classList.remove("go-away");
-            document.getElementsByClassName('search-results-container')[0].classList.add("searching");
-            document.getElementsByClassName('search-results-container')[0].classList.remove("go-away");
-            document.getElementsByClassName('search-results-container')[0].style.overflowY = "hidden";
-            document.getElementsByClassName('search-results-container')[0].style.display = "grid";
 
-            setTimeout(() => {
-                document.getElementsByClassName('search-results-container')[0].style.overflowY = "initial";
-            }, 500);
             worker.onmessage = (event) => {
-                searchResults.value.length = 0;
-                // setTimeout(() => {
+                // console.log('found', event.data)
                 searchResults.value = [...event.data];
-                // }, 400);
             };
         };
 
@@ -209,7 +215,7 @@ export default {
             }
             searchTermTimer.value = setTimeout(() => {
                 search()
-            }, 200)
+            }, 500)
         }
 
 
@@ -226,7 +232,8 @@ export default {
             searchContainer,
             inputChange,
             emitSearch,
-            settingCog
+            settingCog,
+            openSettings,
         };
 
     },
