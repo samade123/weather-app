@@ -260,6 +260,12 @@ export default {
             }
         }
     }
+
+    .progress-chart-container {
+        &:has(.checked) {
+            position: relative;
+        }
+    }
 }
 </style>
   

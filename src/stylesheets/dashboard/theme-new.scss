@@ -173,6 +173,29 @@
       backdrop-filter: blur(10px);
       color: #ffffff;
 
+      /* width */
+      &::-webkit-scrollbar {
+        height: 3px;
+        width: 3px;
+      }
+
+      /* Track */
+      &::-webkit-scrollbar-track {
+        background: #eee5;
+        border-radius: 15px;
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: #eee5;
+        // border: #f7f7f755 1px solid;
+        border-radius: 15px;
+      }
+
+      /* Handle on hover */
+      &::-webkit-scrollbar-thumb:hover {
+        background: #eee8;
+      }
       * {
         direction: ltr;
       }
