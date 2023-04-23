@@ -51,6 +51,7 @@ export default {
     const showCheckedMenu = ref(false)
     const setMainType = (type) => {
       mainType.value = type.type;
+      chart.options.scales.y.ticks = mainType.value == 'temp_c' ? tempTick : normalTick;
 
       chart.data = {
         labels: props.data.map((element) => element.time.substring(11)),
@@ -69,6 +70,16 @@ export default {
       };
       chart.update();
     }
+    const normalTick = {
+      borderColor: "transparent",
+      color: "white",
+    };
+
+    const tempTick = {
+      borderColor: "transparent",
+      color: "white",
+      callback: (value, index, labels) => value + "°",
+    };
 
     onMounted(() => {
       const ctx = document.getElementById("myChart").getContext("2d");
@@ -108,10 +119,7 @@ export default {
               grid: {
                 color: "rgba(255, 99, 132, 0)",
               },
-              ticks: {
-                borderColor: "transparent",
-                color: "white",
-              },
+              ticks: tempTick,
             },
             x: {
               beginAtZero: false,
@@ -135,6 +143,9 @@ export default {
           if (storage.doesDataExist('theme')) {
             themeType.value = storage.getData('theme') // check are we using old theem or new theme - only change the background image if we are onold theme
           }
+
+
+          chart.options.scales.y.ticks = mainType.value == 'temp_c' ? tempTick : normalTick;
           chart.data = {
             labels: newValue.map((element) => element.time.substring(11)),
             datasets: [
@@ -175,6 +186,11 @@ export default {
       width: 90% !important;
     }
   }
+
+  .data-type {
+    display: none;
+  }
+
 }
 
 :root:has(#theme-new:checked) {

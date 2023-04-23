@@ -9,7 +9,7 @@
         <!-- <img :src="temp.condition.icon" width="80" alt="" /> -->
         <WeatherSVG :condition="temp.condition ? temp.condition.text : false" :daytime="temp.condition ? temp['is_day'] : 1" />
 
-        <div class="temperature">{{ temp.temp_c }}</div>
+        <div class="temperature">{{ temp.temp_c }}&#176;</div>
       </div>
     </div>
 
