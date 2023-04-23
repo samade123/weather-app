@@ -21,6 +21,8 @@ export function getTheme() {
   const themeOnLoad = () => {
     if (storage.doesDataExist("theme")) {
       theme.value = storage.getData("theme");
+    } else {
+      storage.storeData("theme", theme.value); //don't showtoast as weather data is avaliable now
     }
     const oldThemeInput = document.querySelector("#theme-old");
     const newThemeInput = document.querySelector("#theme-new");
