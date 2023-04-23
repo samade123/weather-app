@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <WeatherDisplay @city-search='emitSearch' v-if="theme === 'new'">
+    <WeatherDisplay @city-search='emitSearch' @open-settings="openSettings" v-if="theme === 'new'">
       <template #temperature>
         <span v-if='location'>
           {{ current ? current.temp_c : '0' }}&#176;
@@ -69,16 +69,16 @@
       </template>
       <template #weather-svg>
         <!-- <WeatherSVG :condition="current ? current.condition.text : false" /> -->
-        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false" />
+        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false" :daytime="current ? current['is_day'] : 1" />
         <div v-else class="placeholder"></div>
       </template>
       <template #weather-svg-mobile>
-        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false" />
+        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false" :daytime="current ? current['is_day'] : 1" />
         <div v-else class="placeholder"></div>
       </template>
       <template #condition>
         <span v-if="current">
-          {{ current ? current.condition.text : 'Mostly Clear' }},
+          {{ current ? current.condition.text : 'Mostly Clear' }}
         </span>
         <div v-else class="placeholder"></div>
       </template>

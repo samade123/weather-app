@@ -8,22 +8,24 @@ import { watch, ref, onBeforeMount } from 'vue';
 
 export default {
   name: 'WeatherSVG',
-  props: ['condition'],
+  props: ['condition', 'daytime'],
   setup(props, ctx) {
     const svgSrc = ref(require('@/assets/svg/partly-cloudy-night.svg'))
+
+    let conditionIsDay = true;
     const getSVG = () => {
       svgSrc.value = false;
-      let svgName = weatherLUT.find(({ day }) => day == props.condition)
+      conditionIsDay = props['daytime'];
+      let svgName = conditionIsDay ? weatherLUT.find(({ day }) => day == props.condition) : weatherLUT.find(({ night }) => night == props.condition)
       // console.log(svgName);
       if (svgName) {
-        svgSrc.value = require(`@/assets/svg/${svgName["day-img"]}`);
+        svgSrc.value = require(`@/assets/svg/${svgName[conditionIsDay ? 'day-img' : 'night-img']}`);
+        // return svgSrc.value;
+        // svgName = weatherLUT.find(({ night }) => night == props.condition)
+        // if (svgName) {
+        //   svgSrc.value = require(`@/assets/svg/${svgName["night-img"]}`);
+        // }
         return svgSrc.value;
-      } else {
-        svgName = weatherLUT.find(({ night }) => night == props.condition)
-        if (svgName) {
-          svgSrc.value = require(`@/assets/svg/${svgName["night-img"]}`);
-          return svgSrc.value;
-        }
       }
 
 
