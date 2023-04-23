@@ -264,6 +264,10 @@ export default {
             &>div {
                 height: 40px;
                 width: 40px;
+
+                &:hover {
+                    cursor: pointer;
+                }
             }
         }
     }
