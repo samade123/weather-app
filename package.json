@@ -1,6 +1,6 @@
 {
   "name": "weather-app-1",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -21,7 +21,7 @@
     "vue-window-size": "^1.1.2",
     "vue3-lottie": "^2.5.0",
     "vue3-touch-events": "^4.1.0",
-    "vuesax3": "^4.0.22"
+    "vuesax3": "^4.1.1"
   },
   "devDependencies": {
     "@vue/babel-preset-jsx": "^1.4.0",
