@@ -2,13 +2,18 @@ const { defineConfig } = require("@vue/cli-service");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = defineConfig({
+  publicPath: "/",
   transpileDependencies: true,
   filenameHashing: true,
   chainWebpack: (config) => {
     config.plugin("copy").use(CopyPlugin, [
       {
-        patterns: [{ from: "src/api", to: "../api" }],
-        patterns: [{ from: "src/assets/csv", to: "./assets" }],
+        patterns: [
+          { from: "src/api", to: "../api" },
+          { from: "src/assets/csv", to: "./assets" },
+          { from: "public/img/icons/", to: "./img/icons/" },
+          { from: "public/favicon.ico", to: "./favicon.ico" }, // added this line
+        ],
       },
     ]);
 
