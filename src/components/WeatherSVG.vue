@@ -17,18 +17,10 @@ export default {
       svgSrc.value = false;
       conditionIsDay = props['daytime'];
       let svgName = conditionIsDay ? weatherLUT.find(({ day }) => day == props.condition) : weatherLUT.find(({ night }) => night == props.condition)
-      // console.log(svgName);
       if (svgName) {
         svgSrc.value = require(`@/assets/svg/${svgName[conditionIsDay ? 'day-img' : 'night-img']}`);
-        // return svgSrc.value;
-        // svgName = weatherLUT.find(({ night }) => night == props.condition)
-        // if (svgName) {
-        //   svgSrc.value = require(`@/assets/svg/${svgName["night-img"]}`);
-        // }
         return svgSrc.value;
       }
-
-
     };
 
     watch(() => props.condition, (newValue) => {

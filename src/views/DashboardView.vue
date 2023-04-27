@@ -69,11 +69,13 @@
       </template>
       <template #weather-svg>
         <!-- <WeatherSVG :condition="current ? current.condition.text : false" /> -->
-        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false" :daytime="current ? current['is_day'] : 1" />
+        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false"
+          :daytime="current ? current['is_day'] : 1" />
         <div v-else class="placeholder"></div>
       </template>
       <template #weather-svg-mobile>
-        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false" :daytime="current ? current['is_day'] : 1" />
+        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false"
+          :daytime="current ? current['is_day'] : 1" />
         <div v-else class="placeholder"></div>
       </template>
       <template #condition>
@@ -373,5 +375,4 @@ export default {
 @use "./../stylesheets/dashboard/theme-old.scss" as *;
 @use "./../stylesheets/dashboard/theme-new.scss" as *;
 @use "./../stylesheets/transitions.scss" as *;
-@use "./../stylesheets/placeholder.scss" as *;
-</style>
+@use "./../stylesheets/placeholder.scss" as *;</style>
