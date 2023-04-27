@@ -35,3 +35,10 @@ src/composables/weatherReponse.js
 *.csv
 src/assets/*/*.py
 src/assets/*.py
+src/assets/svg/*.svg
+
+# temporarily ignore for now
+src/assets/lottie-files/settings-sliders.json
+src/assets/lottie-files/*
+*.png
+*.svg
