@@ -170,11 +170,11 @@
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
+import { ref, defineAsyncComponent } from "vue";
 import WeatherStrip from "@/components/WeatherStrip.vue";
 import MobileBottom from "@/components/MobileBottom.vue";
 import { storageManager } from "@/composables/storage.js";
-import LineChart from "@/components/Chart.vue";
+// import LineChart from "@/components/Chart.vue";
 import { widthFunction } from "@/composables/Mobile.js";
 import WeatherSVG from "@/components/WeatherSVG.vue";
 import WeatherDisplay from "@/components/WeatherDisplay.vue";
@@ -185,7 +185,9 @@ export default {
   props: ["mobile", "data", "ready", "theme"],
   components: {
     WeatherStrip,
-    LineChart,
+    LineChart: defineAsyncComponent(() =>
+      import("@/components/Chart.vue")
+    ),
     WeatherSVG,
     WeatherDisplay,
     MobileBottom,

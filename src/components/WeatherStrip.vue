@@ -21,9 +21,9 @@
 
 <script>
 import { useWindowSize } from "vue-window-size";
-import { ref } from "@vue/reactivity";
-import { onMounted, watch, watchEffect } from "@vue/runtime-core";
-import WeatherSVG from "@/components/WeatherSVG.vue";
+import { ref, defineAsyncComponent } from "vue";
+import { onMounted, watch } from "@vue/runtime-core";
+// import WeatherSVG from "@/components/WeatherSVG.vue";
 import { storageManager } from "@/composables/storage.js";
 // @ is an alias to /src
 
@@ -31,7 +31,9 @@ export default {
   name: "weatherStrip",
   props: ["data", "upperLimit", "dateCounter", "windowWidth", "ready"],
   components: {
-    WeatherSVG,
+    WeatherSVG: defineAsyncComponent(() =>
+      import("@/components/WeatherSVG.vue")
+    ),
   },
   setup(props) {
     const location = ref(null);

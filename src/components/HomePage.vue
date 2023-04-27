@@ -25,22 +25,28 @@
 
 <script>
 // @ is an alias to /src
-import SideNav from "@/components/SideNav.vue";
-import BottomNav from "@/components/BottomNav.vue";
+// import SideNav from "@/components/SideNav.vue";
+// import BottomNav from "@/components/BottomNav.vue";
 import MainBit from "@/views/DashboardView.vue";
-import ThisWeek from "@/components/ThisWeek.vue";
+// import ThisWeek from "@/components/ThisWeek.vue";
 import { useWindowSize } from "vue-window-size";
 import { watch } from "@vue/runtime-core";
-import { ref } from "@vue/reactivity";
+import { defineAsyncComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 
 export default {
   name: "HomeView",
   components: {
-    SideNav,
-    BottomNav,
+    SideNav: defineAsyncComponent(() =>
+      import("@/components/SideNav.vue")
+    ),
+    BottomNav: defineAsyncComponent(() =>
+      import("@/components/BottomNav.vue")
+    ),
     MainBit,
-    ThisWeek,
+    ThisWeek: defineAsyncComponent(() =>
+      import("@/components/ThisWeek.vue")
+    ),
   },
   emits: ["currentObj", "openSettings", "citySearch"],
   props: ["nav", "data", "ready", "theme"],
