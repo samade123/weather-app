@@ -129,7 +129,7 @@
 <script>
 import WeatherSVG from "@/components/WeatherSVG.vue";
 import { widthFunction } from "@/composables/Mobile.js";
-import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
+// import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
 import searchIconJson from "@/assets/lottie-files/search.json";
 import settingCog from "@/assets/lottie-files/settings-sliders.json";
 // import workerPath from "@/webworkers/searchCSV.js";
@@ -151,13 +151,13 @@ export default {
         const searchInputFocus = ref(false);
         const searchTerm = ref('');
         const searchResults = ref([]);
-        const {
-            transition,
-            beforeEnter,
-            enter,
-            leave,
-            delayedEnter
-        } = useStaggeredTransition();
+        // const {
+        //     transition,
+        //     beforeEnter,
+        //     enter,
+        //     leave,
+        //     delayedEnter
+        // } = useStaggeredTransition();
         const searchTermTimer = ref(false);
         const buttonClickTimer = ref(false);
 
@@ -224,11 +224,12 @@ export default {
             search, getScreenCategory,
             searchIconJson, icon, focusOnInput,
             searchInput, blurOffInput, buttonClick,
-            searchResults, transition,
-            beforeEnter,
-            enter,
-            leave,
-            delayedEnter,
+            searchResults,
+            //  transition,
+            // beforeEnter,
+            // enter,
+            // leave,
+            // delayedEnter,
             searchContainer,
             inputChange,
             emitSearch,

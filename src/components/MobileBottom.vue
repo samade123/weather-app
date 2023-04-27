@@ -15,9 +15,10 @@
                 <div class="search-suggestion-wrapper">
                     <div class="search-results-container" v-if="searchResults.length > 0">
                         <div class="result-wrapper" v-for="(n, index) in 5" :key='n'>
-                            <transition  name="results" appear mode="out-in">
-                                <div class="results" @click="emitSearch(searchResults[index].item.name)" v-if="searchResults[index]" :key='searchResults[index].item.name'
-                                    :style="{'transition-delay': `${n*0.1}s`}"> {{
+                            <transition name="results" appear mode="out-in">
+                                <div class="results" @click="emitSearch(searchResults[index].item.name)"
+                                    v-if="searchResults[index]" :key='searchResults[index].item.name'
+                                    :style="{ 'transition-delay': `${n * 0.1}s` }"> {{
                                         searchResults[index].item.name }}
                                 </div>
 
@@ -52,7 +53,7 @@
 <script>
 import WeatherSVG from "@/components/WeatherSVG.vue";
 import { widthFunction } from "@/composables/Mobile.js";
-import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
+// import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
 import searchIconJson from "@/assets/lottie-files/search.json";
 import searchMapJson from "@/assets/lottie-files/search-map.json";
 // import workerPath from "@/webworkers/searchCSV.js";
@@ -78,13 +79,13 @@ export default {
         const searchTerm = ref('');
         const elementLeft = ref(0)
         const searchResults = ref([]);
-        const {
-            transition,
-            beforeEnter,
-            enter,
-            leave,
-            delayedEnter
-        } = useStaggeredTransition();
+        // const {
+        //     transition,
+        //     beforeEnter,
+        //     enter,
+        //     leave,
+        //     delayedEnter
+        // } = useStaggeredTransition();
         const searchTermTimer = ref(false);
         const currentObj = ref(false)
         const transitionName = ref('slide')
@@ -212,11 +213,12 @@ export default {
             search, getScreenCategory,
             searchIconJson, searchMapJson, element, focusOnInput,
             searchInput, blurOffInput, buttonClick,
-            searchResults, transition,
-            beforeEnter,
-            enter,
-            leave,
-            delayedEnter,
+            searchResults,
+            //  transition,
+            // beforeEnter,
+            // enter,
+            // leave,
+            // delayedEnter,
             searchContainer,
             inputChange,
             emitSearch,
