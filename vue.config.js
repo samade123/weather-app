@@ -31,8 +31,8 @@ module.exports = defineConfig({
   pwa: {
     name: "Local Weather by Sam",
     themeColor: "#e6ebf4",
-    msTileColor: "#000000",
+    msTileColor: "#f7f7f7",
     appleMobileWebAppCapable: "yes",
-    appleMobileWebAppStatusBarStyle: "black",
+    appleMobileWebAppStatusBarStyle: "#f7f7f7",
   },
 });
