@@ -34,5 +34,10 @@ module.exports = defineConfig({
     msTileColor: "#f7f7f7",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "#f7f7f7",
+    backgroundColor: "#f7f7f7",
+
+    manifestOptions: {
+      background_color: "#f7f7f7",
+    },
   },
 });
