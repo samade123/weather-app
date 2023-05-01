@@ -4,8 +4,8 @@ import Papa from "papaparse";
 
 // Listen for messages from the main thread
 self.onmessage = (event) => {
-  const { csvPath, searchTerm } = event.data;
-  // console.log("csv", csvPath, searchTerm)
+  const {searchTerm } = event.data;
+  // console.log("csv", searchTerm)
 
   fetch("./../assets/cities-new.csv")
     .then((response) => response.text())
@@ -31,6 +31,7 @@ self.onmessage = (event) => {
     })
     .catch((error) => {
       // Send an error message back to the main thread
+      console.log({ error: error.message })
       self.postMessage({ error: error.message });
     });
 };
