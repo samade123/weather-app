@@ -11,7 +11,7 @@
       <h1 class="title">Settings</h1>
       <div class="menu-body">
         <div class="lottie-wrapper">
-          <LottiePlayer :animationData="multiSetting" :loop="false" :pauseAnimation="false" :hoverPlay="true" :width="'min(39vw, 5000px)'"
+          <LottiePlayer :animationData="multiSetting" :loop="false" :pauseAnimation="false" :hoverPlay="true" :width="'min(39vw, 500px)'"
             :autoPlay="false" />
         </div>
         <div class="menu-sections">
