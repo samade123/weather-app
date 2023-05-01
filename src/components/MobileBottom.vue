@@ -14,11 +14,11 @@
             <div class="bottom-sections" v-if="switchFunctionality(selectors[0].name)">
                 <div class="search-suggestion-wrapper">
                     <div class="search-results-container" v-if="searchResults.length > 0">
-                        <div class="result-wrapper" v-for="(n, index) in 5" :key='n'>
+                        <div tabindex='0' class="result-wrapper" v-for="(n, index) in 5" :key='n'>
                             <transition name="results" appear mode="out-in">
-                                <div class="results" @click="emitSearch(searchResults[index].item.name)"
-                                    v-if="searchResults[index]" :key='searchResults[index].item.name'
-                                    :style="{ 'transition-delay': `${n * 0.1}s` }"> {{
+                                <div tabindex='0' class="results" @keyup.enter="emitSearch(searchResults[index].item.name)"
+                                    @click="emitSearch(searchResults[index].item.name)" v-if="searchResults[index]"
+                                    :key='searchResults[index].item.name' :style="{ 'transition-delay': `${n * 0.1}s` }"> {{
                                         searchResults[index].item.name }}
                                 </div>
 
@@ -50,7 +50,9 @@
                 <slot name="weather-strip"></slot>
             </div>
             <div class="bottom-sections" v-else-if="switchFunctionality(selectors[2].name)">
-                <slot name="progress-chart"></slot>
+                <slot name="progress-chart">
+                    <div class="placeholder"></div>
+                </slot>
             </div>
         </transition>
     </div>
@@ -59,14 +61,15 @@
 <script>
 import LottiePlayer from "@/components/Lottie.vue";
 import { widthFunction } from "@/composables/Mobile.js";
-import searchIconJson from "@/assets/lottie-files/search.json";
+import searchIconJson from "@/assets/lottie-files/search-mobile-two.json";
 import searchMapJson from "@/assets/lottie-files/search-map.json";
-import { ref, onMounted, toRaw } from 'vue';
+import { ref, onMounted, toRaw, watch } from 'vue';
 
 
 export default {
     name: 'MobileBottom',
     emits: ["citySearch"],
+    props: ["current"],
     components: {
         LottiePlayer,
     },
@@ -95,7 +98,7 @@ export default {
         const transitionName = ref('slide')
 
         const selectedValue = ref("")
-        const selectors = [{ "name": "search", "selected": false, "selectedClass": "one" }, { "name": "3-hours", "selected": true, "selectedClass": "two" }, { "name": "all-day", "selected": false, "selectedClass": "three" }]
+        const selectors = [{ "name": "Search", "selected": false, "selectedClass": "one" }, { "name": "Hours", "selected": true, "selectedClass": "two" }, { "name": "Forecast", "selected": false, "selectedClass": "three" }]
 
         const searchLottieObj = {
             frames: [],
@@ -114,13 +117,13 @@ export default {
         }
 
         const emitSearch = (e) => {
-            ctx.emit("citySearch", e);
-            searchResults.value.length = 0;
-            // icon.value.playSegments([50, 0], true)
-            searchLottieObj.frames = [50, 0]
-            showSearch.value = false;
-            searchTerm.value = "";
-            playIconForwardNext.value = true;
+            ctx.emit("citySearch", removeAccents(e));
+            // searchResults.value.length = 0;
+            // // icon.value.playSegments([50, 0], true)
+            // searchLottieObj.frames = [50, 0]
+            // showSearch.value = false;
+            // searchTerm.value = "";
+            // playIconForwardNext.value = true;
         }
         const buttonClick = (e) => {
             if (!searchInputFocus.value) { //input has no focus
@@ -218,6 +221,25 @@ export default {
             });
         }
 
+        const removeAccents = (str) => {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+
+        watch(() => props.current, (newVal) => {
+
+            if (searchResults.value.length > 0) {
+                searchResults.value.length = 0;
+                // icon.value.playSegments([50, 0], true)
+                searchLottieObj.frames = [50, 0]
+                showSearch.value = false;
+                searchTerm.value = "";
+                playIconForwardNext.value = true;
+            }
+        });
+
+
+
         return {
             width, setMobile, searchTerm,
             search, getScreenCategory,
@@ -252,6 +274,7 @@ export default {
 @use "./../stylesheets/dashboard/theme-old.scss" as *;
 @use "./../stylesheets/dashboard/theme-new.scss" as *;
 @use "./../stylesheets/transitions.scss" as *;
+@use "./../stylesheets/placeholder.scss" as *;
 
 
 .search-suggestion-wrapper:has(.lottie-animation-container) {
@@ -264,6 +287,11 @@ export default {
     height: 100%;
     aspect-ratio: 1;
     margin-inline: auto;
+}
+
+.bottom-sections .placeholder {
+    height: 200px;
+    width: 100%;
 }
 </style>
   

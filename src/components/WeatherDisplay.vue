@@ -97,9 +97,9 @@
             <div class="search-results-container" v-if="searchResults.length > 0">
                 <div class="result-wrapper" v-for="(n, index) in 5" :key='n'>
                     <transition name="results" appear mode="out-in">
-                        <div class="results" @mousedown="emitSearch(searchResults[index].item.name)"
-                            v-if="searchResults[index]" :key='searchResults[index].item.name'
-                            :style="{ 'transition-delay': `${n * 0.1}s` }"> {{
+                        <div class="results" @mousedown="emitSearch(searchResults[index].item.name)" tabindex='0'
+                            @keyup.enter="emitSearch(searchResults[index].item.name)" v-if="searchResults[index]"
+                            :key='searchResults[index].item.name' :style="{ 'transition-delay': `${n * 0.1}s` }"> {{
                                 searchResults[index].item.name }}
                         </div>
 
@@ -164,7 +164,7 @@ export default {
         }
 
         const emitSearch = (e) => {
-            ctx.emit("citySearch", e)
+            ctx.emit("citySearch", removeAccents(e))
         }
         const buttonClick = (e) => {
             if (!searchInputFocus.value) { //input has no focus
@@ -187,6 +187,11 @@ export default {
                 playIconForwardNext.value = false;
             }
         }
+
+        const removeAccents = (str) => {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
 
         const blurOffInput = () => {
             if (!playIconForwardNext.value) {
