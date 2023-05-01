@@ -1,5 +1,5 @@
 <template>
-  <img class="icon" :src="svgSrc" :alt="props.condition" />
+  <img class="icon" :class="[current ? svgClass : false]" :src="svgSrc" :alt="props.condition" />
 </template>
   
 <script>
@@ -8,9 +8,10 @@ import { watch, ref, onBeforeMount } from 'vue';
 
 export default {
   name: 'WeatherSVG',
-  props: ['condition', 'daytime'],
+  props: ['condition', 'daytime', 'current'],
   setup(props, ctx) {
     const svgSrc = ref(require('@/assets/svg/partly-cloudy-night.svg'))
+    const svgClass = ref('sunny-demo')
 
     let conditionIsDay = true;
     const getSVG = () => {
@@ -19,6 +20,21 @@ export default {
       let svgName = conditionIsDay ? weatherLUT.find(({ day }) => day == props.condition) : weatherLUT.find(({ night }) => night == props.condition)
       if (svgName) {
         svgSrc.value = require(`@/assets/svg/${svgName[conditionIsDay ? 'day-img' : 'night-img']}`);
+
+        if (props.current) {
+          let outerBgDiv = document.getElementsByClassName('outer-bg')[0];
+
+          if (outerBgDiv) {
+            outerBgDiv.classList.add('dissapear')
+            outerBgDiv.addEventListener("transitionend", (event) => {
+              svgClass.value = svgName[conditionIsDay ? 'day-css' : 'night-css'];
+              outerBgDiv.classList.remove('dissapear')
+            }, {
+              passive: true,
+              once: true,
+            });
+          }
+        }
         return svgSrc.value;
       }
     };
@@ -28,7 +44,7 @@ export default {
     })
 
     onBeforeMount(() => getSVG());
-    return { props, svgSrc };
+    return { props, svgSrc, svgClass };
   }
 };
 </script>
@@ -40,6 +56,7 @@ img {
   height: min(70px, 8vw);
   transition: height 0.1s ease-in-out;
   margin-inline: auto;
+  // width: 100%;
 }
 
 @media (max-width: 600px) {

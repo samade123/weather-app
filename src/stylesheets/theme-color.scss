@@ -11,7 +11,8 @@
 }
 
 :root:has(#theme-new:checked) {
-    --dynamic-right-color: #f7f7f799;
+  --app-background-color: #0a0a0a;
+  --dynamic-right-color: #f7f7f799;
     --dynamic-right-margin-inline: 30px;
 }
 

@@ -1,19 +1,162 @@
-/* Fallback for browsers that don't support image-set */
-@media (min-width: 0px) {
+:root {
+
   div.outer-bg {
-    background: url('./../assets/theme-new/bg-1200.webp') center / cover no-repeat;
+    transition: opacity 0.5s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955), filter 0.4s 0.2s ease;
+
+    &.dissapear {
+      opacity: 0;
+      filter: blur(25px);
+    }
   }
 }
 
-@media (min-width: 500px) {
-  div.outer-bg {
-    background: url('./../assets/theme-new/bg-2400.webp') center / cover no-repeat;
+:root:has(img.icon.snow) {
+
+  @media (min-width: 0px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-1200.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 500px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-2400.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-3000.webp') center / cover no-repeat;
+    }
   }
 }
 
-@media (min-width: 1000px) {
-  div.outer-bg {
-    background: url('./../assets/theme-new/bg-3000.webp') center / cover no-repeat;
+:root:has(img.icon.sunny) {
+
+  @media (min-width: 0px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-sunny-day-1200.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 500px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-sunny-day-2400.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-sunny-day-3000.webp') center / cover no-repeat;
+    }
+  }
+}
+
+:root:has(img.icon.clear-night) {
+
+  @media (min-width: 0px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-clear-night-1200.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 500px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-clear-night-2400.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-clear-night-3000.webp') center / cover no-repeat;
+    }
+  }
+}
+
+:root:has(img.icon.fog) {
+
+  @media (min-width: 0px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-fog-1200.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 500px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-fog-2400.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-fog-3000.webp') center / cover no-repeat;
+    }
+  }
+}
+
+:root:has(img.icon.rain) {
+
+  @media (min-width: 0px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-rain-1200.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 500px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-rain-2400.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-rain-3000.webp') center / cover no-repeat;
+    }
+  }
+}
+
+
+:root:has(img.icon.hail) {
+
+  @media (min-width: 0px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-hail-1200.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 500px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-hail-2400.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-hail-3000.webp') center / cover no-repeat;
+    }
+  }
+}
+
+
+
+:root:has(img.icon.cloudy) {
+
+  @media (min-width: 0px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-cloudy-1200.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 500px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-cloudy-2400.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-cloudy-3000.webp') center / cover no-repeat;
+    }
   }
 }
 

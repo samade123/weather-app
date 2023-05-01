@@ -5,7 +5,9 @@
         "night": "Clear",
         "icon": 113,
         "night-img": "clear-night.svg",
-        "day-img": "sun-hot.svg"
+        "day-img": "sun-hot.svg",
+        "night-css": "clear-night",
+        "day-css": "sunny"
     },
     {
         "code": 1003,
@@ -13,7 +15,9 @@
         "night": "Partly cloudy",
         "icon": 116,
         "day-img": "partly-cloudy-day.svg",
-        "night-img": "partly-cloudy-night.svg"
+        "night-img": "partly-cloudy-night.svg",
+        "night-css": "cloudy",
+        "day-css": "cloudy"
     },
     {
         "code": 1006,
@@ -21,7 +25,9 @@
         "night": "Cloudy",
         "icon": 119,
         "day-img": "cloudy.svg",
-        "night-img": "cloudy.svg"
+        "night-img": "cloudy.svg",
+        "night-css": "cloudy",
+        "day-css": "cloudy"
     },
     {
         "code": 1009,
@@ -29,7 +35,9 @@
         "night": "Overcast",
         "icon": 122,
         "day-img": "overcast-day.svg",
-        "night-img": "overcast-night.svg"
+        "night-img": "overcast-night.svg",
+        "night-css": "cloudy",
+        "day-css": "cloudy"
     },
     {
         "code": 1030,
@@ -37,7 +45,9 @@
         "night": "Mist",
         "icon": 143,
         "day-img": "mist.svg",
-        "night-img": "mist.svg"
+        "night-img": "mist.svg",
+        "night-css": "fog",
+        "day-css": "fog"
     },
     {
         "code": 1063,
@@ -45,7 +55,9 @@
         "night": "Patchy rain possible",
         "icon": 176,
         "day-img": "partly-cloudy-day-rain.svg",
-        "night-img": "partly-cloudy-night-rain.svg"
+        "night-img": "partly-cloudy-night-rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1066,
@@ -53,7 +65,9 @@
         "night": "Patchy snow possible",
         "icon": 179,
         "day-img": "partly-cloudy-day-snow.svg",
-        "night-img": "partly-cloudy-night-snow.svg"
+        "night-img": "partly-cloudy-night-snow.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1069,
@@ -61,7 +75,9 @@
         "night": "Patchy sleet possible",
         "icon": 182,
         "day-img": "partly-cloudy-day-sleet.svg",
-        "night-img": "partly-cloudy-night-sleet.svg"
+        "night-img": "partly-cloudy-night-sleet.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1072,
@@ -69,7 +85,9 @@
         "night": "Patchy freezing drizzle possible",
         "icon": 185,
         "day-img": "partly-cloudy-day-drizzle.svg",
-        "night-img": "partly-cloudy-night-drizzle.svg"
+        "night-img": "partly-cloudy-night-drizzle.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1087,
@@ -77,7 +95,9 @@
         "night": "Thundery outbreaks possible",
         "icon": 200,
         "day-img": "thunderstorm.svg",
-        "night-img": "thunderstorm.svg"
+        "night-img": "thunderstorm.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1114,
@@ -85,7 +105,9 @@
         "night": "Blowing snow",
         "icon": 227,
         "day-img": "snowflake.svg",
-        "night-img": "snowflake.svg"
+        "night-img": "snowflake.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1117,
@@ -93,7 +115,10 @@
         "night": "Blizzard",
         "icon": 230,
         "day-img": "snowflake.svg",
-        "night-img": "snowflake.svg"
+        "night-img": "snowflake.svg",
+        "night-css": "snow",
+        "day-css": "snow"
+        
     },
     {
         "code": 1135,
@@ -101,7 +126,9 @@
         "night": "Fog",
         "icon": 248,
         "day-img": "fog-day.svg",
-        "night-img": "fog-night.svg"
+        "night-img": "fog-night.svg",
+        "night-css": "fog",
+        "day-css": "fog"
     },
     {
         "code": 1147,
@@ -109,7 +136,9 @@
         "night": "Freezing fog",
         "icon": 260,
         "day-img": "fog.svg",
-        "night-img": "fog.svg"
+        "night-img": "fog.svg",
+        "night-css": "fog",
+        "day-css": "fog"
     },
     {
         "code": 1150,
@@ -117,7 +146,9 @@
         "night": "Patchy light drizzle",
         "icon": 263,
         "day-img": "partly-cloudy-day-drizzle.svg",
-        "night-img": "partly-cloudy-night-drizzle.svg"
+        "night-img": "partly-cloudy-night-drizzle.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1153,
@@ -125,23 +156,30 @@
         "night": "Light drizzle",
         "icon": 266,
         "day-img": "rain.svg",
-        "night-img": "rain.svg"
+        "night-img": "rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1168,
         "day": "Freezing drizzle",
         "night": "Freezing drizzle",
         "icon": 281,
-        "day-img": "snowflake.svg",
-        "night-img": "snowflake.svg"
+        "day-img": "rain.svg",
+        "night-img": "rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
+       
     },
     {
         "code": 1171,
         "day": "Heavy freezing drizzle",
         "night": "Heavy freezing drizzle",
         "icon": 284,
-        "day-img": "snowflake.svg",
-        "night-img": "snowflake.svg"
+        "day-img": "rain.svg",
+        "night-img": "rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1180,
@@ -149,7 +187,9 @@
         "night": "Patchy light rain",
         "icon": 293,
         "day-img": "partly-cloudy-day-rain.svg",
-        "night-img": "partly-cloudy-night-rain.svg"
+        "night-img": "partly-cloudy-night-rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1183,
@@ -157,7 +197,9 @@
         "night": "Light rain",
         "icon": 296,
         "day-img": "rain.svg",
-        "night-img": "rain.svg"
+        "night-img": "rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1186,
@@ -165,7 +207,9 @@
         "night": "Moderate rain at times",
         "icon": 299,
         "day-img": "rain.svg",
-        "night-img": "rain.svg"
+        "night-img": "rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1189,
@@ -173,7 +217,9 @@
         "night": "Moderate rain",
         "icon": 302,
         "day-img": "rain.svg",
-        "night-img": "rain.svg"
+        "night-img": "rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1192,
@@ -181,7 +227,9 @@
         "night": "Heavy rain at times",
         "icon": 305,
         "day-img": "rain.svg",
-        "night-img": "rain.svg"
+        "night-img": "rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1195,
@@ -189,7 +237,9 @@
         "night": "Heavy rain",
         "icon": 308,
         "day-img": "extreme-day-rain.svg.svg",
-        "night-img": "extreme-day-rain.svg.svg"
+        "night-img": "extreme-day-rain.svg.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1198,
@@ -197,7 +247,9 @@
         "night": "Light freezing rain",
         "icon": 311,
         "day-img": "rain.svg",
-        "night-img": "rain.svg"
+        "night-img": "rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1201,
@@ -205,7 +257,9 @@
         "night": "Moderate or heavy freezing rain",
         "icon": 314,
         "day-img": "extreme-day-rain.svg.svg",
-        "night-img": "extreme-night-rain.svg.svg"
+        "night-img": "extreme-night-rain.svg.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1204,
@@ -213,7 +267,9 @@
         "night": "Light sleet",
         "icon": 317,
         "day-img": "sleet.svg",
-        "night-img": "sleet.svg"
+        "night-img": "sleet.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1207,
@@ -221,7 +277,9 @@
         "night": "Moderate or heavy sleet",
         "icon": 320,
         "day-img": "extreme-day-sleet.svg",
-        "night-img": "extreme-night-sleet.svg"
+        "night-img": "extreme-night-sleet.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1210,
@@ -229,7 +287,9 @@
         "night": "Patchy light snow",
         "icon": 323,
         "day-img": "partly-cloudy-day-snow.svg",
-        "night-img": "partly-cloudy-night-snow.svg"
+        "night-img": "partly-cloudy-night-snow.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1213,
@@ -237,7 +297,9 @@
         "night": "Light snow",
         "icon": 326,
         "day-img": "snowflake.svg",
-        "night-img": "snowflake.svg"
+        "night-img": "snowflake.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1216,
@@ -245,7 +307,9 @@
         "night": "Patchy moderate snow",
         "icon": 329,
         "day-img": "partly-cloudy-day-snow.svg",
-        "night-img": "partly-cloudy-night-snow.svg"
+        "night-img": "partly-cloudy-night-snow.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1219,
@@ -253,7 +317,9 @@
         "night": "Moderate snow",
         "icon": 332,
         "day-img": "snowflake.svg",
-        "night-img": "snowflake.svg"
+        "night-img": "snowflake.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1222,
@@ -261,7 +327,9 @@
         "night": "Patchy heavy snow",
         "icon": 335,
         "day-img": "partly-cloudy-day-snow.svg",
-        "night-img": "partly-cloudy-night-snow.svg"
+        "night-img": "partly-cloudy-night-snow.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1225,
@@ -269,7 +337,9 @@
         "night": "Heavy snow",
         "icon": 338,
         "day-img": "extreme-day-snow.svg",
-        "night-img": "extreme-night-snow.svg"
+        "night-img": "extreme-night-snow.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1237,
@@ -277,7 +347,9 @@
         "night": "Ice pellets",
         "icon": 350,
         "day-img": "snowflake.svg",
-        "night-img": "snowflake.svg"
+        "night-img": "snowflake.svg",
+        "night-css": "hail",
+        "day-css": "hail"
     },
     {
         "code": 1240,
@@ -285,7 +357,9 @@
         "night": "Light rain shower",
         "icon": 353,
         "day-img": "rain.svg",
-        "night-img": "rain.svg"
+        "night-img": "rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1243,
@@ -293,7 +367,9 @@
         "night": "Moderate or heavy rain shower",
         "icon": 356,
         "day-img": "rain.svg",
-        "night-img": "rain.svg"
+        "night-img": "rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1246,
@@ -301,7 +377,9 @@
         "night": "Torrential rain shower",
         "icon": 359,
         "day-img": "extreme-day-rain.svg",
-        "night-img": "extreme-night-rain.svg"
+        "night-img": "extreme-night-rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1249,
@@ -309,7 +387,9 @@
         "night": "Light sleet showers",
         "icon": 362,
         "day-img": "sleet.svg",
-        "night-img": "sleet.svg"
+        "night-img": "sleet.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1252,
@@ -317,7 +397,9 @@
         "night": "Moderate or heavy sleet showers",
         "icon": 365,
         "day-img": "extreme-day-sleet.svg",
-        "night-img": "extreme-night-sleet.svg"
+        "night-img": "extreme-night-sleet.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1255,
@@ -325,7 +407,9 @@
         "night": "Light snow showers",
         "icon": 368,
         "day-img": "snow.svg",
-        "night-img": "snow.svg"
+        "night-img": "snow.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1258,
@@ -333,7 +417,9 @@
         "night": "Moderate or heavy snow showers",
         "icon": 371,
         "day-img": "extreme-day-snow.svg",
-        "night-img": "extreme-night-snow.svg"
+        "night-img": "extreme-night-snow.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1261,
@@ -341,7 +427,9 @@
         "night": "Light showers of ice pellets",
         "icon": 374,
         "day-img": "snowflake.svg",
-        "night-img": "snowflake.svg"
+        "night-img": "snowflake.svg",
+        "night-css": "hail",
+        "day-css": "hail"
     },
     {
         "code": 1264,
@@ -349,7 +437,9 @@
         "night": "Moderate or heavy showers of ice pellets",
         "icon": 377,
         "day-img": "extreme-day-snow.svg",
-        "night-img": "extreme-night-snow.svg"
+        "night-img": "extreme-night-snow.svg",
+        "night-css": "hail",
+        "day-css": "hail"
     },
     {
         "code": 1273,
@@ -357,7 +447,9 @@
         "night": "Patchy light rain with thunder",
         "icon": 386,
         "day-img": "thunderstorms-day-rain.svg",
-        "night-img": "thunderstorms-night-rain.svg"
+        "night-img": "thunderstorms-night-rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1276,
@@ -365,7 +457,9 @@
         "night": "Moderate or heavy rain with thunder",
         "icon": 389,
         "day-img": "thunderstorms-day-extreme-rain.svg",
-        "night-img": "thunderstorms-night-extreme-rain.svg"
+        "night-img": "thunderstorms-night-extreme-rain.svg",
+        "night-css": "rain",
+        "day-css": "rain"
     },
     {
         "code": 1279,
@@ -373,7 +467,9 @@
         "night": "Patchy light snow with thunder",
         "icon": 392,
         "day-img": "thunderstorm-snowflake.svg",
-        "night-img": "thunderstorm-snowflake.svg"
+        "night-img": "thunderstorm-snowflake.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     },
     {
         "code": 1282,
@@ -381,6 +477,8 @@
         "night": "Moderate or heavy snow with thunder",
         "icon": 395,
         "day-img": "thunderstorm-night-extreme-snow.svg",
-        "night-img": "thunderstorm-night-extreme-snow.svg"
+        "night-img": "thunderstorm-night-extreme-snow.svg",
+        "night-css": "snow",
+        "day-css": "snow"
     }
 ]

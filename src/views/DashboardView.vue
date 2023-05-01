@@ -69,7 +69,7 @@
       </template>
       <template #weather-svg>
         <!-- <WeatherSVG :condition="current ? current.condition.text : false" /> -->
-        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false"
+        <WeatherSVG v-if="current" :current='true' :condition="current ? current.condition.text : false"
           :daytime="current ? current['is_day'] : 1" />
         <div v-else class="placeholder"></div>
       </template>
@@ -112,7 +112,7 @@
     </WeatherDisplay>
 
     <div class="bottom new" v-if="props.theme == 'new' && setMobile">
-      <MobileBottom @city-search='emitSearch'>
+      <MobileBottom @city-search='emitSearch' :current="location ? location.name : false">
         <template #weather-strip>
           <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter"
             :windowWidth="windowWidth" />
