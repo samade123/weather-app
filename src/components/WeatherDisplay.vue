@@ -135,12 +135,9 @@
 import LottiePlayer from "@/components/Lottie.vue";
 import WeatherSVG from "@/components/WeatherSVG.vue";
 import { widthFunction } from "@/composables/Mobile.js";
-// import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
 import searchIconJson from "@/assets/lottie-files/search.json";
 import settingCog from "@/assets/lottie-files/settings-sliders.json";
 import { ref } from 'vue';
-// import workerPath from "@/webworkers/searchCSV.js";
-// import csvPath from "@/assets/cities-new.csv";
 
 export default {
     name: 'WeatherDisplay',
@@ -158,13 +155,6 @@ export default {
         const searchInputFocus = ref(false);
         const searchTerm = ref('');
         const searchResults = ref([]);
-        // const {
-        //     transition,
-        //     beforeEnter,
-        //     enter,
-        //     leave,
-        //     delayedEnter
-        // } = useStaggeredTransition();
         const searchTermTimer = ref(false);
         const buttonClickTimer = ref(false);
 
@@ -239,11 +229,6 @@ export default {
             searchIconJson, icon, focusOnInput,
             searchInput, blurOffInput, buttonClick,
             searchResults,
-            //  transition,
-            // beforeEnter,
-            // enter,
-            // leave,
-            // delayedEnter,
             searchContainer,
             inputChange,
             emitSearch,
