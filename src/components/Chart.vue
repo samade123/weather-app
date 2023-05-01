@@ -61,7 +61,7 @@ export default {
         labels: props.data.map((element) => element.time.substring(11)),
         datasets: [
           {
-            label: "Temperature",
+            label: type.label,
             data: props.data.map((element) => element[type.type]),
             backgroundColor: "rgba(255, 99, 132, 0)",
             borderColor: [type.color],
@@ -139,6 +139,9 @@ export default {
           },
         },
       });
+
+      chart.options.animation = false; // disables all animations
+
 
       watch(
         () => props.data,
@@ -337,6 +340,7 @@ export default {
       width: 100%;
       height: 100%;
       aspect-ratio: auto;
+      max-height: 165px;
       // max-width: 95vw;
       // max-height: 100%;
       // aspect-ratio: 1.7;
