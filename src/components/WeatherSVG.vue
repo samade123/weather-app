@@ -39,6 +39,7 @@ img {
   width: auto;
   height: min(70px, 8vw);
   transition: height 0.1s ease-in-out;
+  margin-inline: auto;
 }
 
 @media (max-width: 600px) {
