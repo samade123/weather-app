@@ -119,6 +119,8 @@
         </template>
         <template #progress-chart>
           <lineChart v-if="forecast" :data="dataArray" :theme="props.theme" />
+          <div v-else class="placeholder"></div>
+
         </template>
       </MobileBottom>
     </div>
@@ -375,4 +377,5 @@ export default {
 @use "./../stylesheets/dashboard/theme-old.scss" as *;
 @use "./../stylesheets/dashboard/theme-new.scss" as *;
 @use "./../stylesheets/transitions.scss" as *;
-@use "./../stylesheets/placeholder.scss" as *;</style>
+@use "./../stylesheets/placeholder.scss" as *;
+</style>
