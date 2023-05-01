@@ -1,7 +1,10 @@
 <template>
     <div class="middle new">
         <div class="title"><span>the.weather</span><span @click="openSettings">
-                <Vue3Lottie :animationData="settingCog" :loop="false" :pauseAnimation="false" playOnHover="true"
+                <!-- <Vue3Lottie :animationData="settingCog" :loop="false" :pauseAnimation="false" playOnHover="true"
+                    :autoPlay="false" /> -->
+
+                <LottiePlayer :animationData="settingCog" :loop="false" :pauseAnimation="false" :hoverPlay="true"
                     :autoPlay="false" />
             </span></div>
 
@@ -77,8 +80,10 @@
             <!-- <input type="text" class="search" ref="searchInput" @input="inputChange" v-model="searchTerm"
                 @keydown.enter="search" @focus='focusOnInput'> -->
             <div class="search-icon" @click="buttonClick($event)">
-                <Vue3Lottie :animationData="searchIconJson" height="45px" ref="icon" :loop="false" :pauseAnimation="false"
-                    :autoPlay="false" />
+                <!-- <Vue3Lottie :animationData="searchIconJson" height="45px" ref="icon" :loop="false" :pauseAnimation="false"
+                    :autoPlay="false" /> -->
+                <LottiePlayer :animationData="searchIconJson" height="45px" :loop="false" :pauseAnimation="false"
+                    :autoPlay="false" :frames="searchLottieObj.frames" />
             </div>
         </div>
         <!-- <transition-group tag="div" class="search-results-container" mode="out-in" :css="false" appear
@@ -127,20 +132,22 @@
 </template>
   
 <script>
+import LottiePlayer from "@/components/Lottie.vue";
 import WeatherSVG from "@/components/WeatherSVG.vue";
 import { widthFunction } from "@/composables/Mobile.js";
 // import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
 import searchIconJson from "@/assets/lottie-files/search.json";
 import settingCog from "@/assets/lottie-files/settings-sliders.json";
+import { ref } from 'vue';
 // import workerPath from "@/webworkers/searchCSV.js";
-import csvPath from "@/assets/cities-new.csv";
-import { ref, watch, onBeforeMount } from 'vue';
+// import csvPath from "@/assets/cities-new.csv";
 
 export default {
     name: 'WeatherDisplay',
     emits: ["openSettings", "citySearch"],
     components: {
         WeatherSVG,
+        LottiePlayer,
     },
     setup(props, ctx) {
         const { width, setMobile, getScreenCategory } = widthFunction();
@@ -161,6 +168,11 @@ export default {
         const searchTermTimer = ref(false);
         const buttonClickTimer = ref(false);
 
+        const searchLottieObj = {
+            frames: [],
+            play: false,
+        }
+
         const emitSearch = (e) => {
             ctx.emit("citySearch", e)
         }
@@ -180,14 +192,16 @@ export default {
 
         const focusOnInput = () => {
             if (playIconForwardNext.value) { // the next play direction is forward then play forward 
-                icon.value.playSegments([0, 50], true)
+                searchLottieObj.frames = [0, 50]
+                // icon.value.playSegments([0, 50], true)
                 playIconForwardNext.value = false;
             }
         }
 
         const blurOffInput = () => {
             if (!playIconForwardNext.value) {
-                icon.value.playSegments([50, 0], true)
+                searchLottieObj.frames = [50, 0]
+                // icon.value.playSegments([50, 0], true)
                 searchTerm.value = "";
                 search();
                 playIconForwardNext.value = true;
@@ -201,7 +215,7 @@ export default {
             };
             const worker = new Worker(new URL('@/webworkers/searchCSV.js', import.meta.url));
 
-            worker.postMessage({ csvPath, searchTerm: searchTerm.value });
+            worker.postMessage({ searchTerm: searchTerm.value });
 
             worker.onmessage = (event) => {
                 // console.log('found', event.data)
@@ -235,6 +249,7 @@ export default {
             emitSearch,
             settingCog,
             openSettings,
+            searchLottieObj,
         };
 
     },

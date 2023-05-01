@@ -11,7 +11,7 @@
       <h1 class="title">Settings</h1>
       <div class="menu-body">
         <div class="lottie-wrapper">
-          <Vue3Lottie :animationData="multiSetting" :loop="false" :pauseAnimation="false" playOnHover="true"
+          <LottiePlayer :animationData="multiSetting" :loop="false" :pauseAnimation="false" :hoverPlay="true" :width="'min(39vw, 5000px)'"
             :autoPlay="false" />
         </div>
         <div class="menu-sections">
@@ -116,6 +116,7 @@ import ThemeSwitch from "@/components/ThemeSwitch.vue";
 import multiSetting from "@/assets/lottie-files/multi-settings.json";
 
 import { useRouter } from "vue-router";
+import LottiePlayer from "@/components/Lottie.vue";
 
 export default {
   name: "AppView",
@@ -124,6 +125,7 @@ export default {
     LocationSwitch,
     PWAModal,
     ThemeSwitch,
+    LottiePlayer,
   },
   setup() {
     const router = useRouter();
@@ -385,5 +387,9 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.lottie-wrapper > div {
+  margin: 0 auto;
 }
 </style>

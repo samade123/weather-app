@@ -11,8 +11,7 @@
     </div>
     <div class="data-type-item" @click="showCheckedMenu = true">
       <span class="icon">
-        <Vue3Lottie :animationData="settingCog" :loop="false" :pauseAnimation="false" playOnHover="true"
-          :autoPlay="false" />
+        <LottiePlayer :animationData="settingCog" :loop="false" :pauseAnimation="false" :hoverPlay="true" :autoPlay="false" />
       </span>
     </div>
   </div>
@@ -30,6 +29,8 @@
 </template>
 
 <script>
+import LottiePlayer from "@/components/Lottie.vue";
+
 import Chart from "chart.js/auto";
 import { onMounted, watch, ref } from "vue";
 import { widthFunction } from "@/composables/Mobile.js";
@@ -39,11 +40,14 @@ import settingCog from "@/assets/lottie-files/settings-sliders.json";
 export default {
   name: "lineChart",
   props: ["data"],
+  components: {
+    LottiePlayer,
+  },
   setup(props) {
     const { storage } = storageManager();
     const { width, setMobile, getScreenCategory } = widthFunction();
     let themeType = ref(false)
-    let datatype = [{ name: 'temp(c)', type: 'temp_c', color: '#f7f7f7', checked: true, }, { name: 'rain(in)', type: 'precip_in', color: '#348feb', checked: true, }, { name: 'wind(kph)', type: 'wind_kph', color: '#42a4f5', checked: false, }, { name: 'cloud(%)', type: 'cloud', color: '#f5dd42', checked: false, },]
+    let datatype = [{ name: 'temp(c)', type: 'temp_c', color: '#f7f7f7', checked: true, label: 'Temperature' }, { name: 'humdity', type: 'humidity', color: '#fc0388', checked: false, label: 'Humidity' }, { name: 'uv', type: 'uv', color: '#e803fc', checked: false, label: 'UV' },{ name: 'rain(in)', type: 'precip_in', color: '#348feb', checked: true, label: 'Precip(in)' }, { name: 'wind(kph)', type: 'wind_kph', color: '#42a4f5', checked: false, label: 'Wind speed' }, { name: 'cloud(%)', type: 'cloud', color: '#f5dd42', checked: false, label: 'Cloud (%)' },]
     const mainType = ref('temp_c')
     let data = []
     let chart = null;
@@ -256,6 +260,7 @@ export default {
     display: flex;
     gap: 10px;
     overflow-x: auto;
+    overflow-y: hidden;
     padding-bottom: 3px;
 
     /* width */

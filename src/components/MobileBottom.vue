@@ -27,14 +27,20 @@
                     </div>
                     <transition :name="transitionName">
 
-                        <Vue3Lottie v-if='searchResults.length == 0' :animationData="searchMapJson" :loop="false"
-                            :pauseAnimation="false" :autoPlay="false" />
+                        <!-- <Vue3Lottie v-if='searchResults.length == 0' :animationData="searchMapJson" :loop="false"
+                            :pauseAnimation="false" :autoPlay="false" /> -->
+
+                        <LottiePlayer v-if='searchResults.length == 0' :animationData="searchMapJson" :loop="false"
+                            :pauseAnimation="false" :autoPlay="false" height="95%" />
                     </transition>
                 </div>
                 <div class="search-container" @click="buttonClick($event)">
                     <div class="search-icon">
-                        <Vue3Lottie :animationData="searchIconJson" height="40px" width="40px" ref="icon" :loop="false"
-                            :pauseAnimation="false" :autoPlay="false" />
+                        <!-- <Vue3Lottie :animationData="searchIconJson" height="40px" width="40px" ref="icon" :loop="false"
+                            :pauseAnimation="false" :autoPlay="false" /> -->
+                        <LottiePlayer :animationData="searchIconJson" height="40px" width="40px" :loop="false"
+                            :pauseAnimation="false" :autoPlay="false" :frames="searchLottieObj.frames"
+                            :play="searchLottieObj.play" />
                     </div>
                     <input type="text" class="search" ref="searchInput" @input="inputChange" v-model="searchTerm">
                 </div>
@@ -51,20 +57,18 @@
 </template>
   
 <script>
-import WeatherSVG from "@/components/WeatherSVG.vue";
+import LottiePlayer from "@/components/Lottie.vue";
 import { widthFunction } from "@/composables/Mobile.js";
-// import useStaggeredTransition from '@/composables/useStaggeredTransition.js';
 import searchIconJson from "@/assets/lottie-files/search.json";
 import searchMapJson from "@/assets/lottie-files/search-map.json";
-// import workerPath from "@/webworkers/searchCSV.js";
-import csvPath from "@/assets/cities-new.csv";
 import { ref, onMounted, toRaw } from 'vue';
+
 
 export default {
     name: 'MobileBottom',
     emits: ["citySearch"],
     components: {
-        WeatherSVG,
+        LottiePlayer,
     },
     setup(props, ctx) {
         const { width, setMobile, getScreenCategory } = widthFunction();
@@ -93,7 +97,10 @@ export default {
         const selectedValue = ref("")
         const selectors = [{ "name": "search", "selected": false, "selectedClass": "one" }, { "name": "3-hours", "selected": true, "selectedClass": "two" }, { "name": "all-day", "selected": false, "selectedClass": "three" }]
 
-
+        const searchLottieObj = {
+            frames: [],
+            play: false,
+        }
         const switchFunctionality = (selectorName) => {
 
             if (selectorName != selectors[0].name) {
@@ -109,7 +116,8 @@ export default {
         const emitSearch = (e) => {
             ctx.emit("citySearch", e);
             searchResults.value.length = 0;
-            icon.value.playSegments([50, 0], true)
+            // icon.value.playSegments([50, 0], true)
+            searchLottieObj.frames = [50, 0]
             showSearch.value = false;
             searchTerm.value = "";
             playIconForwardNext.value = true;
@@ -129,14 +137,16 @@ export default {
         const focusOnInput = () => {
             // console.log(icon.value)
             if (playIconForwardNext.value) { // the next play direction is forward then play forward 
-                icon.value.playSegments([0, 50], true)
+                searchLottieObj.frames = [0, 50]
+                // icon.value.playSegments([0, 50], true)
                 playIconForwardNext.value = false;
             }
         }
 
         const blurOffInput = () => {
             if (!playIconForwardNext.value) {
-                icon.value.playSegments([50, 0], true)
+                searchLottieObj.frames = [50, 0]
+                // icon.value.playSegments([50, 0], true)
                 searchTerm.value = "";
                 search();
                 playIconForwardNext.value = true;
@@ -152,7 +162,7 @@ export default {
             if (searchTerm.value.length < 3) { return };
             const worker = new Worker(new URL('@/webworkers/searchCSV.js', import.meta.url));
 
-            worker.postMessage({ csvPath, searchTerm: searchTerm.value });
+            worker.postMessage({ searchTerm: searchTerm.value });
             worker.onmessage = (event) => {
                 searchResults.value = [...event.data];
             };
@@ -231,6 +241,7 @@ export default {
             showSearch,
             icon,
             switchFunctionality,
+            searchLottieObj
         };
 
     },

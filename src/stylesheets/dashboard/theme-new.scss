@@ -1,8 +1,6 @@
 @use "@/stylesheets/dashboard/background.scss"as *;
 @use "./../accessibility.scss"as *;
 
-@import 'vue3-lottie/dist/style.css';
-@import "vuesax3/dist/vuesax.css";
 
 :root:has(#theme-new:checked) {
   div.outer {
@@ -152,6 +150,7 @@
             overflow: hidden;
             overflow-wrap: break-word;
             white-space: pre-wrap;
+            text-align: center;
           }
         }
 
