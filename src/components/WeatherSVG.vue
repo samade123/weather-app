@@ -8,10 +8,11 @@ import { watch, ref, onBeforeMount } from 'vue';
 
 export default {
   name: 'WeatherSVG',
-  props: ['condition', 'daytime', 'current'],
+  props: ['condition', 'daytime', 'current','uv'],
   setup(props, ctx) {
     const svgSrc = ref(require('@/assets/svg/partly-cloudy-night.svg'))
     const svgClass = ref('sunny-demo')
+    const loadSvgClass = ref('')
 
     let conditionIsDay = true;
     const getSVG = () => {
@@ -27,7 +28,13 @@ export default {
           if (outerBgDiv) {
             outerBgDiv.classList.add('dissapear')
             outerBgDiv.addEventListener("transitionend", (event) => {
-              svgClass.value = svgName[conditionIsDay ? 'day-css' : 'night-css'];
+
+              
+              loadSvgClass.value = svgName[conditionIsDay ? 'day-css' : 'night-css'];
+              if (props.condition == 'Partly cloudy' && props.uv > 2) { 
+                loadSvgClass.value = 'sunny_cloudy'
+              }
+              svgClass.value = loadSvgClass.value;
               outerBgDiv.classList.remove('dissapear')
             }, {
               passive: true,

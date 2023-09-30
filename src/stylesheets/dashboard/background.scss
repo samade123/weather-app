@@ -31,7 +31,7 @@
   }
 }
 
-:root:has(img.icon.sunny) {
+:root:has(img.icon.sunny_cloudy) {
 
   @media (min-width: 0px) {
     div.outer-bg {
@@ -48,6 +48,27 @@
   @media (min-width: 1000px) {
     div.outer-bg {
       background: url('./../assets/theme-new/bg-sunny-day-3000.webp') center / cover no-repeat;
+    }
+  }
+}
+
+:root:has(img.icon.sunny) {
+
+  @media (min-width: 0px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-sunny-day-beach-1200.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 500px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-sunny-day-beach-2400.webp') center / cover no-repeat;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    div.outer-bg {
+      background: url('./../assets/theme-new/bg-sunny-day-beach-3000.webp') center / cover no-repeat;
     }
   }
 }

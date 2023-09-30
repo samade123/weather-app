@@ -70,12 +70,12 @@
       <template #weather-svg>
         <!-- <WeatherSVG :condition="current ? current.condition.text : false" /> -->
         <WeatherSVG v-if="current" :current='true' :condition="current ? current.condition.text : false"
-          :daytime="current ? current['is_day'] : 1" />
+          :daytime="current ? current['is_day'] : 1" :uv="current ? current.uv : false" />
         <div v-else class="placeholder"></div>
       </template>
       <template #weather-svg-mobile>
         <WeatherSVG v-if="current" :condition="current ? current.condition.text : false"
-          :daytime="current ? current['is_day'] : 1" />
+          :daytime="current ? current['is_day'] : 1" :uv="current ? current.uv : false"/>
         <div v-else class="placeholder"></div>
       </template>
       <template #condition>
