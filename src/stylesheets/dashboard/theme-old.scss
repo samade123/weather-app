@@ -1,0 +1,166 @@
+
+:root:has(#theme-old:checked) {
+
+    div.new {
+        display: none;
+        visibility: hidden;
+      }
+
+    div.outer {
+        display: grid;
+        grid-template-rows: 1fr 4fr 4fr;
+        height: 100%;
+        //   width: 100%;
+        grid-gap: 10px;
+        border: solid 0 5px 0 0 #e6ebf4;
+        //   .top {
+        //     background: orange;
+
+        overflow: scroll;
+
+        @media (max-width: 600px) {
+            grid-template-rows: 4fr 2fr;
+            // min-height: 100vh;
+        }
+
+        //   }
+        .middle {
+            display: grid;
+            place-items: center;
+            color: var(--dynamic-text-color);
+
+            // overflow: auto;
+            .today-board {
+                height: 100%;
+                width: clamp(95%, calc(94% + 20px), 98%);
+                background: var(--dynamic-background-color);
+                background-size: cover;
+                border-radius: 8px;
+
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+
+                @media (max-width: 600px) {
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    margin-top: 10px;
+                }
+
+                .left {
+                    display: grid;
+                    grid-template-rows: 1fr 8fr 1fr;
+
+                    .left-top {
+                        display: flex;
+                        justify-content: space-around;
+
+                        .location-name {
+                            display: flex;
+                            text-align: center;
+
+                            // position: relative;
+                            &>* {
+                                margin: 10px 0 0 0;
+                            }
+
+                            // place-items: center;
+                            // grid-template-rows: auto;
+                        }
+
+                        .location-date {
+                            margin: 10px 0 0 0;
+
+                            i {
+                                margin-left: 10px;
+                            }
+                        }
+                    }
+
+                    .left-middle {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-evenly;
+
+                        .temp {
+                            font-weight: bold;
+                            font-size: 6rem;
+                        }
+
+                        .small {
+                            font-weight: 500;
+                            font-size: 2rem;
+                        }
+
+                        text-align: center;
+
+                        div {
+                            text-align: center;
+                        }
+
+                        .cloudy {
+                            font-size: 20px;
+                        }
+                    }
+
+                    .left-bottom {
+                        display: grid;
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+                }
+
+                .right {
+                    display: grid;
+                    place-items: center;
+
+                    .temp-board {
+                        height: 95%;
+                        width: 90%;
+                        background: var(--dynamic-background-color-transparent);
+                        border-radius: 7px;
+                    }
+                }
+            }
+        }
+
+        .bottom {
+            .weather-title {
+                display: flex;
+                justify-content: space-around;
+            }
+
+            display: grid;
+            grid-template-rows: auto 1fr;
+            grid-gap: 20px;
+
+            @media (min-width: 600px) {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                grid-gap: 20px 25px;
+                padding: 0 0 10px 0;
+            }
+
+            // padding: 5px;
+            width: clamp(95%, calc(94% + 20px), 98%);
+            margin: 0 auto;
+
+            div.stats-card {
+                background: var(--dynamic-board-bg-color);
+                border-radius: 7px;
+
+                display: grid;
+                grid-template-columns: 5fr 3fr;
+
+                div.stats-left {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                }
+
+                i {
+                    display: grid;
+                    place-items: center;
+                }
+            }
+        }
+    }
+}

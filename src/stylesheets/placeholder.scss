@@ -1,0 +1,101 @@
+div.temp div.placeholder {
+  min-height: 96px;
+  min-width: 120px;
+}
+
+
+div.location-name div.placeholder {
+  min-height: 100px;
+  min-width: 350px;
+}
+
+div.location-date div.placeholder {
+  min-height: 18px;
+  width: max(5vw, 160px);
+}
+
+div.condition>div.placeholder {
+  min-height: 100px;
+  min-width: 8vw;
+
+  // aspect-ratio: 1;
+}
+
+div.location-wrapper:has(.placeholder) {
+  grid-template-columns: 30vw auto;
+}
+
+div.cloudy div.placeholder {
+  min-height: 18px;
+  min-width: 8vw;
+}
+
+div.stats div.placeholder {
+  min-height: 18px;
+  min-width: 2vw;
+}
+
+div.forecast div.placeholder {
+  min-height: 105px;
+  min-width: 100px;
+}
+
+.forecast:has(.placeholder) {
+  width: 83%;
+  margin-inline: auto;
+}
+
+.progress-chart-container div.placeholder {
+  height: 140px;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  div.condition div.placeholder {
+    min-height: 8vh;
+    aspect-ratio: 1;
+  }
+
+  div.location-name div.placeholder {
+    min-height: 18px;
+    min-width: 160px;
+  }
+
+  div.cloudy:has(.placeholder) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  div.cloudy div.placeholder {
+    min-height: 18px;
+    min-width: 80px;
+  }
+
+  div.temp div.placeholder {
+    min-height: 115px;
+    min-width: 180px;
+  }
+
+  div.location-wrapper:has(.placeholder) {
+    grid-template-columns: none;
+  }
+
+
+  .forecast:has(.placeholder) {
+    grid-template-columns: repeat(3, 25vw);
+    grid-gap: 12px;
+    width: 100%;
+    place-items: center;
+    place-content: center;
+  }
+
+  div.forecast div.placeholder {
+    min-height: 105px;
+    min-width: 110px;
+  }
+}
+
+.bottom-sections .placeholder {
+  height: 200px;
+  width: 100%;
+}

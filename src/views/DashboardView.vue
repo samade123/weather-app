@@ -1,69 +1,142 @@
 <template>
   <div class="outer">
-    <div class="top" v-if="!props.mobile"></div>
-    <div class="middle">
-      
-      <!-- <div
-        class="today-board" ref="today"
-        :style="{
-          backgroundImage: 'url(' + require('@/assets/background.jpg') + ')',
-        }"
-      >  -->
-
-      <!-- <div
-        class="today-board" ref="today"
-        :style="{
-          backgroundImage: backgroundJPG,
-        }"
-      >  -->
-
-      <div class="today-board" ref="today"> 
-      <div class="left">
-          <div class="left-top">
-            <div class="location-name"><div class="icon"><i class="las la-map-marker"></i></div><div>{{location? location.name : ".."}}</div></div>
-          
-            <div class="location-date">{{location? location.localtime.substring(11) : ".."}}<i class="las la-lg la-cog" @click="openSettings"></i></div>
+    <div class="outer-bg" v-if="props.theme == 'new'"></div>
+    <div class="top" v-if="!props.mobile && props.theme == 'old'"></div>
+    <div class="middle" v-if="props.theme == 'old'">
+      <div class="today-board" ref="today">
+        <div class="left">
+          <div class="left-top old">
+            <div class="location-name">
+              <div class="icon"><i class="las la-map-marker"></i></div>
+              <div>{{ location ? location.name : ".." }}</div>
+            </div>
+            <div class="location-date">{{ location ? location.localtime.substring(11) : ".." }}<i class="las la-lg la-cog"
+                @click="openSettings"></i></div>
           </div>
           <div class="left-middle">
-            <div class="temp">{{current? current.temp_c : "0"}}<span class="small"> &#8451</span></div>
-            <div class="cloudy">{{current? current.condition.text : "Mostly Clear"}}</div>
+            <div class="temp">{{ current ? current.temp_c : "0" }}<span class="small">&#8451;</span></div>
+            <div class="cloudy">{{ current ? current.condition.text : "Mostly Clear" }}</div>
           </div>
-          <div class="left-bottom">
+          <div class="left-bottom old">
             <div class="lb-left">
-
               <i class="las la-tachometer-alt"></i>
-              {{current? current.pressure_in : ".."}}
+              {{ current ? current.pressure_in : ".." }}
             </div>
             <div class="lb-middle">
               <i class="las la-tint"></i>
-                {{current? current.precip_in : ".."}}
+              {{ current ? current.precip_in : ".." }}
             </div>
             <div class="lb-right">
               <i class="las la-wind"></i>
-                {{current? current.wind_kph : ".."}}
+              {{ current ? current.wind_kph : ".." }}
             </div>
           </div>
         </div>
-        <div class="right">
+        <div class="right" v-if="props.theme == 'old'">
           <div class="temp-board">
-            <lineChart  v-if="forecast" :data="dataArray"/>
+            <lineChart v-if="forecast" :data="dataArray" :theme="props.theme" />
           </div>
         </div>
       </div>
     </div>
-    <div class="bottom" v-if="props.mobile" >
-    <div class="weather-title">Today <span> Next 7 days</span> </div>
-      <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth"/>
+
+    <WeatherDisplay @city-search='emitSearch' @open-settings="openSettings" v-if="theme === 'new'">
+      <template #temperature>
+        <span v-if='location'>
+          {{ current ? current.temp_c : '0' }}&#176;
+        </span>
+        <div v-else class="placeholder"></div>
+      </template>
+      <template #location>
+        <span v-if='location'>
+          {{ location ? location.name : '..' }}
+        </span>
+        <div v-else class="placeholder"></div>
+      </template>
+      <template #day-and-month>
+        <span v-if="location">
+          {{ location ? getDay(location.localtime) : '..' }} {{ location ? getMonth(location.localtime) : '..' }}
+        </span>
+        <div v-else class="placeholder"></div>
+      </template>
+      <template #time>
+
+        <span v-if="current">
+
+          {{ location ? getTime(location.localtime) : '..' }}
+        </span>
+        <div v-else class="placeholder"></div>
+      </template>
+      <template #weather-svg>
+        <!-- <WeatherSVG :condition="current ? current.condition.text : false" /> -->
+        <WeatherSVG v-if="current" :current='true' :condition="current ? current.condition.text : false"
+          :daytime="current ? current['is_day'] : 1" :uv="current ? current.uv : false" />
+        <div v-else class="placeholder"></div>
+      </template>
+      <template #weather-svg-mobile>
+        <WeatherSVG v-if="current" :condition="current ? current.condition.text : false"
+          :daytime="current ? current['is_day'] : 1" :uv="current ? current.uv : false"/>
+        <div v-else class="placeholder"></div>
+      </template>
+      <template #condition>
+        <span v-if="current">
+          {{ current ? current.condition.text : 'Mostly Clear' }}
+        </span>
+        <div v-else class="placeholder"></div>
+      </template>
+      <template #cloudy>
+        <span v-if="current">
+          {{ current ? current.cloud : ".." }}%
+        </span>
+        <div v-else class="placeholder"></div>
+      </template>
+      <template #humidity>
+        <span v-if="current">
+          {{ current ? current.humidity : ".." }}%
+        </span>
+        <div v-else class="placeholder"></div>
+      </template>
+      <template #wind>
+        <span v-if="current">
+          {{ current ? current.wind_kph : ".." }}km/h
+        </span>
+        <div v-else class="placeholder"></div>
+      </template>
+      <template #next-seven>
+        <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth" />
+      </template>
+      <template #progress-chart>
+        <lineChart v-if="forecast" :data="dataArray" :theme="props.theme" />
+        <div v-else class="placeholder"></div>
+      </template>
+    </WeatherDisplay>
+
+    <div class="bottom new" v-if="props.theme == 'new' && setMobile">
+      <MobileBottom @city-search='emitSearch' :current="location ? location.name : false">
+        <template #weather-strip>
+          <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter"
+            :windowWidth="windowWidth" />
+        </template>
+        <template #progress-chart>
+          <lineChart v-if="forecast" :data="dataArray" :theme="props.theme" />
+          <div v-else class="placeholder"></div>
+
+        </template>
+      </MobileBottom>
     </div>
-    <div class="bottom" v-else>
+    <div class="bottom" v-if="props.mobile && props.theme == 'old'">
+      <div class="weather-title">Today <span> Next 7 days</span> </div>
+      <WeatherStrip :data="props.data" :upperLimit="upperLimit" :dateCounter="dateCounter" :windowWidth="windowWidth" />
+    </div>
+    <div class="bottom" v-if="!props.mobile && props.theme == 'old'">
       <div class="stats-card">
         <div class="stats-left">
-        <div class="title">Wind</div>
-        <div class="sub-title">Today's Wind Speed</div>
-        <div class="number">
-          {{current? current.wind_kph : ".."}}
-        </div>
+          <div class="title">Wind</div>
+          <div class="sub-title">Today's Wind Speed</div>
+          <div class="number">
+            {{ current ? current.wind_kph : ".." }}
           </div>
+        </div>
         <i class="las la-compass la-5x"></i>
       </div>
       <div class="stats-card">
@@ -71,50 +144,62 @@
           <div class="title">Rain Chance</div>
           <div class="sub-title">Today's Chance of Rain</div>
           <div class="number">
-            {{forecast? forecast.forecastday[0].day.daily_chance_of_rain : ".."}}
+            {{ forecast ? forecast.forecastday[0].day.daily_chance_of_rain : ".." }}
           </div>
         </div>
-          <i class="las la-tachometer-alt la-5x"></i>
+        <i class="las la-tachometer-alt la-5x"></i>
       </div>
       <div class="stats-card">
         <div class="stats-left">
           <div class="title">Pressure</div>
           <div class="sub-title">Today's Pressure</div>
           <div class="number">
-            {{current? current.pressure_in : ".."}}
+            {{ current ? current.pressure_in : ".." }}
           </div>
         </div>
-          <i class="las la-5x la-weight-hanging"></i>
+        <i class="las la-5x la-weight-hanging"></i>
       </div>
       <div class="stats-card">
         <div class="stats-left">
           <div class="title">UV Index</div>
           <div class="sub-title">Today's UV Index</div>
           <div class="number">
-                {{current? current.uv : ".."}}
+            {{ current ? current.uv : ".." }}
           </div>
         </div>
-          <i class="las la-sun la-5x"></i>
+        <i class="las la-sun la-5x"></i>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
+import { ref, defineAsyncComponent } from "vue";
 import WeatherStrip from "@/components/WeatherStrip.vue";
-import LineChart from "@/components/Chart.vue";
+import MobileBottom from "@/components/MobileBottom.vue";
+import { storageManager } from "@/composables/storage.js";
+// import LineChart from "@/components/Chart.vue";
+import { widthFunction } from "@/composables/Mobile.js";
+import WeatherSVG from "@/components/WeatherSVG.vue";
+import WeatherDisplay from "@/components/WeatherDisplay.vue";
 import { useRouter } from "vue-router";
 import { onMounted, watch } from "@vue/runtime-core";
 export default {
-  emits: ["openSettings"],
-  props: ["mobile", "data", "ready"],
+  emits: ["openSettings", "citySearch"],
+  props: ["mobile", "data", "ready", "theme"],
   components: {
     WeatherStrip,
-    LineChart,
+    LineChart: defineAsyncComponent(() =>
+      import("@/components/Chart.vue")
+    ),
+    WeatherSVG,
+    WeatherDisplay,
+    MobileBottom,
   },
   setup(props, ctx) {
     const publicPath = process.env.BASE_URL;
+    const { width, setMobile, getScreenCategory } = widthFunction();
+    const { storage } = storageManager();
 
     const location = ref(null);
     const current = ref(null);
@@ -127,14 +212,50 @@ export default {
     const today = ref(null);
 
     const router = useRouter();
-
     const shout = () => {
       console.log("Sadasds");
+    };
+
+    const getDay = (date) => {
+      const newDate = new Date(date);
+      const options = { weekday: "long" };
+
+      return new Intl.DateTimeFormat("en-US", options).format(newDate);
+    };
+
+    const getMonth = (date) => {
+      const newDate = new Date(date);
+      const month = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      return date.substring(8, 10) + " " + month[newDate.getMonth()];
+    };
+    const getTime = (date) => {
+      const newDate = new Date(date);
+      return date.substring(10);
     };
 
     const openSettings = () => {
       ctx.emit("openSettings");
     };
+
+    const emitSearch = (e) => {
+      console.log("dashboard")
+
+      ctx.emit("citySearch", e)
+    }
 
     const setTheme = () => {
       console.log("running theming");
@@ -155,35 +276,39 @@ export default {
           theme: "rain-dark",
           img: `url(${require("@/assets/background-cloudy.jpg")})`,
         },
-        "Clear": {
+        Clear: {
           theme: "clear-light",
           img: `url(${require("@/assets/background-clear-skies-1.jpg")})`,
         },
       };
 
+      let themeType = storage.getData('theme') // check are we using old theem or new theme - only change the background image if we are onold theme
       let condition = current.value.condition.text.includes("rain")
         ? "rain"
         : current.value.condition.text;
       console.log(condition, themes[condition]);
       let htmlElement = document.documentElement;
-      if (themes.hasOwnProperty(condition)) {
-        htmlElement.setAttribute("theme", themes[condition].theme);
-        today.value.style.backgroundImage = themes[condition].img;
-      } else {
-        htmlElement.setAttribute("theme", themes["Partly cloudy"].theme);
-        today.value.style.backgroundImage = themes["Partly cloudy"].img;
+      if (themeType == 'old') {
+        if (themes.hasOwnProperty(condition)) {
+          htmlElement.setAttribute("theme", themes[condition].theme);
+          today.value.style.backgroundImage = themes[condition].img;
+        } else {
+          htmlElement.setAttribute("theme", themes["Partly cloudy"].theme);
+          today.value.style.backgroundImage = themes["Partly cloudy"].img;
+        }
       }
     };
     watch(
       props,
       (props) => {
-        // console.log("sadasd");
         if (props.ready) {
           location.value = props.data.location;
           current.value = props.data.current;
           forecast.value = props.data.forecast;
+          dataArray.value.length = 0;
           forecast.value.forecastday[0].hour.forEach((element) => {
             var index = forecast.value.forecastday[0].hour.indexOf(element);
+
             if (
               index == 6 ||
               index == 9 ||
@@ -201,17 +326,16 @@ export default {
       { immediate: false, deep: false }
     );
     onMounted(() => {
-      // console.log(today.value.style.backgroundImage);
-
-      // today.value.style.backgroundImage = `url(${require("@/assets/background.jpg")})`;
       if (props) {
         if (props.ready) {
           location.value = props.data.location;
           current.value = props.data.current;
           forecast.value = props.data.forecast;
 
+          dataArray.value.length = 0;
           forecast.value.forecastday[0].hour.forEach((element) => {
             var index = forecast.value.forecastday[0].hour.indexOf(element);
+
             if (
               index == 6 ||
               index == 9 ||
@@ -240,145 +364,18 @@ export default {
       openSettings,
       backgroundJPG,
       today,
+      getDay,
+      getMonth,
+      getTime,
+      width, setMobile, getScreenCategory, emitSearch,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-div.outer {
-  display: grid;
-  grid-template-rows: 1fr 4fr 4fr;
-  height: 100vh;
-  //   width: 100%;
-  grid-gap: 10px;
-  border: solid 0 5px 0 0 #e6ebf4;
-  //   .top {
-  //     background: orange;
-
-  min-height: 100vh;
-  overflow: scroll;
-
-  @media (max-width: 600px) {
-    grid-template-rows: 4fr 2fr;
-  }
-  //   }
-  .middle {
-    display: grid;
-    place-items: center;
-    color: var(--dynamic-text-color);
-    // overflow: auto;
-    .today-board {
-      height: 100%;
-      width: clamp(95%, calc(94% + 20px), 98%);
-      background: var(--dynamic-background-color);
-      background-size: cover;
-      border-radius: 8px;
-
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      @media (max-width: 600px) {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr;
-        margin-top: 10px;
-      }
-
-      .left {
-        display: grid;
-        grid-template-rows: 1fr 8fr 1fr;
-        .left-top {
-          display: flex;
-          justify-content: space-around;
-          .location-name {
-            display: flex;
-            text-align: center;
-            // position: relative;
-            & > * {
-              margin: 10px 0 0 0;
-            }
-            // place-items: center;
-            // grid-template-rows: auto;
-          }
-
-          .location-date {
-            margin: 10px 0 0 0;
-
-            i {
-              margin-left: 10px;
-            }
-          }
-        }
-        .left-middle {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-evenly;
-
-          .temp {
-            font-weight: bold;
-            font-size: 6rem;
-          }
-          .small {
-            font-weight: 500;
-            font-size: 2rem;
-          }
-          text-align: center;
-          div {
-            text-align: center;
-          }
-          .cloudy {
-            font-size: 20px;
-          }
-        }
-        .left-bottom {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-      .right {
-        display: grid;
-        place-items: center;
-        .temp-board {
-          height: 95%;
-          width: 90%;
-          background: var(--dynamic-background-color-transparent);
-          border-radius: 7px;
-        }
-      }
-    }
-  }
-  .bottom {
-    .weather-title {
-      display: flex;
-      justify-content: space-around;
-    }
-    display: grid;
-    grid-template-rows: auto 1fr;
-    grid-gap: 20px;
-
-    @media (min-width: 600px) {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      grid-gap: 20px 25px;
-    }
-    // padding: 5px;
-    width: clamp(95%, calc(94% + 20px), 98%);
-    margin: 0 auto;
-    div.stats-card {
-      background: var(--dynamic-board-bg-color);
-      border-radius: 7px;
-
-      display: grid;
-      grid-template-columns: 5fr 3fr;
-      div.stats-left {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-      }
-      i {
-        display: grid;
-        place-items: center;
-      }
-    }
-  }
-}
+@use "./../stylesheets/dashboard/theme-old.scss" as *;
+@use "./../stylesheets/dashboard/theme-new.scss" as *;
+@use "./../stylesheets/transitions.scss" as *;
+@use "./../stylesheets/placeholder.scss" as *;
 </style>

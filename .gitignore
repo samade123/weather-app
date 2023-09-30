@@ -30,3 +30,15 @@ public/img/icons/*
 public/img/icons_old/*
 public/img/favicon_io.zip
 public/img/pwa-app-icons.zip
+src/composables/weatherReponse.js
+*.webp
+*.csv
+src/assets/*/*.py
+src/assets/*.py
+src/assets/svg/*.svg
+
+# temporarily ignore for now
+src/assets/lottie-files/settings-sliders.json
+src/assets/lottie-files/*
+*.png
+*.svg
