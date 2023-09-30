@@ -16,3 +16,4 @@ squoosh-cli bg.jpg --resize '{ "width": 1200 }' --webp '{ "quality": 75 }' -s -1
 squoosh-cli bg.jpg --resize '{ "width": 2400 }' --webp '{ "quality": 75 }' -s -2400
 squoosh-cli bg.jpg --resize '{ "width": 3000 }' --webp '{ "quality": 75 }' -s -3000
 `
+<!-- squoosh-cli bg-sunny-day-beach.jpg --resize '{ "width": 700 }' --webp '{ "quality": 75 }' -s -700 && squoosh-cli bg-sunny-day-beach.jpg --resize '{ "width": 1200 }' --webp '{ "quality": 75 }' -s -1200 && squoosh-cli bg-sunny-day-beach.jpg --resize '{ "width": 2400 }' --webp '{ "quality": 75 }' -s -2400 &&squoosh-cli bg-sunny-day-beach.jpg --resize '{ "width": 3000 }' --webp '{ "quality": 75 }' -s -3000 -->
