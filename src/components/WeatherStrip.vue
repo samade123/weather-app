@@ -164,7 +164,7 @@ export default {
 
 :root:has(#theme-new:checked) {
   .today-section {
-    overflow: scroll;
+    overflow-y: auto;
     // margin-inline: var(--dynamic-right-margin-inline);
 
     .forecast {
@@ -184,7 +184,6 @@ export default {
 
   @media (max-width: 600px) {
     .today-section {
-      overflow: scroll;
       margin-inline: auto;
     }
   }
