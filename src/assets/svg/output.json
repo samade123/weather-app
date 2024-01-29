@@ -1,5 +1,5 @@
-[
-    {
+{
+    "Sunny":{
         "code": 1000,
         "day": "Sunny",
         "night": "Clear",
@@ -9,7 +9,17 @@
         "night-css": "clear-night",
         "day-css": "sunny"
     },
-    {
+    "Clear":{
+        "code": 1000,
+        "day": "Sunny",
+        "night": "Clear",
+        "icon": 113,
+        "night-img": "clear-night.svg",
+        "day-img": "sun-hot.svg",
+        "night-css": "clear-night",
+        "day-css": "sunny"
+    },
+    "Partly cloudy":{
         "code": 1003,
         "day": "Partly cloudy",
         "night": "Partly cloudy",
@@ -19,7 +29,7 @@
         "night-css": "cloudy",
         "day-css": "cloudy"
     },
-    {
+    "Cloudy": {
         "code": 1006,
         "day": "Cloudy",
         "night": "Cloudy",
@@ -29,7 +39,7 @@
         "night-css": "cloudy",
         "day-css": "cloudy"
     },
-    {
+    "Overcast":{
         "code": 1009,
         "day": "Overcast",
         "night": "Overcast",
@@ -39,7 +49,7 @@
         "night-css": "cloudy",
         "day-css": "cloudy"
     },
-    {
+    "Mist":{
         "code": 1030,
         "day": "Mist",
         "night": "Mist",
@@ -49,7 +59,7 @@
         "night-css": "fog",
         "day-css": "fog"
     },
-    {
+    "Patchy rain possible":{
         "code": 1063,
         "day": "Patchy rain possible",
         "night": "Patchy rain possible",
@@ -59,7 +69,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Patchy snow possible": {
         "code": 1066,
         "day": "Patchy snow possible",
         "night": "Patchy snow possible",
@@ -69,7 +79,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Patchy sleet possible": {
         "code": 1069,
         "day": "Patchy sleet possible",
         "night": "Patchy sleet possible",
@@ -79,7 +89,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Patchy freezing drizzle possible": {
         "code": 1072,
         "day": "Patchy freezing drizzle possible",
         "night": "Patchy freezing drizzle possible",
@@ -89,7 +99,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Thundery outbreaks possible": {
         "code": 1087,
         "day": "Thundery outbreaks possible",
         "night": "Thundery outbreaks possible",
@@ -99,7 +109,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Blowing snow": {
         "code": 1114,
         "day": "Blowing snow",
         "night": "Blowing snow",
@@ -109,7 +119,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Blizzard": {
         "code": 1117,
         "day": "Blizzard",
         "night": "Blizzard",
@@ -120,7 +130,7 @@
         "day-css": "snow"
         
     },
-    {
+    "Fog":{
         "code": 1135,
         "day": "Fog",
         "night": "Fog",
@@ -130,7 +140,7 @@
         "night-css": "fog",
         "day-css": "fog"
     },
-    {
+    "Freezing fog": {
         "code": 1147,
         "day": "Freezing fog",
         "night": "Freezing fog",
@@ -140,7 +150,7 @@
         "night-css": "fog",
         "day-css": "fog"
     },
-    {
+    "Patchy light drizzle": {
         "code": 1150,
         "day": "Patchy light drizzle",
         "night": "Patchy light drizzle",
@@ -150,7 +160,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Light drizzle": {
         "code": 1153,
         "day": "Light drizzle",
         "night": "Light drizzle",
@@ -160,7 +170,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Freezing drizzle": {
         "code": 1168,
         "day": "Freezing drizzle",
         "night": "Freezing drizzle",
@@ -171,7 +181,7 @@
         "day-css": "rain"
        
     },
-    {
+    "Heavy freezing drizzle": {
         "code": 1171,
         "day": "Heavy freezing drizzle",
         "night": "Heavy freezing drizzle",
@@ -181,7 +191,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Patchy light rain": {
         "code": 1180,
         "day": "Patchy light rain",
         "night": "Patchy light rain",
@@ -191,7 +201,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Light rain": {
         "code": 1183,
         "day": "Light rain",
         "night": "Light rain",
@@ -201,7 +211,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Moderate rain at times": {
         "code": 1186,
         "day": "Moderate rain at times",
         "night": "Moderate rain at times",
@@ -211,7 +221,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Moderate rain": {
         "code": 1189,
         "day": "Moderate rain",
         "night": "Moderate rain",
@@ -221,7 +231,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Heavy rain at times": {
         "code": 1192,
         "day": "Heavy rain at times",
         "night": "Heavy rain at times",
@@ -231,7 +241,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Heavy rain": {
         "code": 1195,
         "day": "Heavy rain",
         "night": "Heavy rain",
@@ -241,7 +251,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Light freezing rain": {
         "code": 1198,
         "day": "Light freezing rain",
         "night": "Light freezing rain",
@@ -251,7 +261,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Moderate or heavy freezing rain": {
         "code": 1201,
         "day": "Moderate or heavy freezing rain",
         "night": "Moderate or heavy freezing rain",
@@ -261,7 +271,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Light sleet": {
         "code": 1204,
         "day": "Light sleet",
         "night": "Light sleet",
@@ -271,7 +281,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Moderate or heavy sleet": {
         "code": 1207,
         "day": "Moderate or heavy sleet",
         "night": "Moderate or heavy sleet",
@@ -281,7 +291,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Patchy light snow": {
         "code": 1210,
         "day": "Patchy light snow",
         "night": "Patchy light snow",
@@ -291,7 +301,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Light snow": {
         "code": 1213,
         "day": "Light snow",
         "night": "Light snow",
@@ -301,7 +311,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Patchy moderate snow": {
         "code": 1216,
         "day": "Patchy moderate snow",
         "night": "Patchy moderate snow",
@@ -311,7 +321,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Moderate snow": {
         "code": 1219,
         "day": "Moderate snow",
         "night": "Moderate snow",
@@ -321,7 +331,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Patchy heavy snow": {
         "code": 1222,
         "day": "Patchy heavy snow",
         "night": "Patchy heavy snow",
@@ -331,7 +341,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Heavy snow": {
         "code": 1225,
         "day": "Heavy snow",
         "night": "Heavy snow",
@@ -341,7 +351,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Ice pellets": {
         "code": 1237,
         "day": "Ice pellets",
         "night": "Ice pellets",
@@ -351,7 +361,7 @@
         "night-css": "hail",
         "day-css": "hail"
     },
-    {
+    "Light rain shower": {
         "code": 1240,
         "day": "Light rain shower",
         "night": "Light rain shower",
@@ -361,7 +371,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Moderate or heavy rain shower": {
         "code": 1243,
         "day": "Moderate or heavy rain shower",
         "night": "Moderate or heavy rain shower",
@@ -371,7 +381,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Torrential rain shower": {
         "code": 1246,
         "day": "Torrential rain shower",
         "night": "Torrential rain shower",
@@ -381,7 +391,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Light sleet showers": {
         "code": 1249,
         "day": "Light sleet showers",
         "night": "Light sleet showers",
@@ -391,7 +401,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Moderate or heavy sleet showers": {
         "code": 1252,
         "day": "Moderate or heavy sleet showers",
         "night": "Moderate or heavy sleet showers",
@@ -401,7 +411,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Light snow showers": {
         "code": 1255,
         "day": "Light snow showers",
         "night": "Light snow showers",
@@ -411,7 +421,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Moderate or heavy snow showers": {
         "code": 1258,
         "day": "Moderate or heavy snow showers",
         "night": "Moderate or heavy snow showers",
@@ -421,7 +431,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Light showers of ice pellets": {
         "code": 1261,
         "day": "Light showers of ice pellets",
         "night": "Light showers of ice pellets",
@@ -431,7 +441,7 @@
         "night-css": "hail",
         "day-css": "hail"
     },
-    {
+    "Moderate or heavy showers of ice pellets":  {
         "code": 1264,
         "day": "Moderate or heavy showers of ice pellets",
         "night": "Moderate or heavy showers of ice pellets",
@@ -441,7 +451,7 @@
         "night-css": "hail",
         "day-css": "hail"
     },
-    {
+    "Patchy light rain with thunder": {
         "code": 1273,
         "day": "Patchy light rain with thunder",
         "night": "Patchy light rain with thunder",
@@ -451,7 +461,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Moderate or heavy rain with thunder": {
         "code": 1276,
         "day": "Moderate or heavy rain with thunder",
         "night": "Moderate or heavy rain with thunder",
@@ -461,7 +471,7 @@
         "night-css": "rain",
         "day-css": "rain"
     },
-    {
+    "Patchy light snow with thunder": {
         "code": 1279,
         "day": "Patchy light snow with thunder",
         "night": "Patchy light snow with thunder",
@@ -471,7 +481,7 @@
         "night-css": "snow",
         "day-css": "snow"
     },
-    {
+    "Moderate or heavy snow with thunder":{
         "code": 1282,
         "day": "Moderate or heavy snow with thunder",
         "night": "Moderate or heavy snow with thunder",
@@ -481,4 +491,4 @@
         "night-css": "snow",
         "day-css": "snow"
     }
-]
+}
